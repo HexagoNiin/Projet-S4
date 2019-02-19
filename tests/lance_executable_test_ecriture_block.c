@@ -14,7 +14,7 @@ int main(void) {
     block.data[1] = 'e';
     block.data[2] = 'f';
     block.data[3] = 'o';
-    write_block(block, 1, f);
+    write_block(block, -7, f);
     close(f);
     return 0;
 }

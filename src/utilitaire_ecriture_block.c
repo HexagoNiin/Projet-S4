@@ -13,3 +13,17 @@ int write_block(block_t block, int pos, int disk_id) {
     }
     return EXIT_SUCCESS;
 }
+
+int block_repair(int pos, block_t [] blocks, int disk_id) {
+    /// \brief Répare un block erroné
+    /// \param[in] pos : Position du block eronné
+    /// \param[in] blocks : Liste des blocks aidants à la reconstruction
+    /// \param[in] disk_id : Disk avec le block eronné
+    /// \return Un entier indiquant si l'opération s'est bien passée
+    int i, j;
+    block_t block_repare;
+    for(i=0;i<;i++)
+        for(j=0;j<BLOCK_SIZE;j++)
+            block_repare.data[j] ^= blocks[i].data[j];
+    return write_block(block_repare, pos, disk_id);
+}
