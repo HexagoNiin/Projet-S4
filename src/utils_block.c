@@ -1,4 +1,4 @@
-#include "../headers/utilitaire_ecriture_block.h"
+#include "../headers/utils_block.h"
 
 int write_block(block_t block, int pos, int disk_id) {
     /// \brief Ecrit un block sur un disque à une position donnée
