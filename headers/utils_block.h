@@ -7,6 +7,6 @@
 #include "raid_defines.h"
 
 int write_block(block_t block, int pos, int disk_id);
-int block_repair(int pos, block_t [] blocks);
+int block_repair(int pos, int disks[], int id_disk, int nbr_disks);
 
 #endif
