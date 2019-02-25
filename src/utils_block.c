@@ -1,6 +1,9 @@
 #include "../headers/utils_block.h"
 
 int compute_nblock(int nb_octets) {
+    /// \brief Calcule le nombre de blocks nécessaires pour stocker nb_octets octets
+    /// \param[in] nb_octets : Nombre d'octets à stocker
+    /// \return Nombre de blocks nécessaires
 	return nb_octets / 4 + (nb_octets % 4 != 0);
 }
 

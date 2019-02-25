@@ -1,3 +1,6 @@
+/// \file raid_defines.h
+/// \brief Définitions des structures de données
+/// \date 2019
 #ifndef __R5_DEFINES__
 #define __R5_DEFINES__
 
