@@ -1,5 +1,9 @@
 #include "../headers/utils_block.h"
 
+int compute_nblock(int nb_octets) {
+	return nb_octets / 4 + (nb_octets % 4 != 0);
+}
+
 int write_block(block_t block, int pos, int disk_id) {
     /// \brief Ecrit un block sur un disque à une position donnée
     /// \param[in] block : Block à écrire sur le disk
