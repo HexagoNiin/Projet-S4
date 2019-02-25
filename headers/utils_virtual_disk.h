@@ -7,11 +7,13 @@
 #ifndef _UTILS_VIRTUAL_DISK
 #define _UTILS_VIRTUAL_DISK
 
-#include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "raid_defines.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 
-
+int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk);
 
 #endif
