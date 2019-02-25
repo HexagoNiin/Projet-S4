@@ -33,7 +33,3 @@ int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk) {
     }
     return 0;
 }
-
-int main() {
-    return 0;
-}
