@@ -4,13 +4,16 @@ import java.io.*;
 
 public class Block {
 	
-	private final static int BLOCK_SIZE = 4;
+	public final static int BLOCK_SIZE = 4;
 	private byte [] data = new byte[BLOCK_SIZE];
 
 	public Block() {
 		
 	}
 	
+	public void setData(byte [] data) {
+		this.data = data.clone();
+	}
 	/**
 	 * @author axel
 	 * @param pos Position où écrire le block
