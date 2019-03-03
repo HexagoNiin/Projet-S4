@@ -21,7 +21,7 @@ int write_block(block_t block, int pos, int disk_id) {
     return EXIT_SUCCESS; //0
 }
 
-int block_repair(int pos, int disks[], int id_disk, int nbr_disks) {
+/*int block_repair(int pos, int disks[], int id_disk, int nbr_disks) {
     /// \brief Répare un block erroné
     /// \param[in] pos : Position du block eronné
     /// \param[in, out] disks : Tableau des disks utilisés par le RAID
@@ -44,4 +44,4 @@ int block_repair(int pos, int disks[], int id_disk, int nbr_disks) {
     if(!write_block(block_repare, pos, disks[id_disk])) {
         return 0;
     } return 2;
-}
+}*/
