@@ -10,10 +10,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "raid_defines.h"
 
 int compute_nblock(int nb_octets);
-int write_block(block_t block, int pos, int disk_id);
+int write_block(block_t block, int pos, FILE * disk_id);
 //int block_repair(int pos, int disks[], int id_disk, int nbr_disks);
 
 #endif

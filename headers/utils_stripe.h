@@ -3,7 +3,7 @@
 
 #include "utils_block.h"
 
-int write_stripes(stripe_t stripe, int pos, int * disks);
-int write_chunk(char * buffer, int nChars, int startbyte, int * disks);
+int write_stripes(stripe_t stripe, int pos, FILE ** disks);
+int write_chunk(uchar * buffer, int nChars, int startbyte, FILE ** disks);
 
 #endif

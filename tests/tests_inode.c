@@ -1,12 +1,7 @@
-#include "../headers/utils_stripe.h"
+#include "../headers/utils_inode.h"
 #include <stdio.h>
 int main(void) {
-    uchar tab[8192];
-    int i;
     FILE **file = malloc(sizeof(FILE*)*4);
-    for(i=0;i<8192;i++){
-        tab[i] = (char)(64 + (i%26));
-    }
 
     file[0] = fopen("systeme_test/d0", "w");
     file[1] = fopen("systeme_test/d1", "w");
@@ -16,7 +11,15 @@ int main(void) {
         fprintf(stderr, "Erreur lors de l'ouverture des fichiers\n");
         exit(1);
     }
-    write_chunk(tab, 1024, 0, file);
+    inode_t inode;
+    inode.filename[0] = 'l';
+    inode.filename[1] = 'o';
+    inode.filename[2] = 'l';
+    inode.filename[3] = '\0';
+    inode.size = -1;
+    inode.nblock = -2;
+    inode.first_byte = -3;
+    write_inodes_table(inode, 0, file);
     fclose(file[0]);
     fclose(file[1]);
     fclose(file[2]);
