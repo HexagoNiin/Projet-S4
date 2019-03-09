@@ -5,10 +5,10 @@ import java.io.*;
 public class Block {
 	
 	public final static int BLOCK_SIZE = 4;
-	private byte [] data = new byte[BLOCK_SIZE];
+	private byte [] data;
 
 	public Block() {
-		
+		data = new byte[BLOCK_SIZE];
 	}
 	
 	public void setData(byte [] data) {
@@ -54,7 +54,7 @@ public class Block {
 		Block block = new Block();
 		for(int i = 0;i < nbr_disks; i++) {
 			if(i != id_disk) {
-				if(block.read_block(pos, disks[i]) == 0) { //Pas du C, '!' ne fonctionne pas pour des entiers
+				if(block.read_block(pos, disks[i]) == 0) {
 					System.err.println("Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
 					return 1;
 				}
