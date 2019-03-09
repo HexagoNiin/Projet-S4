@@ -1,7 +1,6 @@
-package stripe_utils;
+package objets;
 
 import java.io.*;
-import block_utils.Block;
 import java.util.Arrays;
 
 public class Chunk {

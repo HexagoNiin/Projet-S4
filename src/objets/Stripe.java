@@ -1,6 +1,5 @@
-package stripe_utils;
+package objets;
 
-import block_utils.Block;
 import java.io.*;
 
 public class Stripe {

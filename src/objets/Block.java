@@ -1,4 +1,4 @@
-package block_utils;
+package objets;
 
 import java.io.*;
 
@@ -15,10 +15,10 @@ public class Block {
 		this.data = data.clone();
 	}
 	/**
-	 * @author axel
-	 * @param pos Position o√π √©crire le block
-	 * @param disk_id Disk sur lequel √©crire le block	
-	 * @return Un entier indiquant si l'op√©ration s'est bien pass√©e (0 : OK, 1 : Erreur cast, 2 ; Erreur √©criture) 
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & CÈdric MARTIN
+	 * @param pos Position o˘ Ècrire le block
+	 * @param disk_id Disk sur lequel Ècrire le block	
+	 * @return Un entier indiquant si l'op√©ration s'est bien pass√©e (0 : OK, 1 : Erreur cast, 2 ; Erreur Ècriture) 
 	 */
 	
 	public int write_block(int pos, File disk_id)  {
@@ -42,34 +42,36 @@ public class Block {
 	}
 	
 	/**
-	 * @author axel
-	 * @param pos Position du block eronn√©
-	 * @param disks Tableau des disks utilis√©s par le RAID
-	 * @param id_disk Index du disk avec le block eronn√©
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & CÈdric MARTIN
+	 * @param pos Position du block eronnÈ
+	 * @param disks Tableau des disks utilisÈs par le RAID
+	 * @param id_disk Index du disk avec le block eronnÈ
 	 * @param nbr_disks
-	 * @return Un entier indiquant si l'op√©ration s'est bien pass√©e (0 : OK, 1 : Erreur lecture, 2 : Erreur √©criture)
+	 * @return Un entier indiquant si l'opÈration s'est bien passÈe (0 : OK, 1 : Erreur lecture, 2 : Erreur Ècriture)
 	 */
 	
 	public int block_repair(int pos, File [] disks, int id_disk, int nbr_disks) {
 		Block block = new Block();
-		
 		for(int i = 0;i < nbr_disks; i++) {
 			if(i != id_disk) {
-				if(!block.read_block(pos, disks[i])) {
+				if(block.read_block(pos, disks[i]) == 0) { //Pas du C, '!' ne fonctionne pas pour des entiers
 					System.err.println("Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
 					return 1;
 				}
-				
 				for(int j = 0;j < BLOCK_SIZE; j++) {
 					this.data[i] = (byte)(this.data[i] ^ block.data[i]);
 				}
 			}
 		}
-		
 		if(this.write_block(pos, disks[id_disk]) == 0) {
 			return 0;
 		}
 		return 2;
+	}
+	
+	public int read_block(int pos, File disk) {
+		//TODO
+		return 0;
 	}
 
 }
