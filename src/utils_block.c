@@ -1,5 +1,15 @@
 #include "../headers/utils_block.h"
 
+block_t create_block() { //Utilisé dans utils_stripe.c
+	/// \brief Crée un block vide
+    /// \return Un block initialisé à 0
+	block_t block; //Block renvoyé
+    for(int i = 0; i < BLOCK_SIZE; i++) { //Initialisation du block de parité
+        block.data[i] = 0;
+    }
+	return block;
+}
+
 int compute_nblock(int nb_octets) {
     /// \brief Calcule le nombre de blocks nécessaires pour stocker nb_octets octets
     /// \param[in] nb_octets : Nombre d'octets à stocker

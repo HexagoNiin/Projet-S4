@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "raid_defines.h"
 
+block_t create_block();
 int read_block (block_t *block, uint pos, FILE *disk);
 int compute_nblock(int nb_octets);
 int write_block(block_t block, int pos, FILE * disk_id);
