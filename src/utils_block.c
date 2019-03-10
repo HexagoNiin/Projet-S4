@@ -62,3 +62,71 @@ int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
         return 0;
     } return 2;
 }
+
+int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
+	/**
+	*	\fn int block_read (block_t *block, uint pos, FILE disk)
+	*	\brief Lit le bloc à une position sur un disque
+    *	\param[in] *block : Pointeur du bloc dans lequel on rend la lecture
+    *	\param[in] pos : Position du bloc
+    *	\param[in] disk : Disque dans lequel on lit
+    *	\return Un entier indiquant si l'opération s'est bien passée
+	*/
+	uchar c;
+	int i;
+
+	for (i = 0; i < (pos * BLOCK_SIZE) - 1; i++){ //offset
+		c = fgetc(disk);
+
+		if (c == EOF)
+			return(1);//inaccessible
+	}
+
+	for (i = 0; i < BLOCK_SIZE; i ++){
+		c = fgetc(disk);
+
+		if (c == EOF)
+			return(1);//inaccessible
+
+		if (&c == NULL) //NULL c'est pour un pointeur, or là tu travailles avec un char, pour le moment j'ai changé c en &c //Alors en fait, selon -Wall &c ne pourra **jamais** valloir NULL, donc je sais pas ce que vous faites ici
+			return(2);//repare aled destruction de donnée
+
+		block->data[i] = c;
+	}
+	return(0);
+}
+
+char* itoh(int x){
+	char *h;
+	h = malloc(2 * sizeof(char));
+	sprintf(h, "%x", x);
+	return h;
+}
+
+void display_block(block_t block){
+	int i;
+	char *byteHex;
+
+	for(i = 0; i < BLOCK_SIZE; i++){
+
+		byteHex = itoh(block.data[i]);
+
+		if (block.data[i] <= 9)
+		printf("0");
+		printf("%s ", byteHex);
+
+	}
+
+	printf("\n");
+}
+
+void display_pos(uint pos, FILE* disk){ //Changé FILE en FILE*
+	block_t block;
+
+	if (read_block(&block, pos, disk)){
+		printf("erreur de lecture [read_block]\n");
+		return;
+	}
+
+	display_block(block);
+}

@@ -19,5 +19,9 @@ int compute_nblock(int nb_octets);
 int write_block(block_t block, int pos, FILE * disk_id);
 void print_block(block_t block);
 int block_repair(int pos, FILE **disks, int id_disk, int nbr_disks);
+int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk);
+char* itoh(int x); //Pas nécessairement dans le header
+void display_block(block_t block);
+void display_pos(uint pos, FILE* disk);
 
 #endif
