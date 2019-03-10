@@ -1,3 +1,9 @@
+/// \file utils_stripe.h
+/// \brief Utilitaires permettant de manipuler la structure stripe_s
+/// \author Ugo EB-LEVADOUX
+/// \author Axel GAUTHIER
+/// \author Cédric MARTIN
+/// \date 2019
 #ifndef _UTILS_STRIPE
 #define _UTILS_STRIPE
 
