@@ -76,7 +76,7 @@ int compute_parity_index(int i) {
 }
 
 int compute_nstripe(int i) {
-    return 4;
+    return nb_octets / NB_DISK + (nb_octets % NB_DISK != 0);
 }
 
 block_t compute_parity(block_t *blocks, int nb_disks) {
