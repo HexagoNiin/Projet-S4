@@ -30,8 +30,8 @@ typedef struct block_s{
 typedef struct inode_s{
   char filename[FILENAME_MAX_SIZE]; // dont '\0'
   uint size; // du fichier en octets
-  uint nblock; // nblock du fichier = (size+BLOCK_SIZE-1)/BLOCK_SIZE ?
   uint first_byte; // start block number on the virtual disk
+  uint nblock; // nblock du fichier = (size+BLOCK_SIZE-1)/BLOCK_SIZE ?
 } inode_t;
 
 /* Type of the inode table */

@@ -4,6 +4,8 @@
 #include "utils_stripe.h"
 #include "string.h"
 
-int write_inodes_table(inode_t inode, int pos, FILE **files);
+int write_inodes_table(inode_table_t inode, FILE **files);
+int get_unused_inode(inode_table_t inodes);
+char *indtostr(inode_t inode);
 
 #endif

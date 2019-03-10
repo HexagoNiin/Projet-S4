@@ -13,8 +13,10 @@
 #include <stdio.h>
 #include "raid_defines.h"
 
+int read_block (block_t *block, uint pos, FILE *disk);
 int compute_nblock(int nb_octets);
 int write_block(block_t block, int pos, FILE * disk_id);
-//int block_repair(int pos, int disks[], int id_disk, int nbr_disks);
+void print_block(block_t block);
+int block_repair(int pos, FILE **disks, int id_disk, int nbr_disks);
 
 #endif

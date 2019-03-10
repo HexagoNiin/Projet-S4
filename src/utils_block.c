@@ -21,7 +21,14 @@ int write_block(block_t block, int pos, FILE * disk_id) {
     return EXIT_SUCCESS; //0
 }
 
-/*int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
+void print_block(block_t block) {
+    int i;
+    for(i=0;i<BLOCK_SIZE;i++)
+    printf("%c ", block.data[i]);
+    printf("\n");
+}
+
+int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
     /// \brief Répare un block erroné
     /// \param[in] pos : Position du block eronné
     /// \param[in, out] disks : Tableau des disks utilisés par le RAID
@@ -45,5 +52,3 @@ int write_block(block_t block, int pos, FILE * disk_id) {
         return 0;
     } return 2;
 }
-IL ME MANQUE READ_BLOCK
-*/
