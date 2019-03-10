@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['compute_5fnblock',['compute_nblock',['../utils__block_8h.html#a5469fbf328f69f1da5a9c0852d94b35e',1,'utils_block.c']]]
+  ['init_5fdisk_5fraid5',['init_disk_raid5',['../utils__virtual__disk_8h.html#ae288e5dd77c7a589ebabb5747da3e1a6',1,'utils_virtual_disk.c']]]
 ];

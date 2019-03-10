@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['block_5frepair',['block_repair',['../utils__block_8h.html#a8729312453a0727e33f2e62c19a2193e',1,'utils_block.c']]]
+  ['compute_5fnblock',['compute_nblock',['../utils__block_8h.html#a5469fbf328f69f1da5a9c0852d94b35e',1,'utils_block.c']]],
+  ['create_5fblock',['create_block',['../utils__block_8h.html#a23ccb02e06e948fb8b116cc3f5db82bc',1,'utils_block.c']]]
 ];

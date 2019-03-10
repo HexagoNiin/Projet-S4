@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>RAID 5: Référence du fichier utils_virtual_disk.h</title>
+<title>RAID 5: Référence du fichier utils_stripe.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,71 +69,46 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Fonctions</a>  </div>
   <div class="headertitle">
-<div class="title">Référence du fichier utils_virtual_disk.h</div>  </div>
+<div class="title">Référence du fichier utils_stripe.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Utilitaires permettant de manipuler la structure <a class="el" href="structvirtual__disk__s.html">virtual_disk_s</a>.  
+<p>Utilitaires permettant de manipuler la structure <a class="el" href="structstripe__s.html">stripe_s</a>.  
 <a href="#details">Plus de détails...</a></p>
-<div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="raid__defines_8h_source.html">raid_defines.h</a>&quot;</code><br />
-<code>#include &lt;sys/types.h&gt;</code><br />
-<code>#include &lt;sys/stat.h&gt;</code><br />
-<code>#include &lt;dirent.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="utils__block_8h_source.html">utils_block.h</a>&quot;</code><br />
 </div>
-<p><a href="utils__virtual__disk_8h_source.html">Aller au code source de ce fichier.</a></p>
+<p><a href="utils__stripe_8h_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:ae288e5dd77c7a589ebabb5747da3e1a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__virtual__disk_8h.html#ae288e5dd77c7a589ebabb5747da3e1a6">init_disk_raid5</a> (const char *nom_rep, <a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a> *r5Disk)</td></tr>
-<tr class="separator:ae288e5dd77c7a589ebabb5747da3e1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f9e7d539275c2eecff6da90ecebc3e7"><td class="memItemLeft" align="right" valign="top"><a id="a8f9e7d539275c2eecff6da90ecebc3e7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>write_stripes</b> (<a class="el" href="structstripe__s.html">stripe_t</a> stripe, int pos, FILE **disks)</td></tr>
+<tr class="separator:a8f9e7d539275c2eecff6da90ecebc3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba5d79a271b3c31276e34b312ee4959"><td class="memItemLeft" align="right" valign="top"><a id="a0ba5d79a271b3c31276e34b312ee4959"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>write_chunk</b> (uchar *buffer, int nChars, int startbyte, FILE **disks)</td></tr>
+<tr class="separator:a0ba5d79a271b3c31276e34b312ee4959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09b92fb229254924cc1bdf08ab33b6ec"><td class="memItemLeft" align="right" valign="top"><a id="a09b92fb229254924cc1bdf08ab33b6ec"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>compute_parity_index</b> (int i)</td></tr>
+<tr class="separator:a09b92fb229254924cc1bdf08ab33b6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd31eb6ca3043801a348c6a90bc923c4"><td class="memItemLeft" align="right" valign="top"><a id="acd31eb6ca3043801a348c6a90bc923c4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>compute_nstripe</b> (int i)</td></tr>
+<tr class="separator:acd31eb6ca3043801a348c6a90bc923c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1b8094ecb2029e04c89e22205d2320e"><td class="memItemLeft" align="right" valign="top"><a id="ae1b8094ecb2029e04c89e22205d2320e"></a>
+<a class="el" href="structblock__s.html">block_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>compute_parity</b> (<a class="el" href="structblock__s.html">block_t</a> *blocks, int nb_disks)</td></tr>
+<tr class="separator:ae1b8094ecb2029e04c89e22205d2320e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1884c2599f1df319d59500ae7539dd1a"><td class="memItemLeft" align="right" valign="top"><a id="a1884c2599f1df319d59500ae7539dd1a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>print_stripe</b> (<a class="el" href="structstripe__s.html">stripe_t</a> stripe)</td></tr>
+<tr class="separator:a1884c2599f1df319d59500ae7539dd1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
-<div class="textblock"><p>Utilitaires permettant de manipuler la structure <a class="el" href="structvirtual__disk__s.html">virtual_disk_s</a>. </p>
+<div class="textblock"><p>Utilitaires permettant de manipuler la structure <a class="el" href="structstripe__s.html">stripe_s</a>. </p>
 <dl class="section author"><dt>Auteur</dt><dd>Ugo EB-LEVADOUX </dd>
 <dd>
 Axel GAUTHIER </dd>
 <dd>
 Cédric MARTIN </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2019 </dd></dl>
-</div><h2 class="groupheader">Documentation des fonctions</h2>
-<a id="ae288e5dd77c7a589ebabb5747da3e1a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae288e5dd77c7a589ebabb5747da3e1a6">&#9670;&nbsp;</a></span>init_disk_raid5()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int init_disk_raid5 </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>nom_rep</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a> *&#160;</td>
-          <td class="paramname"><em>r5Disk</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initialise la variable globale virtual_disk_t r5Disk à partir de nom_rep </p><dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nom_rep</td><td>: Nom du répertoire contenant les disques virtuels formatés </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Renvoie</dt><dd>Un entier indiquant si l'opération s'est bien passée </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">

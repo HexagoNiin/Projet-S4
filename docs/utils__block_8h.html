@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>REVParty: Référence du fichier utils_block.h</title>
+<title>RAID 5: Référence du fichier utils_block.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">REVParty
+   <div id="projectname">RAID 5
    </div>
   </td>
  </tr>
@@ -78,18 +78,36 @@ $(function() {
 <div class="textblock"><code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="raid__defines_8h_source.html">raid_defines.h</a>&quot;</code><br />
 </div>
 <p><a href="utils__block_8h_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Fonctions</h2></td></tr>
+<tr class="memitem:a23ccb02e06e948fb8b116cc3f5db82bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structblock__s.html">block_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__block_8h.html#a23ccb02e06e948fb8b116cc3f5db82bc">create_block</a> ()</td></tr>
+<tr class="separator:a23ccb02e06e948fb8b116cc3f5db82bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d5b4b8d4c4fe0aee7cb129bfdd2f3a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__block_8h.html#a75d5b4b8d4c4fe0aee7cb129bfdd2f3a">read_block</a> (<a class="el" href="structblock__s.html">block_t</a> *block, uint pos, FILE *disk)</td></tr>
+<tr class="separator:a75d5b4b8d4c4fe0aee7cb129bfdd2f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5469fbf328f69f1da5a9c0852d94b35e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__block_8h.html#a5469fbf328f69f1da5a9c0852d94b35e">compute_nblock</a> (int nb_octets)</td></tr>
 <tr class="separator:a5469fbf328f69f1da5a9c0852d94b35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff4d217ba8257992755e70e56f2ec874"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__block_8h.html#aff4d217ba8257992755e70e56f2ec874">write_block</a> (<a class="el" href="structblock__s.html">block_t</a> block, int pos, int disk_id)</td></tr>
-<tr class="separator:aff4d217ba8257992755e70e56f2ec874"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8729312453a0727e33f2e62c19a2193e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__block_8h.html#a8729312453a0727e33f2e62c19a2193e">block_repair</a> (int pos, int disks[], int id_disk, int nbr_disks)</td></tr>
-<tr class="separator:a8729312453a0727e33f2e62c19a2193e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a072089b050b36835d906032d5a6ebf23"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__block_8h.html#a072089b050b36835d906032d5a6ebf23">write_block</a> (<a class="el" href="structblock__s.html">block_t</a> block, int pos, FILE *disk_id)</td></tr>
+<tr class="separator:a072089b050b36835d906032d5a6ebf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea5106f48db9419ae773a69fe19df0f6"><td class="memItemLeft" align="right" valign="top"><a id="aea5106f48db9419ae773a69fe19df0f6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>print_block</b> (<a class="el" href="structblock__s.html">block_t</a> block)</td></tr>
+<tr class="separator:aea5106f48db9419ae773a69fe19df0f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4b09bfcbed9c9b09aa59f014063e3e8"><td class="memItemLeft" align="right" valign="top"><a id="ab4b09bfcbed9c9b09aa59f014063e3e8"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>block_repair</b> (int pos, FILE **disks, int id_disk, int nbr_disks)</td></tr>
+<tr class="separator:ab4b09bfcbed9c9b09aa59f014063e3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7af33d36676a6338a4ab3362c895dbea"><td class="memItemLeft" align="right" valign="top"><a id="a7af33d36676a6338a4ab3362c895dbea"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><b>itoh</b> (int x)</td></tr>
+<tr class="separator:a7af33d36676a6338a4ab3362c895dbea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b7195f29ed4be653271b8c728e7250e"><td class="memItemLeft" align="right" valign="top"><a id="a3b7195f29ed4be653271b8c728e7250e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>display_block</b> (<a class="el" href="structblock__s.html">block_t</a> block)</td></tr>
+<tr class="separator:a3b7195f29ed4be653271b8c728e7250e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b99171c45f96617dba786f85ca656bb"><td class="memItemLeft" align="right" valign="top"><a id="a8b99171c45f96617dba786f85ca656bb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>display_pos</b> (uint pos, FILE *disk)</td></tr>
+<tr class="separator:a8b99171c45f96617dba786f85ca656bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Utilitaires permettant de manipuler la structure <a class="el" href="structblock__s.html">block_s</a>. </p>
@@ -100,56 +118,6 @@ Axel GAUTHIER </dd>
 Cédric MARTIN </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2019 </dd></dl>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
-<a id="a8729312453a0727e33f2e62c19a2193e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8729312453a0727e33f2e62c19a2193e">&#9670;&nbsp;</a></span>block_repair()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int block_repair </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>pos</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>disks</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>id_disk</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nbr_disks</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Répare un block erroné </p><dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>: Position du block eronné </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">disks</td><td>: Tableau des disks utilisés par le RAID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">disk_id</td><td>: Index du disk avec le block eronné </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nbr_disks</td><td>: Nombre de disks utilisés par le RAID </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Renvoie</dt><dd>Un entier indiquant si l'opération s'est bien passée </dd></dl>
-
-</div>
-</div>
 <a id="a5469fbf328f69f1da5a9c0852d94b35e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5469fbf328f69f1da5a9c0852d94b35e">&#9670;&nbsp;</a></span>compute_nblock()</h2>
 
@@ -175,8 +143,69 @@ Cédric MARTIN </dd></dl>
 
 </div>
 </div>
-<a id="aff4d217ba8257992755e70e56f2ec874"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff4d217ba8257992755e70e56f2ec874">&#9670;&nbsp;</a></span>write_block()</h2>
+<a id="a23ccb02e06e948fb8b116cc3f5db82bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ccb02e06e948fb8b116cc3f5db82bc">&#9670;&nbsp;</a></span>create_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structblock__s.html">block_t</a> create_block </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Crée un block vide </p><dl class="section return"><dt>Renvoie</dt><dd>Un block initialisé à 0 </dd></dl>
+
+</div>
+</div>
+<a id="a75d5b4b8d4c4fe0aee7cb129bfdd2f3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75d5b4b8d4c4fe0aee7cb129bfdd2f3a">&#9670;&nbsp;</a></span>read_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int read_block </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structblock__s.html">block_t</a> *&#160;</td>
+          <td class="paramname"><em>block</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>disk</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Lit le bloc à une position sur un disque </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">*block</td><td>: Pointeur du bloc dans lequel on rend la lecture </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>: Position du bloc </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">disk</td><td>: Disque dans lequel on lit </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Un entier indiquant si l'opération s'est bien passée</dd></dl>
+
+</div>
+</div>
+<a id="a072089b050b36835d906032d5a6ebf23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a072089b050b36835d906032d5a6ebf23">&#9670;&nbsp;</a></span>write_block()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +225,7 @@ Cédric MARTIN </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">FILE *&#160;</td>
           <td class="paramname"><em>disk_id</em>&#160;</td>
         </tr>
         <tr>
