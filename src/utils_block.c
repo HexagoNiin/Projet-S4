@@ -96,14 +96,14 @@ int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
 	return(0);
 }
 
-char* itoh(int x){
+char* itoh(int x) {
 	char *h;
 	h = malloc(2 * sizeof(char));
 	sprintf(h, "%x", x);
 	return h;
 }
 
-void display_block(block_t block){
+void display_block(block_t block) {
 	int i;
 	char *byteHex;
 
@@ -120,7 +120,7 @@ void display_block(block_t block){
 	printf("\n");
 }
 
-void display_pos(uint pos, FILE* disk){ //Changé FILE en FILE*
+void display_pos(uint pos, FILE* disk) { //Changé FILE en FILE*
 	block_t block;
 
 	if (read_block(&block, pos, disk)){
