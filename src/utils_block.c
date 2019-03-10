@@ -47,7 +47,7 @@ int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
     /// \return Un entier indiquant si l'opération s'est bien passée
     int i, j;
     block_t block_repare;
-    block_t * block;
+    block_t * block; //block n'est jamais initialisé ?!
     for(i=0;i<nbr_disks;i++) {//nbr_disks à transformer en DEFINE ?
         if(i != id_disk) {
             if(!read_block(block, pos, disks[i])) {
