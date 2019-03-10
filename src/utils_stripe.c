@@ -79,6 +79,10 @@ int compute_nstripe(int i) {
     return nb_octets / NB_DISK + (nb_octets % NB_DISK != 0);
 }
 
-block_t compute_parity(block_t *blocks, int nb_disks) {
-    return blocks[0];
+block_t compute_parity(block_t *blocks, int nb_disks) { //Est-il nécessaire de faire passer nb_disk en paramètre ?
+    block_t parite = create_block();
+    for(int i = 0; i < nb_disks; i++) {
+        parite ^= blocks[i];
+    }
+    return parite;
 }
