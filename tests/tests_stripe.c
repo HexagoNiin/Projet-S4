@@ -8,10 +8,10 @@ int main(void) {
         tab[i] = (char)(64 + (i%26));
     }
 
-    file[0] = fopen("systeme_test/d0", "w");
-    file[1] = fopen("systeme_test/d1", "w");
-    file[2] = fopen("systeme_test/d2", "w");
-    file[3] = fopen("systeme_test/d3", "w");
+    file[0] = fopen("systeme/d0", "w");
+    file[1] = fopen("systeme/d1", "w");
+    file[2] = fopen("systeme/d2", "w");
+    file[3] = fopen("systeme/d3", "w");
     if(file[0] == NULL || file[1] == NULL || file[2] == NULL || file[3] == NULL) {
         fprintf(stderr, "Erreur lors de l'ouverture des fichiers\n");
         exit(1);

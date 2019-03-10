@@ -33,7 +33,7 @@ int compute_final_nblock(int nChars) {
 }
 
 void print_stripe(stripe_t stripe) {
-    int i, j; //Variable j inutilisée ?
+    int i;
     for(i=0;i<stripe.nblocks;i++)
         print_block(stripe.stripe[i]);
     printf("\n");

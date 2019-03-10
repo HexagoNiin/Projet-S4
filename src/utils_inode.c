@@ -1,6 +1,6 @@
 #include "../headers/utils_inode.h"
 
-char *indtostr(inode_t inode) {
+uchar *indtostr(inode_t inode) {
     if(sizeof(inode_t) > MAX_MSG) {
         fprintf(stderr, "L'inode ne peut pas etre convertie en string.\n");
         return NULL;
@@ -28,7 +28,7 @@ char *indtostr(inode_t inode) {
         return NULL;
     }
 
-    return str;
+    return (uchar*)str;
 }
 
 int write_inodes_table(inode_table_t inodes, FILE **files) {
@@ -39,8 +39,8 @@ int write_inodes_table(inode_table_t inodes, FILE **files) {
             fprintf(stderr, "Erreur lors du cast de l'inode en string.\n");
             return 1;
         }
-        if(nStripe = write_chunk(buffer, sizeof(inode_t), INODE_TABLE_SIZE + (i * nStripe), files) == -1) {
-            fprintf(stderr, "%Erreur lors de l'ecriture d'une inode.\n");
+        if((nStripe = write_chunk(buffer, sizeof(inode_t), INODE_TABLE_SIZE + (i * nStripe), files)) == -1) {
+            fprintf(stderr, "Erreur lors de l'ecriture d'une inode.\n");
             return 2;
         }
     }
