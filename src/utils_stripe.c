@@ -76,13 +76,21 @@ int compute_parity_index(int i) {
 }
 
 int compute_nstripe(int i) {
-    return nb_octets / NB_DISK + (nb_octets % NB_DISK != 0);
+    return i / NB_DISK + (i % NB_DISK != 0);
+}
+
+block_t xor(block_t a, block_t b) {
+    block_t c;
+    for(int i = 0; i < BLOCK_SIZE; i++) {
+        c.data[i] = a.data[i] ^ b.data[i];
+    }
+    return c;
 }
 
 block_t compute_parity(block_t *blocks, int nb_disks) { //Est-il nécessaire de faire passer nb_disk en paramètre ?
     block_t parite = create_block();
     for(int i = 0; i < nb_disks; i++) {
-        parite ^= blocks[i];
+        parite = xor(parite, blocks[i]);
     }
     return parite;
 }
