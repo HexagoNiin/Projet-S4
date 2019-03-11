@@ -88,9 +88,6 @@ int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
 		if (c == EOF)
 			return(1);//inaccessible
 
-		if (&c == NULL) //NULL c'est pour un pointeur, or là tu travailles avec un char, pour le moment j'ai changé c en &c //Alors en fait, selon -Wall &c ne pourra **jamais** valloir NULL, donc je sais pas ce que vous faites ici
-			return(2);//repare aled destruction de donnée
-
 		block->data[i] = c;
 	}
 	return(0);
