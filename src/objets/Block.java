@@ -9,16 +9,19 @@ public class Block {
 
 	public Block() {
 		data = new byte[BLOCK_SIZE];
+		for(int i = 0; i < BLOCK_SIZE; i++) {
+			data[i] = (byte) '\0';
+		}
 	}
 	
-	public void setData(byte [] data) {
-		this.data = data.clone();
+	public void setByte(byte data, int i) {
+		this.data[i] = data;
 	}
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cédric MARTIN
-	 * @param pos Position où écrire le block
-	 * @param disk_id Disk sur lequel écrire le block	
-	 * @return Un entier indiquant si l'opÃ©ration s'est bien passÃ©e (0 : OK, 1 : Erreur cast, 2 ; Erreur écriture) 
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cï¿½dric MARTIN
+	 * @param pos Position oï¿½ ï¿½crire le block
+	 * @param disk_id Disk sur lequel ï¿½crire le block	
+	 * @return Un entier indiquant si l'opÃ©ration s'est bien passÃ©e (0 : OK, 1 : Erreur cast, 2 ; Erreur ï¿½criture) 
 	 */
 	
 	public int write_block(int pos, File disk_id)  {
@@ -42,12 +45,12 @@ public class Block {
 	}
 	
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cédric MARTIN
-	 * @param pos Position du block eronné
-	 * @param disks Tableau des disks utilisés par le RAID
-	 * @param id_disk Index du disk avec le block eronné
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cï¿½dric MARTIN
+	 * @param pos Position du block eronnï¿½
+	 * @param disks Tableau des disks utilisï¿½s par le RAID
+	 * @param id_disk Index du disk avec le block eronnï¿½
 	 * @param nbr_disks
-	 * @return Un entier indiquant si l'opération s'est bien passée (0 : OK, 1 : Erreur lecture, 2 : Erreur écriture)
+	 * @return Un entier indiquant si l'opï¿½ration s'est bien passï¿½e (0 : OK, 1 : Erreur lecture, 2 : Erreur ï¿½criture)
 	 */
 	
 	public int block_repair(int pos, File [] disks, int id_disk, int nbr_disks) {
