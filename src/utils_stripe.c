@@ -1,6 +1,11 @@
 #include "../headers/utils_stripe.h"
 
 int write_stripes(stripe_t stripe, int pos, FILE ** disks) {
+    /// \brief Ecrit une bande sur le système RAID à une position donnée
+    /// \param[in] stripe : Bande à écrire sur le disk
+    /// \param[in] pos : Position où écrire le block
+    /// \param[in] disk_id : Système sur lequel écrire la bande
+    /// \return 0 s'il n'y a pas eu d'erreur, 1 dans le cas contraire
     int i;
     for(i=0;i<stripe.nblocks;i++) {
             if(write_block(stripe.stripe[i], pos, disks[i])) {
@@ -12,21 +17,32 @@ int write_stripes(stripe_t stripe, int pos, FILE ** disks) {
 }
 
 block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent, int nb_disks) {
-        int i, j;
-        block_t *blocks = malloc(sizeof(block_t) * (nb_disks-1));
-        for(i=0;i<nb_disks-1;i++) {
-            for(j=0;j<BLOCK_SIZE;j++) {
-                if(*posCurrent == nChars) {
-                    blocks[i].data[j] = '\0';
-                } else {
-                    blocks[i].data[j] = buffer[(*posCurrent)++];
-                }
+    /// \brief Transforme une partie d'une chaine de caractères en nb_disks - 1 blocks.
+    /// \brief Incrémente posCurrent de façon automatique.
+    /// \param[in] buffer : Chaine de caractères
+    /// \param[in] nChars : Nombre de caractères de la chaine
+    /// \param[in, out] posCurrent : Curseur dans la chaine de caractères
+    /// \param[in, out] nb_disks : Système RAID
+    /// \return Un pointeur de blocks
+    int i, j;
+    block_t *blocks = malloc(sizeof(block_t) * (nb_disks-1));
+    for(i=0;i<nb_disks-1;i++) {
+        for(j=0;j<BLOCK_SIZE;j++) {
+            if(*posCurrent == nChars) {
+                blocks[i].data[j] = '\0';
+            } else {
+                blocks[i].data[j] = buffer[(*posCurrent)++];
             }
         }
-        return blocks;
+    }
+    return blocks;
 }
 
 int compute_final_nblock(int nChars) {
+    /// \brief Calcule le nombre de blocks à écrire sur le disque.
+    /// \brief Prend en compte les blocks de parités.
+    /// \param[in] nChars : Nombre de caractères de la chaine à écrire
+    /// \return Le nombre de blocks
     int nChunks = compute_nblock(nChars);
     int nStripes = 3;//compute_nstripe(nChunks);
     return nChunks + nStripes + ((nChunks + nStripes) / NB_DISK);
@@ -40,6 +56,12 @@ void print_stripe(stripe_t stripe) {
 }
 
 int write_chunk(uchar * buffer, int nChars, int startbyte, FILE ** disks) {
+    /// \brief Ecrit une chaine de caractères sur le système RAID.
+    /// \param[in] buffer : Chaine de caractères à écrire
+    /// \param[in] nChars : Nombre de caractères de la Chaine
+    /// \param[in] startbyte : Position où écrire la chaine
+    /// \param[in, out] disks : Système RAID
+    /// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
     int i, j, pos = 0;
     int nChunks = compute_final_nblock(nChars);
     int nStripes = compute_nstripe(nChunks);
