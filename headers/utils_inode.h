@@ -12,6 +12,7 @@
 
 int write_inodes_table(inode_table_t inode, FILE **files);
 int get_unused_inode(inode_table_t inodes);
+int read_inodes_table(inode_table_t able, FILE **raid);
 uchar *indtostr(inode_t inode);
 
 #endif

@@ -66,3 +66,7 @@ int get_unused_inode(inode_table_t inodes) {
     }
     return -1;
 }
+
+int read_inodes_table(table, raid) {
+    return 0;
+}
