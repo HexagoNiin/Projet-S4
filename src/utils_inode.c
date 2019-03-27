@@ -1,5 +1,35 @@
 #include "../headers/utils_inode.h"
 
+int delete_inode(inode_table_t *inodeTable, int pos){
+	/**
+    * \brief Supprime un noeud sur la table des index.
+    * \param[in] inodeTable : Table des index du disque virtuel qui sera modifiée et retournée.
+                 pos : position du noeud à supprimer.
+    * \param[out] 0 = Ack, !0 = Nack;
+    */
+    
+    /* delete du filename ... utile? */
+	for (int i = 1; i < FILENAME_MAX_SIZE; i++){
+		inodeTable[pos]->filename[i] = 0;
+	}
+	inodeTable[pos]->filename[0] = '\0';
+	
+	/* delete size */
+	inodeTable[pos]->size = 0;
+	
+	/* delete nblock */
+	inodeTable[pos]->nblock = 0;
+	
+	/* delete first_byte */
+	inodeTable[pos]->first_byte = 0;
+	
+	for (int i = pos + 1; i < INODE_TABLE_SIZE; i++ {
+		inodeTable[i-1] = inodeTable[i];
+	}
+         
+    return 0;
+}
+
 uchar *indtostr(inode_t inode) {
     /// \brief Transforme une inode en chaine de caractères.
     /// \param[in] inode : L'inode a transformer
