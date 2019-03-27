@@ -1,5 +1,18 @@
 #include "../headers/utils_inode.h"
 
+
+int compute_parity_index(int i){
+    /** \brief Indique le disque sur lequel se trouve le bloc de parité
+      * \param[in] i : Position sur le disque virtuel
+      * \param[out] indPar : Numéro du disque où se situra le bloc de parité
+    */
+    
+    int indPar;
+	indPar = (i + NB_DISK - 1) / NB_DISK;
+	return indPar;
+}
+
+
 uchar *indtostr(inode_t inode) {
     /// \brief Transforme une inode en chaine de caractères.
     /// \param[in] inode : L'inode a transformer
