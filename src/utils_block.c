@@ -31,11 +31,13 @@ int write_block(block_t block, int pos, FILE * disk_id) {
     return EXIT_SUCCESS; //0
 }
 
-void print_block(block_t block) {
+int print_block(block_t block) {
     int i;
     for(i=0;i<BLOCK_SIZE;i++)
     printf("%c ", block.data[i]);
     printf("\n");
+    
+    return 0;
 }
 
 int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
@@ -65,19 +67,18 @@ int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
 
 int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
 	/**
-	*	\fn int block_read (block_t *block, uint pos, FILE disk)
-	*	\brief Lit le bloc à une position sur un disque
-    *	\param[in] *block : Pointeur du bloc dans lequel on rend la lecture
-    *	\param[in] pos : Position du bloc
-    *	\param[in] disk : Disque dans lequel on lit
-    *	\return Un entier indiquant si l'opération s'est bien passée
+	* \brief Lit le bloc à une position sur un disque.
+   	* \param[in] *block : Pointeur du bloc dans lequel on rend la lecture.
+		     pos : Position du bloc.
+   		     disk : Disque dans lequel on lit.
+    	* \param[out] Un entier indiquant si l'opération s'est bien passée.
 	*/
 	uchar c;
 	int i;
 
 	for (i = 0; i < (pos * BLOCK_SIZE) - 1; i++){ //offset
 		c = fgetc(disk);
-
+	
 		if (c == EOF)
 			return(1);//inaccessible
 	}
@@ -94,6 +95,13 @@ int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
 }
 
 char* itoh(int x) {
+	/**
+	* \brief Converti un entier en hexadécimal.
+	* \param[in] x : entier à convertir.
+	* \param[out] h : hexadécimal converti.
+	*/
+	
+	
 	char *h;
 	h = malloc(2 * sizeof(char));
 	sprintf(h, "%x", x);
@@ -101,6 +109,12 @@ char* itoh(int x) {
 }
 
 void display_block(block_t block) {
+	/** 
+	* \brief Affiche en hexadecimal le contenu du bloc sur la console.
+	* \param[in]  block : bloc dont le contenu sera affiché.
+	* \param[out] 0 = Ack, !0 = Nack.
+	*/
+	
 	int i;
 	char *byteHex;
 
@@ -117,13 +131,22 @@ void display_block(block_t block) {
 	printf("\n");
 }
 
-void display_pos(uint pos, FILE* disk) { //Changé FILE en FILE*
+int display_pos(uint pos, FILE* disk) {
+	/** 
+	* \brief Affiche en hexadecimal le contenu du bloc sur une position et sur un disque donné sur la console.
+	* \param[in]  pos : position du bloc sur le disque.
+		      disk : disque sur lequel on souhaite lire le bloc.
+	* \param[out] 0 = Ack, !0 = Nack.
+	*/
+	
 	block_t block;
 
 	if (read_block(&block, pos, disk)){
 		printf("erreur de lecture [read_block]\n");
-		return;
+		return 1;
 	}
 
 	display_block(block);
+	
+	return 0;
 }
