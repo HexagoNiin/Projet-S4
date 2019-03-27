@@ -9,6 +9,8 @@
 
 #include "utils_block.h"
 
+int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk);
+int read_strip(stripe_t *stripe, uint pos, FILE ** disk);
 int write_stripes(stripe_t stripe, int pos, FILE ** disks);
 int write_chunk(uchar * buffer, int nChars, int startbyte, FILE ** disks);
 int compute_parity_index(int i);
