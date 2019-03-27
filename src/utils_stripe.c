@@ -1,5 +1,64 @@
 #include "../headers/utils_stripe.h"
 
+
+int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk){
+	/** \brief Lecture d'un ensemble de bande (ex : lecture d'un fichier).
+	  * \param[in] buffer : Chaine d'octet dans laquelle la lecture sera retourné.
+	  	       nStripe : Nombre de bande qui représente la taille du fichier.
+		       startbyte : Position du début de la lecture dans le disque virtuel.
+		       disk : ensemble des disques representants le disque virtuel.
+	  * \
+	*/
+	
+	stripe_t stripe;
+	
+	
+	for(int i = 0; i < nStripe; i++){
+		read_strip(&stripe, startbyte + i, disk);
+		for (int j = 0; j < stripe.nblock; j++){
+			buffer[i*stripe.nblock + j] = stripe[j];
+		}
+	}
+	
+	return 0;
+}
+
+
+int read_strip(stripe_t *stripe, uint pos, FILE ** disk){
+	/** \brief Lecture d'une bande de bloc à une position donné sur le disque virtuel.
+	  * \param[in] stripe : bande dans laquelle la bande lu sur le disque sera retourné.
+	  	       pos : position de la bande sur le disque.
+		       disk : ensemble des disques representants le disque virtuel.
+	  * \param[out] boolean : 0 = Ack, !0 = Nack. 
+	*/
+	
+	stripe->nblock = NB_DISK - 1;
+	stripe->stripe = malloc((NB_DISK - 1)* sizeof(block_t));
+	
+
+	for(int i = 0; i < NB_DISK - 1; i++){
+		if (i != compute_parity_index(pos)){
+			if (read_block((*stripe)->stripe[i], pos , disk[i])){
+			printf("erreur de lecture [read_block]\n");
+			return 1;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+
+int compute_parity_index(int i){
+    /** \brief Indique le disque sur lequel se trouve le bloc de parité.
+      * \param[in] i : Position sur le disque virtuel.
+      * \param[out] indPar : Numéro du disque où se situra le bloc de parité.
+    */
+    
+    int indPar;
+	indPar = (i + NB_DISK - 1) / NB_DISK;
+	return indPar;
+}
 int write_stripes(stripe_t stripe, int pos, FILE ** disks) {
     /// \brief Ecrit une bande sur le système RAID à une position donnée
     /// \param[in] stripe : Bande à écrire sur le disk
