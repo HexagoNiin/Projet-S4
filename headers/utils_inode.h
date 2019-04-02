@@ -11,9 +11,11 @@
 #include "string.h"
 
 int delete_inode(inode_table_t *inodeTable, int pos);
-int write_inodes_table(inode_table_t inode, FILE **files);
+int write_inodes_table(inode_table_t inode, int startbyte, FILE **files);
 int get_unused_inode(inode_table_t inodes);
 int read_inodes_table(inode_table_t able, FILE **raid);
 uchar *indtostr(inode_t inode);
+uchar *sbtostr(super_block_t super_block);
+int write_super_block(super_block_t super_block, FILE **RAID, int *startbyte);
 
 #endif

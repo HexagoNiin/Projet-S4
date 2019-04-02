@@ -22,6 +22,6 @@ int block_repair(int pos, FILE **disks, int id_disk, int nbr_disks);
 int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk);
 char* itoh(int x); //Pas nécessairement dans le header
 void display_block(block_t block);
-void display_pos(uint pos, FILE* disk);
+int display_pos(uint pos, FILE* disk);
 
 #endif
