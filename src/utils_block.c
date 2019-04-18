@@ -1,5 +1,7 @@
 #include "../headers/utils_block.h"
 
+//ced sale pd egocentrique...
+
 block_t create_block() { //Utilisé dans utils_stripe.c
 	/// \brief Crée un block vide
     /// \return Un block initialisé à 0
