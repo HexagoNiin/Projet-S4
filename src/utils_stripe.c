@@ -93,7 +93,7 @@ int compute_final_nblock(int nChars) {
     /// \param[in] nChars : Nombre de caractères de la chaine à écrire
     /// \return Le nombre de blocks
     int nChunks = compute_nblock(nChars);
-    int nStripes = compute_nstripe(nChunks); //3
+    int nStripes = compute_nstripe(nChunks); //3rr()
     return nChunks + nStripes + ((nChunks + nStripes) / r5Disk.ndisk);
 }
 

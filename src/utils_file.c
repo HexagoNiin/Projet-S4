@@ -1,6 +1,9 @@
 #include "../headers/utils_file.h"
 
 void write_file(char *filename, file_t file) {
+    /// \brief Ecrit un fichier sur le système
+    /// \param[in] filename : nom du fichier à écrire
+    /// \param[in] file : fichier à écrire
     int i, u;
     for(i=0;i<INODE_TABLE_SIZE && (u = strcmp(filename, r5Disk.inodes[i].filename));i++);
     if(!u) {

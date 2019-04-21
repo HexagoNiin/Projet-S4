@@ -1,33 +1,18 @@
 #include "../headers/utils_inode.h"
 
-int delete_inode(inode_table_t *inodeTable, int pos){
+void delete_inode(int pos){
 	/**
     * \brief Supprime un noeud sur la table des index.
-    * \param[in] inodeTable : Table des index du disque virtuel qui sera modifiée et retournée.
-                 pos : position du noeud à supprimer.
-    * \param[out] 0 = Ack, !0 = Nack;
+    * \param[in] pos : position du noeud à supprimer.
     */
 
-    /* delete du filename ... utile? */
-	for (int i = 1; i < FILENAME_MAX_SIZE; i++){
-		inodeTable[pos]->filename[i] = 0;
-	}
-	inodeTable[pos]->filename[0] = '\0';
+	/* supprime l'inode */
+	r5Disk.inodes[pos].first_byte = 0;
 
-	/* delete size */
-	inodeTable[pos]->size = 0;
-
-	/* delete nblock */
-	inodeTable[pos]->nblock = 0;
-
-	/* delete first_byte */
-	inodeTable[pos]->first_byte = 0;
-
-	for (int i = pos + 1; i < INODE_TABLE_SIZE; i++) {
-		inodeTable[i-1] = inodeTable[i];
-	}
-
-    return 0;
+	/* regroupe les inodes */
+	int i;
+	for(i=pos; i < INODE_TABLE_SIZE-1; i++)
+		r5Disk.inodes[i] = r5Disk.inodes[i+1];
 }
 
 uchar *indtostr(inode_t inode) {
@@ -109,7 +94,7 @@ uchar *sbtostr() {
 
 	/* recupere taille super block */
 	int len = 0;
-	len = snprintf(NULL, len, "%s%u%u%u", r5Disk.super_block.raid_type, r5Disk.super_block.nb_blocks_used, r5Disk.super_block.first_free_byte);
+	len = snprintf(NULL, len, "%u%u%u", r5Disk.super_block.raid_type, r5Disk.super_block.nb_blocks_used, r5Disk.super_block.first_free_byte);
 
 	if(len > MAX_MSG) {
 		fprintf(stderr, "Le super block ne peut pas etre convertie en string.\n");
@@ -119,17 +104,17 @@ uchar *sbtostr() {
 	char *str = malloc(sizeof(char) * len);
 	int strPos = 0;
 	/* copie raid_type */
-	if((strPos += sprintf(&str[strPos], "%d", r5Disk.super_block.raid_type)) < 0) {
+	if((strPos += sprintf(&str[strPos], "%u", r5Disk.super_block.raid_type)) < 0) {
 		fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element raid_type.\n");
 		return NULL;
 	}
 	/* copie nb_blocks_used */
-	if((strPos += sprintf(&str[strPos], "%d", r5Disk.super_block.nb_blocks_used)) < 0) {
+	if((strPos += sprintf(&str[strPos], "%u", r5Disk.super_block.nb_blocks_used)) < 0) {
 		fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element nb_block_used.\n");
 		return NULL;
 	}
 	/* copie first_free_byte */
-	if((strPos += sprintf(&str[strPos], "%d", r5Disk.super_block.first_free_byte)) < 0) {
+	if((strPos += sprintf(&str[strPos], "%u", r5Disk.super_block.first_free_byte)) < 0) {
 		fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element first_free_byte.\n");
 		return NULL;
 	}
@@ -153,9 +138,7 @@ int write_super_block(int *startbyte) {
     return 0;
 }
 
-int read_inodes_table(int table, int raid) {
-	(void)table;
-	(void)raid;
+int read_inodes_table() {
     return 0;
 }
 
