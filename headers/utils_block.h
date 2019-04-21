@@ -27,6 +27,5 @@ int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk);
 char* itoh(int x); //Pas nécessairement dans le header
 void display_block(block_t block);
 int display_pos(uint pos, FILE* disk);
-void init_disk_raid5(char *repertoryName);
 
 #endif

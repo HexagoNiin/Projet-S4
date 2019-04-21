@@ -1,6 +1,52 @@
 #include "../headers/utils_virtual_disk.h"
 
-int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk) {
+void init_disk_raid5(const char *repertoryName) {
+	/// \brief Initialise la variable globale r5Disk
+    /// \param[in] repertoryName : le repertoire ou se situe les disks
+
+	/* ouverture repertoire "repertoryName" */
+    DIR *rep;
+	if(!(rep = opendir(repertoryName))) {
+		fprintf(stderr, "Erreur lors de l'ouverture du repertoire.\n");
+		exit(1);
+	}
+
+	/* compte nombre de disks */
+	int nbFiles = 0;
+	struct dirent *disk;
+    while((disk = readdir(rep))) {
+		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, ".."))
+			nbFiles++;
+    }
+
+	/* ouverture des disks */
+	rewinddir(rep);
+	FILE **storage = malloc(sizeof(FILE *) * nbFiles);
+	int i = 0;
+	while((disk = readdir(rep))) {
+		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
+			/* ouverture des disks du repertoire */
+			if(!(storage[i] = fopen(disk->d_name, "wr"))) {
+				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
+				exit(2);
+			}
+			i++;
+		}
+    }
+    closedir(rep);
+
+	/* initialisation r5Disk */
+	r5Disk.number_of_files = 0;
+	r5Disk.super_block.raid_type = CINQ;
+	r5Disk.super_block.nb_blocks_used = 0;
+	r5Disk.super_block.first_free_byte = 0;
+	r5Disk.ndisk = nbFiles;
+	r5Disk.raidmode = CINQ;
+	r5Disk.storage = storage;
+
+}
+
+/*int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk) {
     /// \brief Initialise la variable globale virtual_disk_t r5Disk à partir de nom_rep
     /// \param[in] nom_rep : Nom du répertoire contenant les disques virtuels formatés
     /// \return Un entier indiquant si l'opération s'est bien passée
@@ -32,4 +78,4 @@ int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk) {
         r5Disk->storage[r5Disk->ndisk-1] = fopen(disque->d_name, "r");
     }
     return 0;
-}
+}*/
