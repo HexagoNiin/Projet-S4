@@ -38,19 +38,17 @@ void print_block(block_t block) {
     printf("\n");
 }
 
-int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
+int block_repair(int pos, int id_disk) {
     /// \brief Répare un block erroné
     /// \param[in] pos : Position du block eronné
-    /// \param[in, out] disks : Tableau des disks utilisés par le RAID
     /// \param[in] disk_id : Index du disk avec le block eronné
-    /// \param[in] nbr_disks : Nombre de disks utilisés par le RAID
     /// \return Un entier indiquant si l'opération s'est bien passée
     int i, j;
 	block_t block;
     block_t block_repare;
-    for(i=0;i<nbr_disks;i++) {
+    for(i=0;i<r5Disk.ndisk;i++) {
         if(i != id_disk) {
-            if(!read_block(&block, pos, disks[i])) {
+            if(!read_block(&block, pos, r5Disk.storage[i])) {
                 fprintf(stderr, "Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.\n");
                 return 1;
             }
@@ -58,7 +56,7 @@ int block_repair(int pos, FILE  *disks[], int id_disk, int nbr_disks) {
                 block_repare.data[j] ^= block.data[j];
         }
     }
-    if(!write_block(block_repare, pos, disks[id_disk])) {
+    if(!write_block(block_repare, pos, r5Disk.storage[id_disk])) {
         return 0;
     } return 2;
 }
@@ -147,4 +145,50 @@ int display_pos(uint pos, FILE* disk) {
 	display_block(block);
 
 	return 0;
+}
+
+void init_disk_raid5(char *repertoryName) {
+	/// \brief Initialise la variable globale r5Disk
+    /// \param[in] repertoryName : le repertoire ou se situe les disks
+
+	/* ouverture repertoire "repertoryName" */
+    DIR *rep;
+	if(!(rep = opendir(repertoryName))) {
+		fprintf(stderr, "Erreur lors de l'ouverture du repertoire.\n");
+		exit(1);
+	}
+
+	/* compte nombre de disks */
+	int nbFiles = 0;
+	struct dirent *disk;
+    while((disk = readdir(rep))) {
+		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, ".."))
+			nbFiles++;
+    }
+
+	/* ouverture des disks */
+	rewinddir(rep);
+	FILE **storage = malloc(sizeof(FILE *) * nbFiles);
+	int i = 0;
+	while((disk = readdir(rep))) {
+		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
+			/* ouverture des disks du repertoire */
+			if(!(storage[i] = fopen(disk->d_name, "wr"))) {
+				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
+				exit(2);
+			}
+			i++;
+		}
+    }
+    closedir(rep);
+
+	/* initialisation r5Disk */
+	r5Disk.number_of_files = 0;
+	r5Disk.super_block.raid_type = CINQ;
+	r5Disk.super_block.nb_blocks_used = 0;
+	r5Disk.super_block.first_free_byte = 0;
+	r5Disk.ndisk = nbFiles;
+	r5Disk.raidmode = CINQ;
+	r5Disk.storage = storage;
+
 }

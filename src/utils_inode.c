@@ -31,53 +31,58 @@ int delete_inode(inode_table_t *inodeTable, int pos){
 }
 
 uchar *indtostr(inode_t inode) {
-    /// \brief Transforme une inode en chaine de caractères.
+    /// \brief Transforme une inode en chaine de caractères non signés.
     /// \param[in] inode : L'inode a transformer
-    /// \return La chaine de caractères ou NULL s'il y a eu une erreur
-    if(sizeof(inode_t) > MAX_MSG) {
-        fprintf(stderr, "L'inode ne peut pas etre convertie en string.\n");
-        return NULL;
-    }
+	/// \return La chaine de caractères ou NULL s'il y a eu une erreur
 
-    char *str = malloc(sizeof(char) * sizeof(inode_t));
-    int i, strPos = 0;
+	/* recuperer taille inode */
+	int len = 0;
+	len = snprintf(NULL, len, "%s%u%u%u", inode.filename, inode.size, inode.first_byte, inode.nblock);
+
+	if(len > MAX_MSG) {
+		fprintf(stderr, "L'inode ne peut pas etre convertie en string.\n");
+		return NULL;
+	}
+
+	/* copie filename */
+	char *str = malloc(sizeof(char) * len);
+	int i, strPos = 0;
     for(i=0;i<FILENAME_MAX_SIZE;i++) {
         str[strPos] = inode.filename[i];
         strPos++;
     }
-
-    if((strPos += sprintf(&str[strPos], "%d", inode.size)) < 0) {
-        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture dans la string.\n");
+	/* copie size */
+    if((strPos += sprintf(&str[strPos], "%u", inode.size)) < 0) {
+        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element size.\n");
         return NULL;
     }
-
-    if((strPos += sprintf(&str[strPos], "%d", inode.nblock)) < 0) {
-        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture dans la string.\n");
+	/* copie first_byte */
+    if((strPos += sprintf(&str[strPos], "%u", inode.nblock)) < 0) {
+        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element nblock.\n");
         return NULL;
     }
-
-    if((strPos += sprintf(&str[strPos], "%d", inode.first_byte)) < 0) {
-        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture dans la string.\n");
+	/* copie nblock */
+    if((strPos += sprintf(&str[strPos], "%u", inode.first_byte)) < 0) {
+        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element first_byte.\n");
         return NULL;
     }
 
     return (uchar*)str;
 }
 
-int write_inodes_table(inode_table_t inodes, int startbyte, FILE **files) {
+int write_inodes_table(int startbyte) {
     /// \brief Ecrit la table d'inode sur le système RAID.
-    /// \param[in] inodes : La table d'inodes
-    /// \param[in, out] files : Le système RAID
+    /// \param[in] startbyte : position
     /// \return 0 si tout s'est bien passé, 1 s'il y a eu une erreur lors du cast de la table, 2 s'il y a eu erreur lors de l'écriture
     int i, nStripe = 0;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
-        uchar *buffer = indtostr(inodes[i]);
+        uchar *buffer = indtostr(r5Disk.inodes[i]);
         if(buffer == NULL) {
             fprintf(stderr, "Erreur lors du cast de l'inode en string.\n");
             return 1;
         }
         /* startbyte ici est provisoire */
-        if((nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe), files)) == -1) {
+        if((nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe))) == -1) {
             fprintf(stderr, "Erreur lors de l'ecriture d'une inode.\n");
             return 2;
         }
@@ -85,13 +90,12 @@ int write_inodes_table(inode_table_t inodes, int startbyte, FILE **files) {
     return EXIT_SUCCESS;
 }
 
-int get_unused_inode(inode_table_t inodes) {
+int get_unused_inode() {
     /// \brief Retourne l'indice du premier inode disponible dans la table.
-    /// \param[in] inodes : Table d'inodes
     /// \return L'indice d'un inode ou -1 si la table est pleine
     int i;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
-        if(inodes[i].first_byte == 0) {
+        if(r5Disk.inodes[i].first_byte == 0) {
             return i;
         }
     }
@@ -99,37 +103,49 @@ int get_unused_inode(inode_table_t inodes) {
     return -1;
 }
 
-uchar * sbtostr(super_block_t super_block) {
-    char *str = malloc(sizeof(char) * sizeof(super_block_t));
-    int strPos = 0;
+uchar *sbtostr() {
+	/// \brief Transforme la structure super_block_t en chaine de caractères
+	/// \return la chaine de caractères
 
-    if((strPos += sprintf(&str[strPos], "%d", super_block.raid_type)) < 0) {
-        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture dans la string.\n");
-        return NULL;
-    }
+	/* recupere taille super block */
+	int len = 0;
+	len = snprintf(NULL, len, "%s%u%u%u", r5Disk.super_block.raid_type, r5Disk.super_block.nb_blocks_used, r5Disk.super_block.first_free_byte);
 
-    if((strPos += sprintf(&str[strPos], "%d", super_block.nb_blocks_used)) < 0) {
-        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture dans la string.\n");
-        return NULL;
-    }
+	if(len > MAX_MSG) {
+		fprintf(stderr, "Le super block ne peut pas etre convertie en string.\n");
+		return NULL;
+	}
 
-    if((strPos += sprintf(&str[strPos], "%d", super_block.first_free_byte)) < 0) {
-        fprintf(stderr, "Il y a eu un probleme lors de l'ecriture dans la string.\n");
-        return NULL;
-    }
+	char *str = malloc(sizeof(char) * len);
+	int strPos = 0;
+	/* copie raid_type */
+	if((strPos += sprintf(&str[strPos], "%d", r5Disk.super_block.raid_type)) < 0) {
+		fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element raid_type.\n");
+		return NULL;
+	}
+	/* copie nb_blocks_used */
+	if((strPos += sprintf(&str[strPos], "%d", r5Disk.super_block.nb_blocks_used)) < 0) {
+		fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element nb_block_used.\n");
+		return NULL;
+	}
+	/* copie first_free_byte */
+	if((strPos += sprintf(&str[strPos], "%d", r5Disk.super_block.first_free_byte)) < 0) {
+		fprintf(stderr, "Il y a eu un probleme lors de l'ecriture de l'element first_free_byte.\n");
+		return NULL;
+	}
 
     return (uchar*)str;
 }
 
-int write_super_block(super_block_t super_block, FILE **RAID, int *startbyte) {
-    uchar *buffer = sbtostr(super_block);
+int write_super_block(int *startbyte) {
+    uchar *buffer = sbtostr(r5Disk.super_block);
 
     if(buffer == NULL) {
         fprintf(stderr, "Erreur lors du cast du super block en string.\n");
         return 1;
     }
 
-    if((*startbyte = write_chunk(buffer, sizeof(super_block_t), 0, RAID)) == -1) {
+    if((*startbyte = write_chunk(buffer, sizeof(super_block_t), 0)) == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du super block.\n");
         return 2;
     }
@@ -137,6 +153,27 @@ int write_super_block(super_block_t super_block, FILE **RAID, int *startbyte) {
     return 0;
 }
 
-int read_inodes_table(table, raid) {
+int read_inodes_table(int table, int raid) {
+	(void)table;
+	(void)raid;
     return 0;
+}
+
+int init_inode(char *filename, uint size, uint position) {
+	(void)filename;
+	(void)size;
+	(void)position;
+	return 0;
+}
+
+int update_inodes_table(inode_t inode, int new_byte) {
+	if(r5Disk.number_of_files < INODE_TABLE_SIZE) {
+		r5Disk.inodes[r5Disk.number_of_files] = inode;
+		r5Disk.number_of_files++;
+		r5Disk.super_block.first_free_byte += (new_byte * r5Disk.ndisk * BLOCK_SIZE); //a remplacer par fonction qui met a jour le champ first_free_byte de la couche 3
+		return 0;
+	} else {
+		fprintf(stderr, "Erreur, la table d'inodes est pleine, le fichier n'a pas ete ajoute.\n");
+		return 1;
+	}
 }
