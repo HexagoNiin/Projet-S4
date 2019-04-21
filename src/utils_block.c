@@ -72,12 +72,13 @@ int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
 	uchar c;
 	int i;
 
-	for (i = 0; i < (pos * BLOCK_SIZE) - 1; i++){ //offset
+	/*for (i = 0; i < (pos * BLOCK_SIZE); i++){ //offset
 		c = fgetc(disk);
 
 		if (c == EOF)
 			return(1);//inaccessible
-	}
+	}*/
+	fseek(disk, pos, SEEK_SET);
 
 	for (i = 0; i < BLOCK_SIZE; i ++){
 		c = fgetc(disk);
