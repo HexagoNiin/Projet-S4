@@ -9,14 +9,13 @@
 
 #include "utils_block.h"
 
-int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk);
-int read_strip(stripe_t *stripe, uint pos, FILE ** disk);
-int write_stripes(stripe_t stripe, int pos);
+int read_chunk(uchar *buffer, int nStripe, int startbyte);
+int read_stripe(stripe_t *stripe, uint pos);
+int write_stripe(stripe_t stripe, int pos);
 int write_chunk(uchar * buffer, int nChars, int startbyte);
-block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent);
 int compute_parity_index(int i);
 int compute_nstripe(int i);
-block_t compute_parity(block_t *blocks, int nb_block);
+block_t compute_parity(block_t *blocks, int nb_disks);
 void print_stripe(stripe_t stripe);
 
 #endif

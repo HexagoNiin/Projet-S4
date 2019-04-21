@@ -1,7 +1,7 @@
 #include "../headers/utils_stripe.h"
 
 
-int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk){
+/*int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk){
 	/**
 	* \brief Lecture d'un ensemble de bande (ex : lecture d'un fichier).
 	* \param[in] buffer : Chaine d'octet dans laquelle la lecture sera retourné.
@@ -10,22 +10,32 @@ int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk){
 		       disk : ensemble des disques representants le disque virtuel.
 	* \ param[out] 0 = Ack, !0 = Nack.
 	*/
-
-	stripe_t stripe;
-
+	/*stripe_t stripe;
 
 	for(int i = 0; i < nStripe; i++){
-		read_strip(&stripe, startbyte + i, disk);
+		read_stripe(&stripe, startbyte + i, disk);
 		for (int j = 0; j < stripe.nblocks; j++){
 			buffer[i*stripe.nblocks + j] = stripe[j];
 		}
 	}
-
 	return 0;
+}*/
+
+int read_chunk(uchar * buffer, int nChars, int startbyte) {
+	int nbStripes = compute_nstripe(compute_nblock(nChars));
+	for(int i = 0; i < nbStripes; i++) {
+		stripe_t stripe;
+		read_stripe(&stripe, i + startbyte);
+		for(int j = 0; j < stripe.nblocks; j++) {
+			block_t block = stripe.stripe[j];
+			for(int k = 0; k < BLOCK_SIZE; k++) {
+				buffer[i*nbStripes + j*stripe.nblocks + k] = block.data[k];
+			}
+		}
+	}
 }
 
-
-int read_strip(stripe_t *stripe, uint pos, FILE ** disk){
+int read_stripe(stripe_t *stripe, uint pos){
 	/**
 	* \brief Lecture d'une bande de bloc à une position donné sur le disque virtuel.
 	* \param[in] stripe : bande dans laquelle la bande lu sur le disque sera retourné.
@@ -40,7 +50,7 @@ int read_strip(stripe_t *stripe, uint pos, FILE ** disk){
 
 	for(int i = 0; i < r5Disk.ndisk - 1; i++){
 		if (i != compute_parity_index(pos)){
-			if (read_block((*stripe)->stripe[i], pos , disk[i])){
+			if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])){
 			printf("erreur de lecture [read_block]\n");
 			return 1;
 			}
@@ -51,7 +61,7 @@ int read_strip(stripe_t *stripe, uint pos, FILE ** disk){
 }
 
 
-int write_stripes(stripe_t stripe, int pos) {
+int write_stripe(stripe_t stripe, int pos) {
     /// \brief Ecrit une bande sur le système RAID à une position donnée
     /// \param[in] stripe : Bande à écrire sur le disk
     /// \param[in] pos : Position où écrire le block
@@ -111,7 +121,7 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     /// \param[in] startbyte : Position où écrire la chaine
     /// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
     int i, j, pos = 0;
-    int nChunks = compute_final_nblock(nChars);
+    int nChunks = compute_nblock(nChars);
     int nStripes = compute_nstripe(nChunks);
     stripe_t stripe;
     stripe.nblocks = r5Disk.ndisk;
@@ -131,7 +141,7 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
             }
         }
 
-        if(write_stripes(stripe, startbyte + (i * BLOCK_SIZE)))
+        if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE)))
             return -1;
 
         free(blocks);
@@ -154,8 +164,8 @@ int compute_parity_index(int i){
 }
 
 
-int compute_nstripe(int i) {
-    return i / r5Disk.ndisk + (i % r5Disk.ndisk != 0);
+int compute_nstripe(int nb_blocks) {
+    return nb_blocks / (r5Disk.ndisk - 1) + ((nb_blocks / (r5Disk.ndisk - 1)) % 2 != 0);
 }
 
 block_t xor(block_t a, block_t b) {

@@ -14,6 +14,6 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
-int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk);
+int init_disk_raid5(const char* repertoryName);
 
 #endif
