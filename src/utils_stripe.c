@@ -151,16 +151,13 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     return nStripes;
 }
 
-int compute_parity_index(int i){
+int compute_parity_index(int numBande){
     /**
     * \brief Indique le disque sur lequel se trouve le bloc de parité.
     * \param[in] i : Position sur le disque virtuel.
     * \param[out] indPar : Numéro du disque où se situra le bloc de parité.
     */
-
-    int indPar;
-	indPar = (i + r5Disk.ndisk - 1) / r5Disk.ndisk;
-	return indPar;
+    return (r5Disk.ndisk - 1) - (numBande % r5Disk.ndisk);
 }
 
 
