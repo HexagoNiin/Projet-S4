@@ -2,7 +2,7 @@
 
 
 /*int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk){
-	/**
+	**
 	* \brief Lecture d'un ensemble de bande (ex : lecture d'un fichier).
 	* \param[in] buffer : Chaine d'octet dans laquelle la lecture sera retourné.
 	  	       nStripe : Nombre de bande qui représente la taille du fichier.
@@ -23,16 +23,21 @@
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	int nbStripes = compute_nstripe(compute_nblock(nChars));
+	int offset = 0;
 	for(int i = 0; i < nbStripes; i++) {
 		stripe_t stripe;
 		read_stripe(&stripe, i + startbyte);
 		for(int j = 0; j < stripe.nblocks; j++) {
 			block_t block = stripe.stripe[j];
-			for(int k = 0; k < BLOCK_SIZE; k++) {
-				buffer[i*nbStripes + j*stripe.nblocks + k] = block.data[k];
+			if(j == compute_parity_index(i)) {
+				for(int k = 0; k < BLOCK_SIZE; k++) {
+					buffer[i*(r5Disk.ndisk - 1)*BLOCK_SIZE + j*(stripe.nblocks+1) + k - offset] = block.data[k];
+				}
 			}
+			else offset += BLOCK_SIZE * stripe.nblocks;
 		}
 	}
+	return 0;
 }
 
 int read_stripe(stripe_t *stripe, uint pos){
