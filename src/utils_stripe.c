@@ -48,10 +48,8 @@ int read_stripe(stripe_t *stripe, uint pos){
 		       disk : ensemble des disques representants le disque virtuel.
 	* \param[out] boolean : 0 = Ack, !0 = Nack.
 	*/
-
 	stripe->nblocks = r5Disk.ndisk - 1;
 	stripe->stripe = malloc((r5Disk.ndisk - 1)* sizeof(block_t));
-
 
 	for(int i = 0; i < r5Disk.ndisk - 1; i++){
 		if (i != compute_parity_index(pos)){
@@ -61,10 +59,8 @@ int read_stripe(stripe_t *stripe, uint pos){
 			}
 		}
 	}
-
 	return 0;
 }
-
 
 int write_stripe(stripe_t stripe, int pos) {
     /// \brief Ecrit une bande sur le système RAID à une position donnée
@@ -145,7 +141,6 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
                 i_blocks++;
             }
         }
-
         if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE)))
             return -1;
 
