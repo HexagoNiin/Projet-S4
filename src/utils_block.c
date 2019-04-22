@@ -10,6 +10,14 @@ block_t create_block() { //Utilisé dans utils_stripe.c
 	return block;
 }
 
+block_t tab_to_block(uchar *tab) {	//Fonction de debug
+	block_t block = create_block();
+	for(int i = 0; i < BLOCK_SIZE; i++) {
+		block.data[i] = tab[i];
+	}
+	return block;
+}
+
 int compute_nblock(int nb_octets) {
     /// \brief Calcule le nombre de blocks nécessaires pour stocker nb_octets octets
     /// \param[in] nb_octets : Nombre d'octets à stocker
