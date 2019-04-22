@@ -41,9 +41,14 @@ int write_block(block_t block, int pos, FILE * disk_id) {
 
 void print_block(block_t block) {
     int i;
-    for(i=0;i<BLOCK_SIZE;i++)
-    printf("%c ", block.data[i]);
-    printf("\n");
+	printf("[");
+    for(i=0;i<BLOCK_SIZE;i++) {
+		if(BLOCKS_ARE_STRINGS) 		printf("%c", block.data[i]);
+		else if(i != BLOCK_SIZE -1)	printf("%-3d", block.data[i]);
+		else						printf("%d", block.data[i]);
+		if(i != BLOCK_SIZE -1)		printf(" ");
+	}
+    printf("]\n");
 }
 
 int block_repair(int pos, int id_disk) {
