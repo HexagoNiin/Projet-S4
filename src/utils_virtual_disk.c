@@ -25,8 +25,10 @@ int init_disk_raid5(const char *repertoryName) {
 	int i = 0;
 	while((disk = readdir(rep))) {
 		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
+			char* chemin = malloc(sizeof(char*));
+			sprintf(chemin, "%s/%s", repertoryName, disk->d_name);
 			/* ouverture des disks du repertoire */
-			if(!(storage[i] = fopen(disk->d_name, "wr"))) {
+			if(!(storage[i] = fopen(chemin, "wr"))) {
 				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
 				exit(2);
 			}
