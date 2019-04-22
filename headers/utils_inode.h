@@ -17,6 +17,6 @@ int read_inodes_table(inode_table_t able, FILE **raid);
 uchar *indtostr(inode_t inode);
 uchar *sbtostr();
 int write_super_block(int *startbyte);
-int init_inode(char *filename, uint size, uint position);
+inode_t init_inode(char *filename, uint size, uint pos);
 int update_inodes_table(inode_t inode, int new_byte);
 #endif

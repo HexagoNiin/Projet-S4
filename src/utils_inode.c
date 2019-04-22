@@ -159,11 +159,13 @@ int read_inodes_table(int table, int raid) {
     return 0;
 }
 
-int init_inode(char *filename, uint size, uint position) {
-	(void)filename;
-	(void)size;
-	(void)position;
-	return 0;
+inode_t init_inode(char* filename, uint size, uint pos) {
+	inode_t inode;
+	strcpy(inode.filename, filename);
+	inode.size = size;
+	inode.first_byte = pos;
+	inode.nblock = 0;
+	return inode;
 }
 
 int update_inodes_table(inode_t inode, int new_byte) {
