@@ -28,7 +28,7 @@ int init_disk_raid5(const char *repertoryName) {
 			char* chemin = malloc(sizeof(char*));
 			sprintf(chemin, "%s/%s", repertoryName, disk->d_name);
 			/* ouverture des disks du repertoire */
-			if(!(storage[i] = fopen(chemin, "wr"))) {
+			if(!(storage[i] = fopen(chemin, "w+"))) {
 				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
 				exit(2);
 			}
