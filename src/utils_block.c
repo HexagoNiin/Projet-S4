@@ -92,7 +92,6 @@ int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
 			return(1);//inaccessible
 	}*/
 	fseek(disk, pos, SEEK_SET);
-
 	for (i = 0; i < BLOCK_SIZE; i ++){
 		c = fgetc(disk);
 
