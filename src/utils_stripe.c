@@ -1,7 +1,5 @@
 #include "../headers/utils_stripe.h"
 
-
-
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	int nbStripes = compute_nstripe(compute_nblock(nChars));
 	int offset = 0;
