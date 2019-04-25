@@ -24,7 +24,7 @@ int delete_inode(inode_table_t *inodeTable, int pos){
 	inodeTable[pos]->first_byte = 0;
 
 	for (int i = pos + 1; i < INODE_TABLE_SIZE; i++) {
-		inodeTable[i-1] = inodeTable[i];
+		*inodeTable[i-1] = *inodeTable[i];
 	}
 
     return 0;
@@ -153,10 +153,14 @@ int write_super_block(int *startbyte) {
     return 0;
 }
 
-int read_inodes_table(int table, int raid) {
+int read_inodes_table(inode_table_t table, FILE **raid) {
 	(void)table;
 	(void)raid;
     return 0;
+}
+
+void first_free_byte(super_block_t sBlock, uint first_free_byte) {
+	sBlock.first_free_byte = first_free_byte;
 }
 
 inode_t init_inode(char* filename, uint size, uint pos) {
