@@ -19,4 +19,5 @@ uchar *sbtostr();
 int write_super_block(int *startbyte);
 inode_t init_inode(char *filename, uint size, uint pos);
 int update_inodes_table(inode_t inode, int new_byte);
+
 #endif
