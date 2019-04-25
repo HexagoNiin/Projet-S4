@@ -1,6 +1,9 @@
 #include "../headers/utils_file.h"
 
 void write_file(char *filename, file_t file) {
+    /// \brief Ecrit un fichier sur le système
+    /// \param[in] filename : nom du fichier à écrire
+    /// \param[in] file : fichier à écrire
     int i, u;
     for(i=0;i<INODE_TABLE_SIZE && (u = strcmp(filename, r5Disk.inodes[i].filename));i++);
     if(!u) {
@@ -15,13 +18,19 @@ void write_file(char *filename, file_t file) {
             return ;
         } else {
             /* supprimer inode */
-            delete_inode(r5Disk.inodes, i-1);
+            delete_inode(i-1);
         }
     }
-    /* creation inode et mise a jour de la table d'inodes*/
-    init_inode(filename, file.size, r5Disk.super_block.first_free_byte);
+    /* creation inode et mise a jour de la table d'inodes */
+    inode_t inode = init_inode(filename, file.size, r5Disk.super_block.first_free_byte);
     /* ecriture fichier */
-    write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
+    int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
+    if(size == -1) {
+        exit(1);
+        fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
+    }
+    inode.nblock = size * r5Disk.disk;
+    update_inodes_table(inode);
     return ;
 }
 

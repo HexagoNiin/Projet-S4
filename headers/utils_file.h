@@ -11,6 +11,6 @@
 #include "../headers/utils_inode.h"
 #include "../headers/utils_stripe.h"
 
-
+void write_file(char *filename, file_t file);
 
 #endif

@@ -10,14 +10,14 @@
 #include "utils_stripe.h"
 #include "string.h"
 
-int delete_inode(inode_table_t *inodeTable, int pos);
+void delete_inode(int pos);
 int write_inodes_table(int startbyte);
 int get_unused_inode();
-int read_inodes_table(inode_table_t table, FILE **raid);
+int read_inodes_table();
 uchar *indtostr(inode_t inode);
 uchar *sbtostr();
 int write_super_block(int *startbyte);
-inode_t init_inode(char *filename, uint size, uint pos);
-int update_inodes_table(inode_t inode, int new_byte);
-
+inode_t init_inode(char *filename, uint size, uint position);
+int update_inodes_table(inode_t inode);
+void update_first_free_byte(int new_byte);
 #endif

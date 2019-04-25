@@ -40,7 +40,7 @@ typedef inode_t inode_table_t[INODE_TABLE_SIZE];// la taille est fixe
 typedef struct super_block_s{
   enum raid raid_type;
   uint nb_blocks_used ; //
-  uint first_free_byte; // premier octet libre
+  uint first_free_byte; // premier block libre
   } super_block_t;
 
 /* Type of the virtual disk system */
