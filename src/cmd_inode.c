@@ -24,12 +24,13 @@ int nFiles(DIR *dir) {
 int main(int argc, char *argv[]) {
     if(argc != 2) {
         fprintf(stderr, "Usage : <%s> nom_repertoire\n", argv[0]);
+		exit(1);
     }
 
     DIR *dir = opendir(argv[1]);
     if(dir == NULL) {
         fprintf(stderr, "Une erreur est survenue lors de l'ouverture du dossier.\n");
-        exit(1);
+        exit(2);
     }
     int count = nFiles(dir);
     FILE **raid = malloc(sizeof(FILE *) * count);
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
     inode_table_t table;
     if(read_inodes_table(table, raid)) {
         fprintf(stderr, "Erreur lors de la lecture de la table.\n");
-        exit(2);
+        exit(3);
     }
 
     for(i=0;i<INODE_TABLE_SIZE;i++) {
