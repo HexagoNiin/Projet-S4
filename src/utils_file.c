@@ -33,3 +33,11 @@ void write_file(char *filename, file_t file) {
     update_inodes_table(inode);
     return ;
 }
+
+void store_file_from_host() {
+
+}
+
+void load_file_from_host() {
+
+}
