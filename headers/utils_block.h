@@ -15,9 +15,12 @@
 #include <string.h>
 #include "raid_defines.h"
 
+#define BLOCKS_ARE_STRINGS 0
+
 virtual_disk_t r5Disk; //variable globale supervisant le systeme RAID
 
 block_t create_block();
+block_t tab_to_block(uchar *tab);
 int read_block (block_t *block, uint pos, FILE *disk);
 int compute_nblock(int nb_octets);
 int write_block(block_t block, int pos, FILE * disk_id);

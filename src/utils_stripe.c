@@ -4,14 +4,18 @@
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	int nbStripes = compute_nstripe(compute_nblock(nChars));
+	int offset = 0;
 	for(int i = 0; i < nbStripes; i++) {
 		stripe_t stripe;
 		read_stripe(&stripe, i + startbyte);
 		for(int j = 0; j < stripe.nblocks; j++) {
 			block_t block = stripe.stripe[j];
-			for(int k = 0; k < BLOCK_SIZE; k++) {
-				buffer[i*nbStripes + j*stripe.nblocks + k] = block.data[k];
+			if(j == compute_parity_index(i)) {
+				for(int k = 0; k < BLOCK_SIZE; k++) {
+					buffer[i*(r5Disk.ndisk - 1)*BLOCK_SIZE + j*(stripe.nblocks+1) + k - offset] = block.data[k];
+				}
 			}
+			else offset += BLOCK_SIZE * stripe.nblocks;
 		}
 	}
 	return 0;
@@ -25,10 +29,8 @@ int read_stripe(stripe_t *stripe, uint pos){
 		       disk : ensemble des disques representants le disque virtuel.
 	* \param[out] boolean : 0 = Ack, !0 = Nack.
 	*/
-
 	stripe->nblocks = r5Disk.ndisk - 1;
 	stripe->stripe = malloc((r5Disk.ndisk - 1)* sizeof(block_t));
-
 
 	for(int i = 0; i < r5Disk.ndisk - 1; i++){
 		if (i != compute_parity_index(pos)){
@@ -38,10 +40,8 @@ int read_stripe(stripe_t *stripe, uint pos){
 			}
 		}
 	}
-
 	return 0;
 }
-
 
 int write_stripe(stripe_t stripe, int pos) {
     /// \brief Ecrit une bande sur le système RAID à une position donnée
@@ -122,7 +122,6 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
                 i_blocks++;
             }
         }
-
         if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE)))
             return -1;
 
@@ -133,16 +132,13 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     return nStripes;
 }
 
-int compute_parity_index(int i){
+int compute_parity_index(int numBande){
     /**
     * \brief Indique le disque sur lequel se trouve le bloc de parité.
     * \param[in] i : Position sur le disque virtuel.
     * \param[out] indPar : Numéro du disque où se situra le bloc de parité.
     */
-
-    int indPar;
-	indPar = (i + r5Disk.ndisk - 1) / r5Disk.ndisk;
-	return indPar;
+    return (r5Disk.ndisk - 1) - (numBande % r5Disk.ndisk);
 }
 
 

@@ -7,6 +7,8 @@
 #ifndef _UTILS_VIRTUAL_DISK
 #define _UTILS_VIRTUAL_DISK
 
+
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "raid_defines.h"
@@ -14,6 +16,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
+virtual_disk_t r5Disk;
 int init_disk_raid5(const char* repertoryName);
 
 #endif

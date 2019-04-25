@@ -1,6 +1,6 @@
 #include "../headers/utils_virtual_disk.h"
 
-void init_disk_raid5(const char *repertoryName) {
+int init_disk_raid5(const char *repertoryName) {
 	/// \brief Initialise la variable globale r5Disk
     /// \param[in] repertoryName : le repertoire ou se situe les disks
 
@@ -25,8 +25,10 @@ void init_disk_raid5(const char *repertoryName) {
 	int i = 0;
 	while((disk = readdir(rep))) {
 		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
+			char* chemin = malloc(sizeof(char*));
+			sprintf(chemin, "%s/%s", repertoryName, disk->d_name);
 			/* ouverture des disks du repertoire */
-			if(!(storage[i] = fopen(disk->d_name, "wr"))) {
+			if(!(storage[i] = fopen(chemin, "w+"))) {
 				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
 				exit(2);
 			}
@@ -44,6 +46,7 @@ void init_disk_raid5(const char *repertoryName) {
 	r5Disk.raidmode = CINQ;
 	r5Disk.storage = storage;
 
+	return 0;
 }
 
 /*int init_disk_raid5(const char* nom_rep, virtual_disk_t* r5Disk) {
