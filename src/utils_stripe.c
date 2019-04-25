@@ -1,22 +1,21 @@
 #include "../headers/utils_stripe.h"
 
-
-
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
-	int nbStripes = compute_nstripe(compute_nblock(nChars));
-	int offset = 0;
-	for(int i = 0; i < nbStripes; i++) {
+	int posBuffer = 0;
+	int posDisk = 0;
+	while(posBuffer < nChars) {
 		stripe_t stripe;
-		read_stripe(&stripe, i + startbyte);
-		for(int j = 0; j < stripe.nblocks; j++) {
-			block_t block = stripe.stripe[j];
-			if(j == compute_parity_index(i)) {
-				for(int k = 0; k < BLOCK_SIZE; k++) {
-					buffer[i*(r5Disk.ndisk - 1)*BLOCK_SIZE + j*(stripe.nblocks+1) + k - offset] = block.data[k];
+		read_stripe(&stripe, startbyte + posDisk*4);
+		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
+			block_t block = stripe.stripe[i];
+			if(i != compute_parity_index(startbyte + posDisk)) {
+				for(int j = 0; j < BLOCK_SIZE && posBuffer < nChars; j++) {
+					buffer[posBuffer] = block.data[j];
+					posBuffer++;
 				}
 			}
-			else offset += BLOCK_SIZE * stripe.nblocks;
 		}
+		posDisk++;
 	}
 	return 0;
 }
@@ -29,15 +28,13 @@ int read_stripe(stripe_t *stripe, uint pos){
 		       disk : ensemble des disques representants le disque virtuel.
 	* \param[out] boolean : 0 = Ack, !0 = Nack.
 	*/
-	stripe->nblocks = r5Disk.ndisk - 1;
-	stripe->stripe = malloc((r5Disk.ndisk - 1)* sizeof(block_t));
+	stripe->nblocks = r5Disk.ndisk;
+	stripe->stripe = malloc((r5Disk.ndisk)* sizeof(block_t));
 
-	for(int i = 0; i < r5Disk.ndisk - 1; i++){
-		if (i != compute_parity_index(pos)){
-			if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])){
+	for(int i = 0; i < r5Disk.ndisk; i++) {
+		if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])) {
 			printf("erreur de lecture [read_block]\n");
 			return 1;
-			}
 		}
 	}
 	return 0;
