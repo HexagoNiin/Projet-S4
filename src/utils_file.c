@@ -24,3 +24,11 @@ void write_file(char *filename, file_t file) {
     write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
     return ;
 }
+
+void store_file_from_host() {
+
+}
+
+void load_file_from_host() {
+
+}
