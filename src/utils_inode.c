@@ -15,14 +15,18 @@ void delete_inode(int pos){
 		r5Disk.inodes[i] = r5Disk.inodes[i+1];
 }
 
+int inodelen() {
+	inode_t inode = {"", 0, 0, 0};
+	return snprintf(NULL, 0, "%s%u%u%u", inode.filename, inode.size, inode.first_byte, inode.nblock);
+}
+
 uchar *indtostr(inode_t inode) {
     /// \brief Transforme une inode en chaine de caractères non signés.
     /// \param[in] inode : L'inode a transformer
 	/// \return La chaine de caractères ou NULL s'il y a eu une erreur
 
 	/* recuperer taille inode */
-	int len = 0;
-	len = snprintf(NULL, len, "%s%u%u%u", inode.filename, inode.size, inode.first_byte, inode.nblock);
+	int len = inodelen();
 
 	if(len > MAX_MSG) {
 		fprintf(stderr, "L'inode ne peut pas etre convertie en string.\n");
@@ -67,7 +71,7 @@ int write_inodes_table(int startbyte) {
             return 1;
         }
         /* startbyte ici est provisoire */
-        if((nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe))) == -1) {
+        if((nStripe = write_chunk(buffer, inodelen(), startbyte + (i * nStripe))) == -1) {
             fprintf(stderr, "Erreur lors de l'ecriture d'une inode.\n");
             return 2;
         }
@@ -80,12 +84,14 @@ int get_unused_inode() {
     /// \return L'indice d'un inode ou -1 si la table est pleine
     int i;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
-        if(r5Disk.inodes[i].first_byte == 0) {
+        if(r5Disk.inodes[i].first_byte == 0)
             return i;
-        }
     }
-
     return -1;
+}
+
+int sblen() {
+	return snprintf(NULL, 0, "%u%u%u", r5Disk.super_block.raid_type, r5Disk.super_block.nb_blocks_used, r5Disk.super_block.first_free_byte);
 }
 
 uchar *sbtostr() {
@@ -93,8 +99,7 @@ uchar *sbtostr() {
 	/// \return la chaine de caractères
 
 	/* recupere taille super block */
-	int len = 0;
-	len = snprintf(NULL, len, "%u%u%u", r5Disk.super_block.raid_type, r5Disk.super_block.nb_blocks_used, r5Disk.super_block.first_free_byte);
+	int len = sblen();
 
 	if(len > MAX_MSG) {
 		fprintf(stderr, "Le super block ne peut pas etre convertie en string.\n");
@@ -130,7 +135,7 @@ int write_super_block(int *startbyte) {
         return 1;
     }
 
-    if((*startbyte = write_chunk(buffer, sizeof(super_block_t), 0)) == -1) {
+    if((*startbyte = write_chunk(buffer, sblen(), 0)) == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du super block.\n");
         return 2;
     }
@@ -142,21 +147,26 @@ int read_inodes_table() {
     return 0;
 }
 
-int init_inode(char *filename, uint size, uint position) {
-	(void)filename;
-	(void)size;
-	(void)position;
-	return 0;
+inode_t init_inode(char *filename, uint size, uint position) {
+	inode_t inode;
+	strcpy(inode.filename, filename);
+	inode.size = size;
+	inode.first_byte = position;
+	return inode;
 }
 
-int update_inodes_table(inode_t inode, int new_byte) {
+int update_inodes_table(inode_t inode) {
 	if(r5Disk.number_of_files < INODE_TABLE_SIZE) {
-		r5Disk.inodes[r5Disk.number_of_files] = inode;
+		r5Disk.inodes[get_unused_inode()] = inode;
 		r5Disk.number_of_files++;
-		r5Disk.super_block.first_free_byte += (new_byte * r5Disk.ndisk * BLOCK_SIZE); //a remplacer par fonction qui met a jour le champ first_free_byte de la couche 3
+		update_first_free_byte(inode.first_byte);
 		return 0;
 	} else {
 		fprintf(stderr, "Erreur, la table d'inodes est pleine, le fichier n'a pas ete ajoute.\n");
 		return 1;
 	}
+}
+
+void update_first_free_byte(int new_byte) {
+	r5Disk.super_block.first_free_byte += new_byte;
 }

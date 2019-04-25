@@ -1,25 +1,6 @@
 #include "../headers/utils_stripe.h"
 
 
-/*int read_chunk(uchar *buffer, int nStripe, int startbyte, FILE **disk){
-	/**
-	* \brief Lecture d'un ensemble de bande (ex : lecture d'un fichier).
-	* \param[in] buffer : Chaine d'octet dans laquelle la lecture sera retourné.
-	  	       nStripe : Nombre de bande qui représente la taille du fichier.
-		       startbyte : Position du début de la lecture dans le disque virtuel.
-		       disk : ensemble des disques representants le disque virtuel.
-	* \ param[out] 0 = Ack, !0 = Nack.
-	*/
-	/*stripe_t stripe;
-
-	for(int i = 0; i < nStripe; i++){
-		read_stripe(&stripe, startbyte + i, disk);
-		for (int j = 0; j < stripe.nblocks; j++){
-			buffer[i*stripe.nblocks + j] = stripe[j];
-		}
-	}
-	return 0;
-}*/
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	int nbStripes = compute_nstripe(compute_nblock(nChars));
@@ -33,6 +14,7 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 			}
 		}
 	}
+	return 0;
 }
 
 int read_stripe(stripe_t *stripe, uint pos){
