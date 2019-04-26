@@ -34,8 +34,8 @@ void write_file(const char *filename, file_t file) {
     return ;
 }
 
-void store_file_from_host() {
-
+int read_file(const char *namefile, file_t *file) {
+	return 0;
 }
 
 void load_file_from_host(const char *filename) {
@@ -48,4 +48,10 @@ void load_file_from_host(const char *filename) {
 	write_file(filename, file);
 }
 
+void store_file_to_host(const char *filename) {
+	file_t file;
+	read_file(filename, &file);
+	FILE* f = fopen(filename, "w");
+	fwrite(file.data, sizeof(uchar), file.size, f);
+	fclose(f);
 }
