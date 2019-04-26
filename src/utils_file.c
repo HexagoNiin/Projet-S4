@@ -1,6 +1,6 @@
 #include "../headers/utils_file.h"
 
-void write_file(char *filename, file_t file) {
+void write_file(const char *filename, file_t file) {
     /// \brief Ecrit un fichier sur le système
     /// \param[in] filename : nom du fichier à écrire
     /// \param[in] file : fichier à écrire
@@ -34,10 +34,24 @@ void write_file(char *filename, file_t file) {
     return ;
 }
 
-void store_file_from_host() {
-
+int read_file(const char *namefile, file_t *file) {
+	return 0;
 }
 
-void load_file_from_host() {
+void load_file_from_host(const char *filename) {
+	FILE* f = fopen(filename, "r");
+	file_t file;
+	file.size = fseek(f, 0, SEEK_END)+1;
+	fseek(f, 0, SEEK_SET);
+	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++) file.data[i] = fgetc(f);
+	fclose(f);
+	write_file(filename, file);
+}
 
+void store_file_to_host(const char *filename) {
+	file_t file;
+	read_file(filename, &file);
+	FILE* f = fopen(filename, "w");
+	fwrite(file.data, sizeof(uchar), file.size, f);
+	fclose(f);
 }

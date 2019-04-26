@@ -123,7 +123,7 @@ int read_super_block() {
 	return EXIT_SUCCESS;
 }
 
-inode_t init_inode(char *filename, uint size, uint position) {
+inode_t init_inode(const char *filename, uint size, uint position) {
 	inode_t inode;
 	strcpy(inode.filename, filename);
 	inode.size = size;
