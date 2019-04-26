@@ -122,7 +122,7 @@ int read_super_block() {
 	r5Disk.super_block = strtosb(buffer);
 }
 
-inode_t init_inode(char *filename, uint size, uint position) {
+inode_t init_inode(const char *filename, uint size, uint position) {
 	inode_t inode;
 	strcpy(inode.filename, filename);
 	inode.size = size;
