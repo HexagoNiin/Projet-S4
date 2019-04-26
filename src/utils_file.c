@@ -38,6 +38,14 @@ void store_file_from_host() {
 
 }
 
-void load_file_from_host() {
+void load_file_from_host(const char *filename) {
+	FILE* f = fopen(filename, "r");
+	file_t file;
+	file.size = fseek(f, 0, SEEK_END)+1;
+	fseek(f, 0, SEEK_SET);
+	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++) file.data[i] = fgetc(f);
+	fclose(f);
+	write_file(filename, file);
+}
 
 }
