@@ -8,7 +8,6 @@
 #define _UTILS_INODE
 
 #include "utils_stripe.h"
-#include "string.h"
 
 void delete_inode(int pos);
 int write_inodes_table(int startbyte);
