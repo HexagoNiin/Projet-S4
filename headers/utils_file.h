@@ -11,7 +11,6 @@
 #include "../headers/utils_inode.h"
 #include "../headers/utils_stripe.h"
 
-void write_file(char *filename, file_t file);
 void write_file(const char *filename, file_t file);
 void load_file_from_host(const char *filename);
 void store_file_to_host(const char *filename);
