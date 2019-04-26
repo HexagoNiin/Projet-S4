@@ -17,7 +17,6 @@ int read_inodes_table();
 uchar *indtostr(inode_t inode);
 uchar *sbtostr();
 int write_super_block(int *startbyte);
-inode_t init_inode(char *filename, uint size, uint position);
 inode_t init_inode(const char *filename, uint size, uint position);
 int update_inodes_table(inode_t inode);
 void update_first_free_byte(int new_byte);
