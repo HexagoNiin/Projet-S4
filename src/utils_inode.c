@@ -120,6 +120,7 @@ int read_super_block() {
         return EXIT_FAILURE;
 	}
 	r5Disk.super_block = strtosb(buffer);
+	return EXIT_SUCCESS;
 }
 
 inode_t init_inode(char *filename, uint size, uint position) {
