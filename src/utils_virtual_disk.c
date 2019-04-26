@@ -1,6 +1,6 @@
 #include "../headers/utils_virtual_disk.h"
 
-int init_disk_raid5(const char *repertoryName) {
+int init_disk_raid5(const char* repertoryName) {
 	/// \brief Initialise la variable globale r5Disk
     /// \param[in] repertoryName : le repertoire ou se situe les disks
 
