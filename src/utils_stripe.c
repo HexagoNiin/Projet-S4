@@ -1,11 +1,13 @@
 #include "../headers/utils_stripe.h"
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Lis une chaine de caractères du RAID
+	/// \param[in] startbyte : Position où lire la chaine en octets
 	int posBuffer = 0;
 	int posDisk = 0;
 	while(posBuffer < nChars) {
 		stripe_t stripe;
-		read_stripe(&stripe, startbyte + posDisk*4);
+		read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE);
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
 			if(i != compute_parity_index(startbyte + posDisk)) {
@@ -17,7 +19,7 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 		}
 		posDisk++;
 	}
-	return 0;
+	return posDisk;
 }
 
 int read_stripe(stripe_t *stripe, uint pos){
@@ -82,7 +84,7 @@ int compute_final_nblock(int nChars) {
     /// \param[in] nChars : Nombre de caractères de la chaine à écrire
     /// \return Le nombre de blocks
     int nChunks = compute_nblock(nChars);
-    int nStripes = compute_nstripe(nChunks); //3rr()
+    int nStripes = compute_nstripe(nChunks);
     return nChunks + nStripes + ((nChunks + nStripes) / r5Disk.ndisk);
 }
 
@@ -97,7 +99,7 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     /// \brief Ecrit une chaine de caractères sur le système RAID.
     /// \param[in] buffer : Chaine de caractères à écrire
     /// \param[in] nChars : Nombre de caractères de la chaine
-    /// \param[in] startbyte : Position où écrire la chaine
+    /// \param[in] startbyte : Position où écrire la chaine en octets
     /// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
     int i, j, pos = 0;
     int nChunks = compute_nblock(nChars);
@@ -109,10 +111,8 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     for(i=0;i<nStripes;i++) {
         block_t *blocks = generateStripe(buffer, nChars, &pos);
         int i_blocks = 0;
-
         for(j=0;j<r5Disk.ndisk;j++) {
             if(j == compute_parity_index(i)) {
-                //stripe.stripe[j] = blocks[i_blocks]; //a suppr
                 stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
             } else {
                 stripe.stripe[j] = blocks[i_blocks];
@@ -133,14 +133,21 @@ int compute_parity_index(int numBande){
     /**
     * \brief Indique le disque sur lequel se trouve le bloc de parité.
     * \param[in] i : Position sur le disque virtuel.
-    * \param[out] indPar : Numéro du disque où se situra le bloc de parité.
+    * \param[out] indPar : Numéro du disque où se situera le bloc de parité.
     */
     return (r5Disk.ndisk - 1) - (numBande % r5Disk.ndisk);
 }
 
 
-int compute_nstripe(int nb_blocks) {
+int compute_nstripev1(int nb_blocks) {
     return nb_blocks / (r5Disk.ndisk - 1) + ((nb_blocks / (r5Disk.ndisk - 1)) % 2 != 0);
+}
+
+int compute_nstripe(int nb_blocks) {
+	int nb_block_parite = (nb_blocks / (r5Disk.ndisk - 1)) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
+	if((nb_block_parite + nb_blocks) % r5Disk.ndisk == 0)
+		return (nb_block_parite + nb_blocks) / r5Disk.ndisk;
+	return (nb_block_parite + nb_blocks + (r5Disk.ndisk - (nb_blocks + nb_block_parite) % r5Disk.ndisk)) / r5Disk.ndisk;
 }
 
 block_t xor(block_t a, block_t b) {
