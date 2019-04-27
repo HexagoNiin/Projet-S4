@@ -61,8 +61,8 @@ int edit(char *filename) {
     return 0;
 }
 
-int load(char *filename) {
-    (void)filename;
+int load(char *arguments) {
+    load_file_from_host(arguments);
     return 0;
 }
 

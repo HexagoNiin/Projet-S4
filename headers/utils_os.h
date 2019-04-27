@@ -16,7 +16,7 @@ int ls(char *option);
 int rm(char *filename);
 int create(char *filename);
 int edit(char *filename);
-int load(char *filename);
+int load(char *arguments);
 int store(char *filename);
 
 
