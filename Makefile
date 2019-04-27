@@ -9,26 +9,42 @@ TESTSDIR=tests
 
 # DÉPENDENCES
 DISK=utils_virtual_disk.o
-BLOCK=utils_block.o
+BLOCK=utils_block.o $(DISK)
 STRIPE=utils_stripe.o $(BLOCK)
 INODE=utils_inode.o $(STRIPE)
 FILE=utils_file.o $(INODE)
+OS=utils_os.o $(FILE)
 
 # AFFICHAGE DEBUG
-ifneq ($(DEBUG),)
-OPT+=-D _DEBUG_LOG
+ifeq ($(log),1)
+OPT+=-D _LOG1
+endif
+ifeq ($(log),2)
+OPT+=-D _LOG2
+endif
+ifeq ($(log),3)
+OPT+=-D _LOG3
+endif
+ifeq ($(log),4)
+OPT+=-D _LOG4
+endif
+ifeq ($(log),5)
+OPT+=-D _LOG5
+endif
+ifeq ($(log),6)
+OPT+=-D _LOG6
 endif
 
 # PROGRAMMES
-cmd_test: cmd_test.o $(DISK) $(STRIPE)
+cmd_test: cmd_test.o $(STRIPE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-cmd_inode: cmd_inode.o $(DISK) $(INODE)
+cmd_inode: cmd_inode.o $(INODE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-cmd_file: cmd_file.o $(DISK) $(FILE)
+cmd_file: cmd_file.o $(FILE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
