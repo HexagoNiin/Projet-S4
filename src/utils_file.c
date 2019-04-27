@@ -29,7 +29,7 @@ void write_file(const char *filename, file_t file) {
         exit(1);
         fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
     }
-    inode.nblock = size * r5Disk.disk;
+    inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
     return ;
 }
@@ -41,7 +41,8 @@ int read_file(const char *namefile, file_t *file) {
 void load_file_from_host(const char *filename) {
 	FILE* f = fopen(filename, "r");
 	file_t file;
-	file.size = fseek(f, 0, SEEK_END)+1;
+	fseek(f, 0, SEEK_END)+1;
+	file.size = ftell(f);
 	fseek(f, 0, SEEK_SET);
 	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++) file.data[i] = fgetc(f);
 	fclose(f);

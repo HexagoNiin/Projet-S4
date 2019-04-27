@@ -28,6 +28,10 @@ cmd_inode: cmd_inode.o $(DISK) $(INODE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
+cmd_file: cmd_file.o $(DISK) $(FILE)
+	$(CC) -o $@ $^ $(OPT)
+	mv $@ $@.out
+
 cmd_format: cmd_format.o
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
