@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
 	log5("[MAIN] Logs de niveau 5 activés");
 	log6("[MAIN] Logs de niveau 6 activés");
 	log1(" ");
+	init_disk_raid5("systeme");
     interpreteur();
     return 0;
 }

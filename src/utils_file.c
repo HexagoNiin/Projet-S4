@@ -11,6 +11,7 @@ void write_file(const char *filename, file_t file) {
             /* mise a jour du RAID */
             int nstripe;
             nstripe = write_chunk(file.data, file.size, r5Disk.inodes[i-1].first_byte);
+			(void) nstripe; //À CHANGER
             /* mise a jour de l'inode */
             r5Disk.inodes[i-1].size = file.size;
             strcpy(r5Disk.inodes[i-1].filename, filename);
