@@ -5,6 +5,7 @@
 #define __R5_DEFINES__
 
 #include <stdio.h>
+#include "debug_log.h"
 
 #define ERREUR -1
 #define BLOCK_SIZE 4 // octets

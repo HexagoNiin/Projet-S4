@@ -14,6 +14,11 @@ STRIPE=utils_stripe.o $(BLOCK)
 INODE=utils_inode.o $(STRIPE)
 FILE=utils_file.o $(INODE)
 
+# AFFICHAGE DEBUG
+ifneq ($(DEBUG),)
+OPT+=-D _DEBUG_LOG
+endif
+
 # PROGRAMMES
 cmd_test: cmd_test.o $(DISK) $(STRIPE)
 	$(CC) -o $@ $^ $(OPT)
@@ -34,6 +39,8 @@ cmd_format: cmd_format.o
 # NETTOYAGE
 clean:
 	rm -rf *.o *.exe *.stackdump
+
+
 
 # EXPLICATIONS SUR LE MAKEFILE
 
@@ -56,3 +63,8 @@ clean:
 # fichier généré, afin notamment de ne pas l'uploader sur github (les .out sont
 # automatiquement ignorés) ; car il ne sert et serait redondant de posséder des
 # fichiers que nous pouvons générer avec le reste.
+#
+# Pour afficher des infos de debug (avec la "fonction" debug(x) dans le
+# programme), il suffit de donner une valeur quelconque au paramètre DEBUG en
+# appelant le make
+# Exemple : make cmd_file DEBUG=yes
