@@ -4,6 +4,7 @@ char command_list[NB_COMMANDS][COMMANDS_SIZE] = {"ls", "cat", "rm", "create", "e
 FunctionStr command_exec[NB_COMMANDS] = {&ls, &cat, &rm, &create, &edit, &load, &store};
 
 void interpreteur() {
+	log1("[INTERPRETEUR] Lancement interpreteur\n")
     char *command = malloc(sizeof(char) * (COMMANDS_SIZE + FILENAME_MAX_SIZE + 2));
     char **command_option = NULL;
     int exit = 0;
@@ -26,6 +27,7 @@ int action(char **command) {
     int i;
     for(i=0;i<NB_COMMANDS;i++) {
         if(!strcmp(command[0], command_list[i])) {
+			log1("[INTERPRETEUR] Exécution de %s", command[0])
             return command_exec[i]((command[1]));
         }
     }

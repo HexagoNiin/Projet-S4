@@ -39,6 +39,7 @@ int read_file(const char *namefile, file_t *file) {
 }
 
 void load_file_from_host(const char *filename) {
+	log2("[LOAD_FILE_FROM_HOST] Chargement vers le disque de %s", filename);
 	FILE* f = fopen(filename, "r");
 	file_t file;
 	fseek(f, 0, SEEK_END);
