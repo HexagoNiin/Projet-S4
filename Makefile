@@ -88,7 +88,8 @@ clean:
 # automatiquement ignorés) ; car il ne sert et serait redondant de posséder des
 # fichiers que nous pouvons générer avec le reste.
 #
-# Pour afficher des infos de debug (avec la "fonction" debug(x) dans le
-# programme), il suffit de donner une valeur quelconque au paramètre DEBUG en
-# appelant le make
-# Exemple : make cmd_file DEBUG=yes
+# IL est possible d'afficher des logs pour savoir ce qu'ils se passe lors de
+# l'exécution du programme. Ces logs sont découpés en fonctions de la profondeur
+# de la couche : log1 affiche les logs du main et de l'OS, log6 affiche les logs
+# des fonctions gérant les blocs.
+# Pour définir le niveau de log, il suffit de faire make [cible] log=[1-6]
