@@ -52,6 +52,10 @@ cmd_format: cmd_format.o
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
+raid5: main.o $(OS)
+	$(CC) -o $@ $^ $(OPT)
+	mv $@ $@.out
+
 # AUTOMATISATION
 %.o: $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(OPT)
