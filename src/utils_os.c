@@ -13,8 +13,10 @@ void interpreteur() {
         printf("\x1B[94mSysteme RAID\x1B[0m$ ");
         fgets(command, COMMANDS_SIZE + FILENAME_MAX_SIZE + 2, stdin);
         command_option = parser(command);
-        if(command_option)
+        if(command_option) {
             exit = action(command_option);
+			log1(" ");
+		}
         else
             fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Usage : command [option]\n");
     }
