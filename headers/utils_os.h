@@ -1,7 +1,6 @@
 #ifndef _UTILS_OS
 #define _UTILS_OS
 
-#include <string.h>
 #include "utils_file.h"
 
 #define NB_COMMANDS 7
