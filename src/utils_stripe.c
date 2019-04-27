@@ -139,15 +139,8 @@ int compute_parity_index(int numBande){
 }
 
 
-int compute_nstripev1(int nb_blocks) {
-    return nb_blocks / (r5Disk.ndisk - 1) + ((nb_blocks / (r5Disk.ndisk - 1)) % 2 != 0);
-}
-
 int compute_nstripe(int nb_blocks) {
-	int nb_block_parite = (nb_blocks / (r5Disk.ndisk - 1)) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
-	if((nb_block_parite + nb_blocks) % r5Disk.ndisk == 0)
-		return (nb_block_parite + nb_blocks) / r5Disk.ndisk;
-	return (nb_block_parite + nb_blocks + (r5Disk.ndisk - (nb_blocks + nb_block_parite) % r5Disk.ndisk)) / r5Disk.ndisk;
+    return nb_blocks / (r5Disk.ndisk - 1) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
 }
 
 block_t xor(block_t a, block_t b) {
