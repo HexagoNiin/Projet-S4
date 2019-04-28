@@ -89,5 +89,6 @@ int store_file_to_host(const char *filename) {
 	if(f == NULL) return 2;
 	if(fwrite(file.data, sizeof(uchar), file.size, f)) return 3;
 	fclose(f);
+	log2("[STORE_FILE_TO_HOST] Données lues (%d caractères) : %s", file.size, file.data)
 	return 0;
 }
