@@ -30,13 +30,8 @@ int action(char **command) {
     int i;
     for(i=0;i<NB_COMMANDS;i++) {
         if(!strcmp(command[0], command_list[i])) {
-<<<<<<< HEAD
 			log1("[INTERPRETEUR] Exécution de %s", command[0])
             return command_exec[i](command[1]);
-=======
-			log1("[INTERPRETEUR] Exécution de %s", command[0]);
-            return command_exec[i](command[1], workspace);
->>>>>>> 04250de60fdcb4e5280e1e2022db9f6fae7ecb85
         }
     }
     if(strcmp(command[0], "quit")) {
@@ -47,6 +42,15 @@ int action(char **command) {
 }
 
 int ls(char *option) {
+	int i;
+	for(i=0;i<INODE_TABLE_SIZE;i++) {
+		if(r5Disk.inodes[i].first_byte) {
+			printf("%s", r5Disk.inodes[i].filename);
+			if(!strcmp(option, "-l")) {
+				printf(" : %d octets %d sur le disque %d nombre de blocks", r5Disk.inodes[i].size, r5Disk.inodes[i].first_byte, r5Disk.inodes[i].nblock);
+			} printf("\n");
+		}
+	}
 	return 0;
 }
 
@@ -57,25 +61,8 @@ int cat(char *filename) {
     return 0;
 }
 
-<<<<<<< HEAD
 int rm(char *filename) {
     (void)filename;
-=======
-int rm(char *filename, char *workspace) {
-    int i = 0;
-	log1("[RM] Parcours de la table d'inodes : (%d emplacements)", INODE_TABLE_SIZE);
-	while(i < INODE_TABLE_SIZE && strcmp(r5Disk.inodes[i].filename, "") && strcmp(r5Disk.inodes[i].filename, filename)) {
-		log1("[RM] [%2d] %s", i, r5Disk.inodes[i].filename);
-		i++;
-	}
-	log1("[RM] [%2d] %s", i, r5Disk.inodes[i].filename);
-	if(strcmp(r5Disk.inodes[i].filename, filename)) {
-		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
-		return 1;
-	}
-	log1("[RM] Suppression de l'entrée %d", i);
-	delete_inode(i);
->>>>>>> 04250de60fdcb4e5280e1e2022db9f6fae7ecb85
     return 0;
 }
 

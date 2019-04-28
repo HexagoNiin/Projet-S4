@@ -64,6 +64,9 @@ raid5: main.o $(OS)
 clean:
 	rm -rf *.o *.exe *.stackdump
 
+mrproper:
+	rm -rf *.o *.exe *.stackdump *.out
+
 
 
 # EXPLICATIONS SUR LE MAKEFILE
