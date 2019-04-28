@@ -41,7 +41,7 @@ int read_file(const char* filename, file_t *file){
 	\param[in] filename : filename du fichier à lire
 	\param[in] fichier : fichier de lecture
 	*/
-	log2("[READ_FILE] Lecture sur le système de %s", file);
+	log2("[READ_FILE] Lecture sur le système de %s", filename);
 	char c;
 	  int i = 0;
 	  int file_exist = 0;
