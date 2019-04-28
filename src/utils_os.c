@@ -16,12 +16,12 @@ void interpreteur() {
         if(command_option) {
             exit = action(command_option);
 			if(exit && exit != -2) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
-			log1(" ");
+			if(exit != -2)  {log1(" "); }
 		}
         else
             fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Usage : command [option]\n");
     }
-	log1("[INTERPRETEUR] Fermeture de l'interpréteur");
+	log1("[INTERPRETEUR] Fermeture de l'interpréteur\n");
 
 	int u;
 	for(u=0;u<r5Disk.ndisk;u++)
