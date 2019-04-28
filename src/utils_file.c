@@ -54,7 +54,7 @@ int read_file(const char* filename, file_t *file){
 	    }
 	  }
 
-	if(!file_exits){
+	if(!file_exist){
 		return 0;
 	}
 
