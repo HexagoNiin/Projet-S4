@@ -8,6 +8,7 @@ void delete_inode(int pos){
 
 	/* supprime l'inode */
 	r5Disk.inodes[pos].first_byte = 0;
+	strcpy(r5Disk.inodes[pos].filename, "");
 
 	/* regroupe les inodes */
 	int i;
