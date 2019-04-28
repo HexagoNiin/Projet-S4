@@ -4,7 +4,7 @@ char command_list[NB_COMMANDS][COMMANDS_SIZE] = {"ls", "cat", "rm", "create", "e
 FunctionStr command_exec[NB_COMMANDS] = {&ls, &cat, &rm, &create, &edit, &load, &store};
 
 void interpreteur() {
-	log1("[INTERPRETEUR] Lancement interpreteur\n");
+	log1("[INTERPRETEUR] Lancement interpréteur\n");
     char *command = malloc(sizeof(char) * (COMMANDS_SIZE + FILENAME_MAX_SIZE + 2));
     char **command_option = NULL;
     int exit = 0;
@@ -15,12 +15,13 @@ void interpreteur() {
         command_option = parser(command);
         if(command_option) {
             exit = action(command_option);
-			if(exit) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
-			log1(" ");
+			if(exit && exit != -2) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
+			if(exit != -2) log1(" ");
 		}
         else
             fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Usage : command [option]\n");
     }
+	log1("[INTERPRETEUR] Fermeture de l'interpréteur")
 }
 
 int action(char **command) {
@@ -62,9 +63,6 @@ int cat(char *filename) {
 }
 
 int rm(char *filename) {
-<<<<<<< HEAD
-    (void)filename;
-=======
     int i = 0;
 	log1("[RM] Parcours de la table d'inodes : (%d emplacements)", INODE_TABLE_SIZE);
 	while(i < INODE_TABLE_SIZE && strcmp(r5Disk.inodes[i].filename, "") && strcmp(r5Disk.inodes[i].filename, filename)) {
@@ -78,7 +76,6 @@ int rm(char *filename) {
 	}
 	log1("[RM] Suppression de l'entrée %d", i);
 	delete_inode(i);
->>>>>>> 0933eb66ee35ab540e385cdb75bd8f1011844ded
     return 0;
 }
 

@@ -55,23 +55,20 @@ int read_file(const char* filename, file_t *file){
 	  }
 
 	if(!file_exist){
-<<<<<<< HEAD
-		return 0;
-=======
 		return 1;
->>>>>>> 0933eb66ee35ab540e385cdb75bd8f1011844ded
 	}
 
 	file->size = r5Disk.inodes[i].size;
 
 	read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
 
-	return 1;
+	return 0;
 }
 
 int load_file_from_host(const char *filename) {
 	log2("[LOAD_FILE_FROM_HOST] Chargement vers le disque virtuel de %s", filename);
 	FILE* f = fopen(filename, "r");
+	if(f == NULL) return 2;
 	file_t file;
 	fseek(f, 0, SEEK_END);
 	file.size = ftell(f);
