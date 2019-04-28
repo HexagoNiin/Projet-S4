@@ -46,7 +46,9 @@ int ls(char *option) {
 }
 
 int cat(char *filename) {
-    (void)filename;
+    file_t file;
+	read_file(filename, &file);
+	printf("%s", file.data);
     return 0;
 }
 
