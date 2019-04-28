@@ -94,13 +94,11 @@ int edit(char *filename, char *workspace) {
 }
 
 int load(char *arguments, char *workspace) {
-    load_file_from_host(arguments);
-    return 0;
+    return load_file_from_host(arguments);
 }
 
 int store(char *filename, char *workspace) {
-    (void)filename;
-    return 0;
+    return store_file_to_host(filename);
 }
 
 char **parser(char *command) {
