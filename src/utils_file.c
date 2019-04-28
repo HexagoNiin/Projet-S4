@@ -55,6 +55,7 @@ int read_file(const char* filename, file_t *file){
 	  }
 
 	if(!file_exist){
+		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
 		return 1;
 	}
 
@@ -68,7 +69,10 @@ int read_file(const char* filename, file_t *file){
 int load_file_from_host(const char *filename) {
 	log2("[LOAD_FILE_FROM_HOST] Chargement vers le disque virtuel de %s", filename);
 	FILE* f = fopen(filename, "r");
-	if(f == NULL) return 2;
+	if(f == NULL) {
+		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
+		return 2;
+	}
 	file_t file;
 	fseek(f, 0, SEEK_END);
 	file.size = ftell(f);
