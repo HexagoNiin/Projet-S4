@@ -6,9 +6,7 @@
 /// \date 2019
 #ifndef _UTILS_FILE
 #define _UTILS_FILE
-#include "../headers/raid_defines.h"
 #include "../headers/utils_inode.h"
-#include "../headers/utils_stripe.h"
 
 int write_file(const char *filename, file_t file);
 int read_file(const char *filename, file_t *file);
