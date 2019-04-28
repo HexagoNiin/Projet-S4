@@ -2,24 +2,26 @@
 #define _UTILS_OS
 
 #include "utils_file.h"
+#include <time.h>
+#include "couleur.h"
 
 #define NB_COMMANDS 7
 #define COMMANDS_SIZE 16
 #define NB_OPTIONS 1
 
-typedef int(*FunctionStr)(char*);
+typedef int(*FunctionStr)(char*, char*);
 
-int action(char **command);
-int cat(char *filename);
-int ls(char *option);
-int rm(char *filename);
-int create(char *filename);
-int edit(char *filename);
-int load(char *arguments);
-int store(char *filename);
+int action(char **command, char *workspace);
+int cat(char *filename, char *workspace);
+int ls(char *option, char *workspace);
+int rm(char *filename, char *workspace);
+int create(char *filename, char *workspace);
+int edit(char *filename, char *workspace);
+int load(char *arguments, char *workspace);
+int store(char *filename, char *workspace);
 
 
-void interpreteur();
+void interpreteur(char *workspace);
 char **parser(char *command);
 
 #endif

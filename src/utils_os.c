@@ -3,8 +3,8 @@
 char command_list[NB_COMMANDS][COMMANDS_SIZE] = {"ls", "cat", "rm", "create", "edit", "load", "store"};
 FunctionStr command_exec[NB_COMMANDS] = {&ls, &cat, &rm, &create, &edit, &load, &store};
 
-void interpreteur() {
-	log1("[INTERPRETEUR] Lancement interpreteur\n")
+void interpreteur(char *workspace) {
+	log1("[INTERPRETEUR] Lancement interpreteur\n");
     char *command = malloc(sizeof(char) * (COMMANDS_SIZE + FILENAME_MAX_SIZE + 2));
     char **command_option = NULL;
     int exit = 0;
@@ -14,7 +14,7 @@ void interpreteur() {
         fgets(command, COMMANDS_SIZE + FILENAME_MAX_SIZE + 2, stdin);
         command_option = parser(command);
         if(command_option) {
-            exit = action(command_option);
+            exit = action(command_option, workspace);
 			if(exit) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
 			log1(" ");
 		}
@@ -23,7 +23,7 @@ void interpreteur() {
     }
 }
 
-int action(char **command) {
+int action(char **command, char *workspace) {
     /// \brief execute l'action d'une command + option passé en paramètre
     /// \command command + option
     /// \return -1 si la commande est invalide, -2 si l'on veut quitter le shell, le code de retour de la commande executee sinon
@@ -31,7 +31,7 @@ int action(char **command) {
     for(i=0;i<NB_COMMANDS;i++) {
         if(!strcmp(command[0], command_list[i])) {
 			log1("[INTERPRETEUR] Exécution de %s", command[0]);
-            return command_exec[i]((command[1]));
+            return command_exec[i](command[1], workspace);
         }
     }
     if(strcmp(command[0], "quit")) {
@@ -41,12 +41,37 @@ int action(char **command) {
     return -2;
 }
 
-int ls(char *option) {
-    (void)option;
-    return 0;
+int ls(char *option, char *workspace) {
+	DIR *directory;
+	if((directory = opendir(workspace))) {
+		fprintf(stderr, ROUGE "[ERR]" BLANC "Le nom du repertoire n'est valide.\n");
+		return -1;
+	}
+	struct dirent *fichier;
+	struct stat infos;
+	while((fichier = readdir(directory))) {
+		if(strcmp(fichier->d_name, ".") && strcmp(fichier->d_name, "..")) {
+			if(!stat(fichier->d_name, &infos)) {
+				fprintf(stderr, ROUGE "[ERR]" BLANC "La recuperation des informations du fichier n'a pas aboutie.\n");
+				return -2;
+			}
+			if(!strcmp(option, "-l")) {
+				printf("%d", (int)infos.st_nlink);
+				printf(" %d", (int)infos.st_uid);
+				printf(" %d", (int)infos.st_gid);
+				printf(" %d", (int)infos.st_size);
+				printf(" %s", ctime(infos.st_atime));
+				printf(" %s", fichier->d_name);
+			} else {
+				printf("%s", fichier->d_name);
+			} printf("\n");
+		}
+	}
+	return 0;
 }
 
-int cat(char *filename) {
+int cat(char *filename, char *workspace) {
+	(void)workspace;
     file_t file;
 	read_file(filename, &file);
 	printf("%s", file.data);
@@ -70,21 +95,21 @@ int rm(char *filename) {
     return 0;
 }
 
-int create(char *filename) {
+int create(char *filename, char *workspace) {
     (void)filename;
     return 0;
 }
 
-int edit(char *filename) {
+int edit(char *filename, char *workspace) {
     (void)filename;
     return 0;
 }
 
-int load(char *arguments) {
+int load(char *arguments, char *workspace) {
     return load_file_from_host(arguments);
 }
 
-int store(char *filename) {
+int store(char *filename, char *workspace) {
     return store_file_to_host(filename);
 }
 
