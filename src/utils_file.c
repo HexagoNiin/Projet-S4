@@ -28,8 +28,8 @@ int write_file(const char *filename, file_t file) {
     /* ecriture fichier */
     int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
     if(size == -1) {
-        exit(1);
         fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
+		return 1;
     }
     inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
@@ -50,7 +50,7 @@ int load_file_from_host(const char *filename) {
 	fseek(f, 0, SEEK_SET);
 	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++) file.data[i] = fgetc(f);
 	fclose(f);
-	write_file(filename, file);
+	if(!write_file(filename, file)) return 1;
 	return 0;
 }
 

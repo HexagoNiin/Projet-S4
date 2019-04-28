@@ -15,6 +15,7 @@ void interpreteur() {
         command_option = parser(command);
         if(command_option) {
             exit = action(command_option);
+			if(exit) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
 			log1(" ");
 		}
         else
