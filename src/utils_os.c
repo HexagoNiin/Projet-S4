@@ -69,13 +69,11 @@ int edit(char *filename) {
 }
 
 int load(char *arguments) {
-    load_file_from_host(arguments);
-    return 0;
+    return load_file_from_host(arguments);
 }
 
 int store(char *filename) {
-    (void)filename;
-    return 0;
+    return store_file_to_host(filename);
 }
 
 char **parser(char *command) {

@@ -50,16 +50,16 @@ int load_file_from_host(const char *filename) {
 	fseek(f, 0, SEEK_SET);
 	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++) file.data[i] = fgetc(f);
 	fclose(f);
-	if(!write_file(filename, file)) return 1;
-	return 0;
+	return write_file(filename, file);
 }
 
 int store_file_to_host(const char *filename) {
 	log2("[STORE_FILE_TO_HOST] Importation depuis le disque virtuel de %s", filename);
 	file_t file;
-	read_file(filename, &file);
+	if(read_file(filename, &file)) return 1;
 	FILE* f = fopen(filename, "w");
-	fwrite(file.data, sizeof(uchar), file.size, f);
+	if(f == NULL) return 2;
+	if(fwrite(file.data, sizeof(uchar), file.size, f)) return 3;
 	fclose(f);
 	return 0;
 }
