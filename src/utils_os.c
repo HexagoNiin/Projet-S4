@@ -78,7 +78,7 @@ int cat(char *filename, char *workspace) {
     return 0;
 }
 
-int rm(char *filename) {
+int rm(char *filename, char *workspace) {
     int i = 0;
 	log1("[RM] Parcours de la table d'inodes : (%d emplacements)", INODE_TABLE_SIZE);
 	while(i < INODE_TABLE_SIZE && strcmp(r5Disk.inodes[i].filename, "") && strcmp(r5Disk.inodes[i].filename, filename)) {
