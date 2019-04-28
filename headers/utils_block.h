@@ -11,7 +11,6 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 #include "raid_defines.h"
 #include "utils_virtual_disk.h"
 
