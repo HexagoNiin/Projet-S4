@@ -36,42 +36,32 @@ int write_file(const char *filename, file_t file) {
     return 0;
 }
 
-int read_file(const char* filename, file_t *fichier){
+int read_file(const char* filename, file_t *file){
 	/** 	\brief lit un fichier du système
 	\param[in] filename : filename du fichier à lire
 	\param[in] fichier : fichier de lecture
 	*/
-	log2("[READ_FILE] Lecture sur le système de %s", filename);
-
+	log2("[READ_FILE] Lecture sur le système de %s", file);
 	char c;
-	int u;
-	int i = 0;
+	  int i = 0;
+	  int file_exist = 0;
 
-	int fichier_existe = 0;
+	  while(i < INODE_TABLE_SIZE && !file_exist){
+	    if (strcmp(filename, r5Disk.inodes[i].filename) == 0){
+	      file_exist = 1;
+	    }
+	    else{
+	      i++;
+	    }
+	  }
 
-	while(i < INODE_TABLE_SIZE && !fichier_existe){
-		u = 0;
-		c = r5Disk.inodes[i].filename[u];
-		while(c != '\0' && c == filename[u]){
-			u++;
-			c = r5Disk.inodes[i].filename[u];
-		}
-
-		if (c == '\0' || c == filename[u]){
-			fichier_existe = 1;
-		}
-		else{
-			i++;
-		}
-	}
-
-	if(!fichier_existe){
+	if(!file_exits){
 		return 0;
 	}
 
-	fichier->size = r5Disk.inodes[i].size;
+	file->size = r5Disk.inodes[i].size;
 
-	read_chunk(fichier->data, r5Disk.inodes[i].nblock , r5Disk.inodes[i].first_byte);
+	read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
 
 	return 1;
 }
