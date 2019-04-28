@@ -66,14 +66,14 @@ int read_file(const char* filename, file_t *fichier){
 	}
 
 	if(!fichier_existe){
-		return 0;
+		return 1;
 	}
 
 	fichier->size = r5Disk.inodes[i].size;
 
 	read_chunk(fichier->data, r5Disk.inodes[i].nblock , r5Disk.inodes[i].first_byte);
 
-	return 1;
+	return 0;
 }
 
 int load_file_from_host(const char *filename) {
