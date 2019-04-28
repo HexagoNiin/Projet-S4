@@ -28,7 +28,7 @@ int init_disk_raid5(const char* repertoryName) {
 			char* chemin = malloc(sizeof(char*));
 			sprintf(chemin, "%s/%s", repertoryName, disk->d_name);
 			/* ouverture des disks du repertoire */
-			if(!(storage[i] = fopen(chemin, "w+"))) {
+			if(!(storage[i] = fopen(chemin, "r+"))) {
 				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
 				exit(2);
 			}
@@ -46,6 +46,35 @@ int init_disk_raid5(const char* repertoryName) {
 	r5Disk.raidmode = CINQ;
 	r5Disk.storage = storage;
 
+	return 0;
+}
+
+uchar *xor_uchar(uchar *a, uchar *b, int size) {
+	uchar *buffer = malloc(size * sizeof(uchar));
+	for(int i = 0; i < size; i++) {
+		buffer[i] = a[i] ^ b[i];
+		printf("%x xor %x\n", a[i], b[i]);
+	}
+	return buffer;
+}
+
+int repair_disk(int num) {
+	int num_ref = (num == 0) ? (1) : (0);
+	fseek(r5Disk.storage[num_ref], 0, SEEK_END);
+	size_t size = ftell(r5Disk.storage[num_ref]);
+	fseek(r5Disk.storage[num_ref], 0, SEEK_SET);
+	uchar *buffer_lecture = malloc(size * sizeof(uchar));
+	uchar *buffer_ecriture = malloc(size * sizeof(uchar));
+	fread(buffer_ecriture, sizeof(uchar), size, r5Disk.storage[num_ref]);
+	for(int i = num_ref + 1; i < r5Disk.ndisk; i++) {
+		if(i != num) {
+			fseek(r5Disk.storage[i], 0, SEEK_SET);
+			fread(buffer_lecture, sizeof(uchar), size, r5Disk.storage[i]);
+			buffer_ecriture = xor_uchar(buffer_lecture, buffer_ecriture, size);
+		}
+	}
+	fseek(r5Disk.storage[num], 0, SEEK_SET);
+	fwrite(buffer_ecriture, sizeof(uchar), size, r5Disk.storage[num]);
 	return 0;
 }
 
