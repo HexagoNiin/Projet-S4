@@ -1,5 +1,45 @@
 #include "../headers/utils_file.h"
 
+
+int read_file(char* nom, file_t *fichier){
+  /** 	\brief lit un fichier du système
+     	\param[in] nom : nom du fichier à lire
+  	\param[in] fichier : fichier de lecture
+  */
+	
+  char c;
+  int u;
+  int i = 0;
+
+  int fichier_existe = 0;
+
+  while(i < INODE_TABLE_SIZE && !fichier_existe){
+    u = 0;
+    c = r5Disk.inodes[i].filename[u];
+    while(c != '\0' && c != nom[u]){
+      u++;
+      c = r5Disk.inodes[i].filename[u];
+    }
+
+    if (c == '\0' || c != nom[u]){
+      fichier_existe = 1;
+    }
+    else{
+      i++;
+    }
+  }
+
+  if(!fichier_existe){
+    return 0;
+  }
+
+  fichier->size = r5Disk.inodes[i].size;
+
+  read_chunk(fichier->data, r5Disk.inodes[i].nblock , r5Disk.inodes[i].first_byte);
+
+  return 1;
+}
+
 int write_file(const char *filename, file_t file) {
     /// \brief Ecrit un fichier sur le système
     /// \param[in] filename : nom du fichier à écrire
