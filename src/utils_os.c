@@ -62,7 +62,23 @@ int cat(char *filename) {
 }
 
 int rm(char *filename) {
+<<<<<<< HEAD
     (void)filename;
+=======
+    int i = 0;
+	log1("[RM] Parcours de la table d'inodes : (%d emplacements)", INODE_TABLE_SIZE);
+	while(i < INODE_TABLE_SIZE && strcmp(r5Disk.inodes[i].filename, "") && strcmp(r5Disk.inodes[i].filename, filename)) {
+		log1("[RM] [%2d] %s", i, r5Disk.inodes[i].filename);
+		i++;
+	}
+	log1("[RM] [%2d] %s", i, r5Disk.inodes[i].filename);
+	if(strcmp(r5Disk.inodes[i].filename, filename)) {
+		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
+		return 1;
+	}
+	log1("[RM] Suppression de l'entrée %d", i);
+	delete_inode(i);
+>>>>>>> 0933eb66ee35ab540e385cdb75bd8f1011844ded
     return 0;
 }
 
