@@ -84,7 +84,9 @@ int rm(char *filename) {
 }
 
 int create(char *filename) {
-    (void)filename;
+    file_t file;
+	file.size = 0;
+	write_file(filename, file);
     return 0;
 }
 
