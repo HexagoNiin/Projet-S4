@@ -3,7 +3,7 @@
 char command_list[NB_COMMANDS][COMMANDS_SIZE] = {"ls", "cat", "rm", "create", "edit", "load", "store"};
 FunctionStr command_exec[NB_COMMANDS] = {&ls, &cat, &rm, &create, &edit, &load, &store};
 
-void interpreteur(char *workspace) {
+void interpreteur() {
 	log1("[INTERPRETEUR] Lancement interpreteur\n");
     char *command = malloc(sizeof(char) * (COMMANDS_SIZE + FILENAME_MAX_SIZE + 2));
     char **command_option = NULL;
@@ -14,7 +14,7 @@ void interpreteur(char *workspace) {
         fgets(command, COMMANDS_SIZE + FILENAME_MAX_SIZE + 2, stdin);
         command_option = parser(command);
         if(command_option) {
-            exit = action(command_option, workspace);
+            exit = action(command_option);
 			if(exit) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
 			log1(" ");
 		}
@@ -23,15 +23,20 @@ void interpreteur(char *workspace) {
     }
 }
 
-int action(char **command, char *workspace) {
+int action(char **command) {
     /// \brief execute l'action d'une command + option passé en paramètre
     /// \command command + option
     /// \return -1 si la commande est invalide, -2 si l'on veut quitter le shell, le code de retour de la commande executee sinon
     int i;
     for(i=0;i<NB_COMMANDS;i++) {
         if(!strcmp(command[0], command_list[i])) {
+<<<<<<< HEAD
+			log1("[INTERPRETEUR] Exécution de %s", command[0])
+            return command_exec[i](command[1]);
+=======
 			log1("[INTERPRETEUR] Exécution de %s", command[0]);
             return command_exec[i](command[1], workspace);
+>>>>>>> 04250de60fdcb4e5280e1e2022db9f6fae7ecb85
         }
     }
     if(strcmp(command[0], "quit")) {
@@ -41,43 +46,21 @@ int action(char **command, char *workspace) {
     return -2;
 }
 
-int ls(char *option, char *workspace) {
-	DIR *directory;
-	if((directory = opendir(workspace))) {
-		fprintf(stderr, ROUGE "[ERR]" BLANC "Le nom du repertoire n'est valide.\n");
-		return -1;
-	}
-	struct dirent *fichier;
-	struct stat infos;
-	while((fichier = readdir(directory))) {
-		if(strcmp(fichier->d_name, ".") && strcmp(fichier->d_name, "..")) {
-			if(!stat(fichier->d_name, &infos)) {
-				fprintf(stderr, ROUGE "[ERR]" BLANC "La recuperation des informations du fichier n'a pas aboutie.\n");
-				return -2;
-			}
-			if(!strcmp(option, "-l")) {
-				printf("%d", (int)infos.st_nlink);
-				printf(" %d", (int)infos.st_uid);
-				printf(" %d", (int)infos.st_gid);
-				printf(" %d", (int)infos.st_size);
-				printf(" %s", ctime(infos.st_atime));
-				printf(" %s", fichier->d_name);
-			} else {
-				printf("%s", fichier->d_name);
-			} printf("\n");
-		}
-	}
+int ls(char *option) {
 	return 0;
 }
 
-int cat(char *filename, char *workspace) {
-	(void)workspace;
+int cat(char *filename) {
     file_t file;
 	read_file(filename, &file);
 	printf("%s", file.data);
     return 0;
 }
 
+<<<<<<< HEAD
+int rm(char *filename) {
+    (void)filename;
+=======
 int rm(char *filename, char *workspace) {
     int i = 0;
 	log1("[RM] Parcours de la table d'inodes : (%d emplacements)", INODE_TABLE_SIZE);
@@ -92,24 +75,25 @@ int rm(char *filename, char *workspace) {
 	}
 	log1("[RM] Suppression de l'entrée %d", i);
 	delete_inode(i);
+>>>>>>> 04250de60fdcb4e5280e1e2022db9f6fae7ecb85
     return 0;
 }
 
-int create(char *filename, char *workspace) {
+int create(char *filename) {
     (void)filename;
     return 0;
 }
 
-int edit(char *filename, char *workspace) {
+int edit(char *filename) {
     (void)filename;
     return 0;
 }
 
-int load(char *arguments, char *workspace) {
+int load(char *arguments) {
     return load_file_from_host(arguments);
 }
 
-int store(char *filename, char *workspace) {
+int store(char *filename) {
     return store_file_to_host(filename);
 }
 

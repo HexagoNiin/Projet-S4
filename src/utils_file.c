@@ -41,7 +41,7 @@ int read_file(const char* filename, file_t *file){
 	\param[in] fichier : fichier de lecture
 	*/
 	log2("[READ_FILE] Lecture sur le système de %s", filename);
-	char c;
+	//char c;
 	  int i = 0;
 	  int file_exist = 0;
 
@@ -55,7 +55,11 @@ int read_file(const char* filename, file_t *file){
 	  }
 
 	if(!file_exist){
+<<<<<<< HEAD
+		return 0;
+=======
 		return 1;
+>>>>>>> 04250de60fdcb4e5280e1e2022db9f6fae7ecb85
 	}
 
 	file->size = r5Disk.inodes[i].size;
