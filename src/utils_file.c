@@ -52,12 +52,12 @@ int read_file(const char* filename, file_t *fichier){
 	while(i < INODE_TABLE_SIZE && !fichier_existe){
 		u = 0;
 		c = r5Disk.inodes[i].filename[u];
-		while(c != '\0' && c != filename[u]){
+		while(c != '\0' && c == filename[u]){
 			u++;
 			c = r5Disk.inodes[i].filename[u];
 		}
 
-		if (c == '\0' || c != filename[u]){
+		if (c == '\0' || c == filename[u]){
 			fichier_existe = 1;
 		}
 		else{
