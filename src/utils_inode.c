@@ -159,6 +159,7 @@ int update_inodes_table(inode_t inode) {
 	/// \return 0 s'il y a eu une erreur, 1 sinon
 	if(r5Disk.number_of_files < INODE_TABLE_SIZE) {
 		r5Disk.inodes[get_unused_inode()] = inode;
+		printf("[DBG] : %d\n", get_unused_inode()); //TEST ICI ALED OULOULOU
 		r5Disk.number_of_files++;
 		update_first_free_byte(inode.first_byte);
 		return 0;
