@@ -7,7 +7,6 @@
 #ifndef _UTILS_VIRTUAL_DISK
 #define _UTILS_VIRTUAL_DISK
 
-
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
