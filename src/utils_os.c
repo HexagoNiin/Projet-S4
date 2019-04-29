@@ -96,7 +96,7 @@ int edit(char *filename) {
 	char fullname[FILENAME_MAX_SIZE + 4];
 	sprintf(fullname, "%s.tmp", filename);
 	store_file_to_host(fullname);
-	pid_t pid;
+	/*pid_t pid;
 	switch((pid = fork())) {
 		case -1:
 			fprintf(stderr, "Erreur lors de la creation du fils.\n");
@@ -115,7 +115,7 @@ int edit(char *filename) {
 	fwrite(&file.data, sizeof(uchar), MAX_FILE_SIZE, f);
 	write_file(filename, file);
 	fclose(f);
-	remove(fullname);
+	remove(fullname);*/
     return 0;
 }
 

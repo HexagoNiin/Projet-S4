@@ -104,6 +104,7 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     int i, j, pos = 0;
     int nChunks = compute_nblock(nChars);
     int nStripes = compute_nstripe(nChunks);
+
     stripe_t stripe;
     stripe.nblocks = r5Disk.ndisk;
     stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
