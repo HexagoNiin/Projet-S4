@@ -91,7 +91,25 @@ int create(char *filename) {
 }
 
 int edit(char *filename) {
-    (void)filename;
+	file_t file;
+    read_file(filename, &file);
+	char fullname[FILENAME_MAX_SIZE + 4];
+	sprintf(fullname, "%s.tmp", filename);
+	store_file_to_host(fullname);
+	pid_t pid;
+	switch((pid = fork())) {
+		case -1:
+			fprintf(stderr, "Erreur lors de la creation du fils.\n");
+			return -2;
+		case 0:
+			execlp("nano", "nano", filename, NULL);
+		default:
+			wait(NULL);
+	}
+	fwrite(&file.data, sizeof(uchar), MAX_FILE_SIZE, f);
+	write_file(filename, file);
+	fclose(f);
+	remove(fullname);
     return 0;
 }
 

@@ -32,6 +32,7 @@ int write_file(const char *filename, file_t file) {
     }
     inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
+	write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
     return 0;
 }
 
@@ -54,7 +55,7 @@ int read_file(const char* filename, file_t *file){
 	    }
 	  }
 
-	if(!file_exist){
+	if(!file_exist) {
 		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
 		return 1;
 	}

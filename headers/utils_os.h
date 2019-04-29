@@ -3,6 +3,7 @@
 
 #include "utils_file.h"
 #include "couleur.h"
+#include <wait.h>
 
 #define NB_COMMANDS 7
 #define COMMANDS_SIZE 16

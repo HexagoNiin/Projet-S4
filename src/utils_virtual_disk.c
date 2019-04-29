@@ -41,7 +41,7 @@ int init_disk_raid5(const char* repertoryName) {
 	r5Disk.number_of_files = 0;
 	r5Disk.super_block.raid_type = CINQ;
 	r5Disk.super_block.nb_blocks_used = 0;
-	r5Disk.super_block.first_free_byte = SUPER_BLOCK_SIZE * BLOCK_SIZE;
+	r5Disk.super_block.first_free_byte = (SUPER_BLOCK_SIZE / nbFiles) * BLOCK_SIZE + (write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE) * BLOCK_SIZE);
 	r5Disk.ndisk = nbFiles;
 	r5Disk.raidmode = CINQ;
 	r5Disk.storage = storage;

@@ -34,19 +34,21 @@ uchar *indtostr(inode_t inode) {
 
 int write_inodes_table(int startbyte) {
     /// \brief Ecrit la table d'inode sur le système RAID.
-    /// \param[in] startbyte : position
-    /// \return 0 si tout s'est bien passé, 1 s'il y a eu une erreur lors du cast de la table, 2 s'il y a eu erreur lors de l'écriture
+    /// \param[in] startbyte : position en octet
+    /// \return -1 s'il y a eu une erreur, le nombre de bandes écrites sinon
     int i, nStripe = 0;
+	int totalStripe = 0
 	uchar *buffer = NULL;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
         buffer = indtostr(r5Disk.inodes[i]);
         if((nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE))) == -1) {
             fprintf(stderr, "Erreur lors de l'ecriture d'une inode.\n");
-            return EXIT_FAILURE;
+            return -1;
         }
+		totalStripe += nStripe
 		free(buffer);
     }
-    return EXIT_SUCCESS;
+    return totalStripe;
 }
 
 inode_t strtoind(uchar *str) {
