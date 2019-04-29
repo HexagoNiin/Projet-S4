@@ -44,10 +44,10 @@ int init_disk_raid5(const char* repertoryName) {
 	r5Disk.super_block.nb_blocks_used = 0;
 	r5Disk.raidmode = CINQ;
 	r5Disk.storage = storage;
-    r5Disk.super_block.first_free_byte = ((SUPER_BLOCK_SIZE / nbFiles) * BLOCK_SIZE) + (write_inodes_table((SUPER_BLOCK_SIZE / nbFiles) * BLOCK_SIZE) * BLOCK_SIZE);
-
-	read_inodes_table(SUPER_BLOCK_SIZE * BLOCK_SIZE);
-
+    r5Disk.super_block.first_free_byte = INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE;
+    if(!read_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE)) {
+        fprintf(stderr, "Aucune inode n'a ete trouvee.\n");
+    }
 	return 0;
 }
 

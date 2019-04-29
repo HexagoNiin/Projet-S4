@@ -15,7 +15,7 @@
 #define MAX_MSG 1024 // uchar
 #define SUPER_BLOCK_SIZE 4 // nb blocs avec parité
 #define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE+1 // en octets
-#define INODE_SIZE 11 // en blocks avec parité
+#define INODE_SIZE 16 // en blocks avec parité
 
 typedef unsigned int uint; // même taille que int
 typedef unsigned char uchar; // 8 bits = octet

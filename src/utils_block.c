@@ -74,29 +74,23 @@ int block_repair(int pos, int id_disk) {
     } return 2;
 }
 
-int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
+int read_block (block_t *block, uint pos, FILE *disk) {
 	/**
 	* \brief Lit le bloc à une position sur un disque.
    	* \param[in] *block : Pointeur du bloc dans lequel on rend la lecture.
 		     pos : Position du bloc.
    		     disk : Disque dans lequel on lit.
-    	* \param[out] Un entier indiquant si l'opération s'est bien passée.
+    * \param[out] Un entier indiquant si l'opération s'est bien passée.
 	*/
 	uchar c;
 	int i;
-
-	/*for (i = 0; i < (pos * BLOCK_SIZE); i++){ //offset
-		c = fgetc(disk);
-
-		if (c == EOF)
-			return(1);//inaccessible
-	}*/
 	fseek(disk, pos, SEEK_SET);
 	for (i = 0; i < BLOCK_SIZE; i ++){
 		c = fgetc(disk);
 
-		if (c == EOF)
+		if (c == 255) {
 			return(1);//inaccessible
+		}
 
 		block->data[i] = c;
 	}

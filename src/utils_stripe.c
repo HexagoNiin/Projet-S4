@@ -7,7 +7,10 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	int posDisk = 0;
 	while(posBuffer < nChars) {
 		stripe_t stripe;
-		read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE);
+		if(read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE)) {
+			fprintf(stderr, "Erreur lecture du chunk\n");
+			return -1;
+		}
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
 			if(i != compute_parity_index(startbyte + posDisk)) {
@@ -32,7 +35,6 @@ int read_stripe(stripe_t *stripe, uint pos){
 	*/
 	stripe->nblocks = r5Disk.ndisk;
 	stripe->stripe = malloc((r5Disk.ndisk)* sizeof(block_t));
-
 	for(int i = 0; i < r5Disk.ndisk; i++) {
 		if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])) {
 			printf("erreur de lecture [read_block]\n");

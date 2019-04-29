@@ -75,11 +75,11 @@ int read_inodes_table(int startbyte) {
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
 		if((nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE))) == -1) {
 			fprintf(stderr, "Erreur lors de la lecture d'une inode.\n");
-			return 1;
+			return 0;
 		}
 		r5Disk.inodes[i] = strtoind(buffer);
 	}
-	return 0;
+	return 1;
 }
 
 int get_unused_inode() {
