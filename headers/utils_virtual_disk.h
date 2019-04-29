@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "raid_defines.h"
+#include "utils_inode.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>

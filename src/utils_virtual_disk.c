@@ -46,6 +46,8 @@ int init_disk_raid5(const char* repertoryName) {
 	r5Disk.raidmode = CINQ;
 	r5Disk.storage = storage;
 
+	read_inodes_table(SUPER_BLOCK_SIZE * BLOCK_SIZE);
+
 	return 0;
 }
 
