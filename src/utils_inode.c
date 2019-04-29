@@ -86,7 +86,9 @@ int get_unused_inode() {
     /// \brief Retourne l'indice du premier inode disponible dans la table.
     /// \return L'indice d'un inode ou -1 si la table est pleine
     int i;
+	log3("[GET_UNUSED_INODE] Parcours de la table d'inode :");
     for(i=0;i<INODE_TABLE_SIZE;i++) {
+		log3("[GET_UNUSED_INODE] [%d] first_byte : %d", i, r5Disk.inodes[i].first_byte);
         if(r5Disk.inodes[i].first_byte == 0)
             return i;
     }
