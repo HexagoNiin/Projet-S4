@@ -100,11 +100,17 @@ int edit(char *filename) {
 	switch((pid = fork())) {
 		case -1:
 			fprintf(stderr, "Erreur lors de la creation du fils.\n");
-			return -2;
+			return -1;
 		case 0:
 			execlp("nano", "nano", filename, NULL);
 		default:
 			wait(NULL);
+	}
+
+	FILE *f = fopen(fullname, "r");
+	if(!f) {
+		fprintf(stderr, "Erreur ouverture %s.\n", fullname);
+		return -2;
 	}
 	fwrite(&file.data, sizeof(uchar), MAX_FILE_SIZE, f);
 	write_file(filename, file);

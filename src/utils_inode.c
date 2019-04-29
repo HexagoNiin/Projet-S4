@@ -37,7 +37,7 @@ int write_inodes_table(int startbyte) {
     /// \param[in] startbyte : position en octet
     /// \return -1 s'il y a eu une erreur, le nombre de bandes écrites sinon
     int i, nStripe = 0;
-	int totalStripe = 0
+	int totalStripe = 0;
 	uchar *buffer = NULL;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
         buffer = indtostr(r5Disk.inodes[i]);
@@ -45,7 +45,7 @@ int write_inodes_table(int startbyte) {
             fprintf(stderr, "Erreur lors de l'ecriture d'une inode.\n");
             return -1;
         }
-		totalStripe += nStripe
+		totalStripe += nStripe;
 		free(buffer);
     }
     return totalStripe;
