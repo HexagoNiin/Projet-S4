@@ -8,7 +8,7 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	while(posBuffer < nChars) {
 		stripe_t stripe;
 		if(read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE)) {
-			fprintf(stderr, "Erreur lecture du chunk\n");
+			log4("[READ_CHUNK] Erreur lecture du chunk");
 			return -1;
 		}
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
@@ -37,7 +37,7 @@ int read_stripe(stripe_t *stripe, uint pos){
 	stripe->stripe = malloc((r5Disk.ndisk)* sizeof(block_t));
 	for(int i = 0; i < r5Disk.ndisk; i++) {
 		if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])) {
-			printf("erreur de lecture [read_block]\n");
+			log4("[READ_STRIPE] Erreur de lecture du bloc\n");
 			return 1;
 		}
 	}
@@ -52,7 +52,7 @@ int write_stripe(stripe_t stripe, int pos) {
     int i;
     for(i=0;i<stripe.nblocks;i++) {
             if(write_block(stripe.stripe[i], pos, r5Disk.storage[i])) {
-                fprintf(stderr, "Erreur lors de l'ecriture de la bande.\n");
+                log4("[WRITE_STRIPE] Erreur lors de l'ecriture de la bande.\n");
                 return EXIT_FAILURE;
             }
     }
