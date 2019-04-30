@@ -31,4 +31,8 @@ public class VirtualDisk {
     	}*/ //JE SAIS PAS LIRE DES DOSSIERS EN JAVA C'EST L'ENFER
     	number_of_files = 0;
     }
+    
+    public VirtualDisk() {}
+    
+    public int getNDisk() { return ndisk; }
 }

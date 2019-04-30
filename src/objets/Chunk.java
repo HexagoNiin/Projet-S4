@@ -43,16 +43,15 @@ public class Chunk {
 	public int write_chunk(int startbyte, File [] disks) {
 		int NB_DISK = 4;
 		Stripe stripe = new Stripe(NB_DISK);
-		int nChunks = stripe.compute_final_nblock(NB_DISK);
-		int nStripes = stripe.compute_nstripe(nChunks);
+		int nStripes = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 		
 		for(int i = 0; i < nStripes; i++) {
 			Block [] blocks = this.generateStripe(NB_DISK);
 			int i_blocks = 0;
 			
 			for(int j = 0; j < NB_DISK; j++) {
-				if(j == stripe.compute_parity_index(i)) {
-					stripe.setIStripe(stripe.compute_parity(blocks, NB_DISK-1), j); // compute_parity...
+				if(j == new Utils().compute_parity_index(i)) {
+					stripe.setIStripe(new Utils().compute_parity(blocks, NB_DISK-1), j); // compute_parity...
 				} else {
 					stripe.setIStripe(blocks[i_blocks], j);
 					i_blocks++;
