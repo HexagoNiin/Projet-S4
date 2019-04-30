@@ -1,7 +1,5 @@
 package objets;
 
-import java.io.*;
-
 public class Stripe {
 	
 	private int nblocks;
@@ -36,9 +34,9 @@ public class Stripe {
 	 * @return 0 si l'operation s'est bien passee, 1 s'il y a eu un probleme d'ecriture.
 	 */
 	
-	public int write_stripes(int pos, File [] disks) {
+	public int write_stripes(int pos) {
 		for(int i = 0; i < this.getNblocks(); i++) {
-			if(this.getIStripe(i).write_block(pos, disks[i]) != 0) {
+			if(this.getIStripe(i).write_block(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
 				System.err.println("Erreur lors de l'écriture de la bande.");
 				return 1;
 			}

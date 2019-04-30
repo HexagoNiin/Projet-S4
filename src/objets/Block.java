@@ -53,11 +53,11 @@ public class Block {
 	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur lecture, 2 : Erreur �criture)
 	 */
 	
-	public int block_repair(int pos, File [] disks, int id_disk, int nbr_disks) {
+	public int block_repair(int pos, int id_disk) {
 		Block block = new Block();
-		for(int i = 0;i < nbr_disks; i++) {
+		for(int i = 0;i < (new VirtualDisk()).getNDisk(); i++) {
 			if(i != id_disk) {
-				if(block.read_block(pos, disks[i]) == 0) {
+				if(block.read_block(pos, (new VirtualDisk()).getStorage()[i]) == 0) {
 					System.err.println("Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
 					return 1;
 				}
@@ -66,7 +66,7 @@ public class Block {
 				}
 			}
 		}
-		if(this.write_block(pos, disks[id_disk]) == 0) {
+		if(this.write_block(pos, (new VirtualDisk()).getStorage()[id_disk]) == 0) {
 			return 0;
 		}
 		return 2;

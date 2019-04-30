@@ -35,4 +35,6 @@ public class VirtualDisk {
     public VirtualDisk() {}
     
     public int getNDisk() { return ndisk; }
+    
+    public File [] getStorage() { return storage; }
 }
