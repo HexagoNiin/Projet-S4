@@ -4,12 +4,12 @@ import java.io.*;
 import java.nio.file.*;
 
 public class VirtualDisk {
-	private int number_of_files;
-	private SuperBlock super_block;
-	private TableInode inodes;// tableau
-	private int ndisk;
-	private String raid; // type de RAID
-    private File [] storage; //tab[NUMBER_OF_DISKS];
+	private static int number_of_files;
+	private static SuperBlock super_block;
+	private static TableInode inodes;// tableau
+	private static int ndisk;
+	private static String raid; // type de RAID
+    private static File [] storage; //tab[NUMBER_OF_DISKS];
     
     public VirtualDisk(String nom_rep) {
     	/*Path chemin = Paths.get(nom_rep);
