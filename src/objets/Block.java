@@ -18,7 +18,7 @@ public class Block {
 		this.data[i] = data;
 	}
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & C�dric MARTIN
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
 	 * @param pos Position o� �crire le block
 	 * @param disk_id Disk sur lequel �crire le block	
 	 * @return Un entier indiquant si l'opération s'est bien passée (0 : OK, 1 : Erreur cast, 2 ; Erreur �criture) 
@@ -45,7 +45,7 @@ public class Block {
 	}
 	
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & C�dric MARTIN
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
 	 * @param pos Position du block eronn�
 	 * @param disks Tableau des disks utilis�s par le RAID
 	 * @param id_disk Index du disk avec le block eronn�
