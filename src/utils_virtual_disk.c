@@ -69,7 +69,7 @@ uchar *xor_uchar(uchar *a, uchar *b, int size) {
 	uchar *buffer = malloc(size * sizeof(uchar));
 	for(int i = 0; i < size; i++) {
 		buffer[i] = a[i] ^ b[i];
-		printf("%x xor %x\n", a[i], b[i]);
+		//printf("%x xor %x\n", a[i], b[i]);
 	}
 	return buffer;
 }
