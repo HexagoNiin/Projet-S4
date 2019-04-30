@@ -70,7 +70,7 @@ int block_repair(int pos, int id_disk) {
         }
     }
     if(!write_block(block_repare, pos, r5Disk.storage[id_disk])) {
-        return 0;
+        return EXIT_SUCCESS;
     } return 2;
 }
 
@@ -88,12 +88,12 @@ int read_block (block_t *block, uint pos, FILE *disk) {
 	for (i = 0; i < BLOCK_SIZE; i ++){
 		if (feof(disk)) {
 			log5("[READ_BLOCK] Fin de fichier detectee.\n");
-			return 1;
+			return EXIT_FAILURE;
 		}
 		c = fgetc(disk);
 		block->data[i] = c;
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 char* itoh(int x) {
@@ -145,10 +145,10 @@ int display_pos(uint pos, FILE* disk) {
 
 	if (read_block(&block, pos, disk)){
 		log5("[DISLAY_POS] Erreur de lecture du bloc");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	display_block(block);
 
-	return 0;
+	return EXIT_SUCCESS;
 }

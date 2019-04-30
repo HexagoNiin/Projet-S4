@@ -40,10 +40,10 @@ int read_stripe(stripe_t *stripe, uint pos){
 	for(int i = 0; i < r5Disk.ndisk; i++) {
 		if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])) {
 			log4("[READ_STRIPE] Erreur de lecture du bloc\n");
-			return 1;
+			return EXIT_FAILURE;
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 int write_stripe(stripe_t stripe, int pos) {

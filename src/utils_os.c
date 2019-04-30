@@ -58,7 +58,7 @@ int ls(char *option) {
 			} printf("\n");
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 int cat(char *filename) {
@@ -66,9 +66,9 @@ int cat(char *filename) {
 	int code = read_file(filename, &file);
 	if(!code) {
 		printf("%s", file.data);
-		return 1;
+		return EXIT_SUCCESS;
 	}
-    return 0;
+    return EXIT_FAILURE;
 }
 
 int rm(char *filename) {
@@ -81,21 +81,23 @@ int rm(char *filename) {
 	log1("[RM] [%2d] %s", i, r5Disk.inodes[i].filename);
 	if(strcmp(r5Disk.inodes[i].filename, filename)) {
 		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 	log1("[RM] Suppression de l'entrée %d", i);
 	delete_inode(i);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int create(char *filename) {
     file_t file;
 	file.size = 0;
 	write_file(filename, file);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int edit(char *filename) {
+	(void)filename;
+	/*
 	file_t file;
     read_file(filename, &file);
 	char fullname[FILENAME_MAX_SIZE + 4];
@@ -120,7 +122,7 @@ int edit(char *filename) {
 	fwrite(&file.data, sizeof(uchar), MAX_FILE_SIZE, f);
 	write_file(filename, file);
 	fclose(f);
-	remove(fullname);
+	remove(fullname);*/
     return 0;
 }
 

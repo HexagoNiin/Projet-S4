@@ -42,7 +42,7 @@ int init_disk_raid5(const char* repertoryName) {
     r5Disk.storage = storage;
     r5Disk.super_block.raid_type = CINQ;
     r5Disk.raidmode = CINQ;
-    if(!read_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE)) {
+    if(read_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE)) {
         printf("Systeme inexistant : mise en place du systeme RAID\n");
         r5Disk.number_of_files = 0;
         r5Disk.super_block.nb_blocks_used = INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE;
@@ -62,7 +62,7 @@ int init_disk_raid5(const char* repertoryName) {
             exit(3);
     }
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 uchar *xor_uchar(uchar *a, uchar *b, int size) {
@@ -91,5 +91,5 @@ int repair_disk(int num) {
 	}
 	fseek(r5Disk.storage[num], 0, SEEK_SET);
 	fwrite(buffer_ecriture, sizeof(uchar), size, r5Disk.storage[num]);
-	return 0;
+	return EXIT_SUCCESS;
 }

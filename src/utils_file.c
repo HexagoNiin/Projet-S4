@@ -18,7 +18,7 @@ int write_file(const char *filename, file_t file) {
             r5Disk.inodes[i-1].size = file.size;
             strcpy(r5Disk.inodes[i-1].filename, filename);
             r5Disk.inodes[i-1].nblock = nstripe * r5Disk.ndisk;
-            return 0;
+            return EXIT_SUCCESS;
         } else {
 			log2("[WRITE_FILE] Le fichier est plus grand que l'original.");
             /* supprimer inode */
@@ -32,13 +32,13 @@ int write_file(const char *filename, file_t file) {
     int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
     if(size == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
-		return 1;
+		return EXIT_FAILURE;
     }
     inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
 	write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
 	write_super_block();
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int read_file(const char* filename, file_t *file){
@@ -61,12 +61,12 @@ int read_file(const char* filename, file_t *file){
 	}
 	if(!file_exist) {
 		fprintf(stdin, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 	file->size = r5Disk.inodes[i].size;
 	read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 int load_file_from_host(const char *filename) {
@@ -74,7 +74,7 @@ int load_file_from_host(const char *filename) {
 	FILE* f = fopen(filename, "r");
 	if(f == NULL) {
 		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'a pas été trouvé.\n");
-		return 2;
+		return EXIT_FAILURE;
 	}
 	file_t file;
 	fseek(f, 0, SEEK_END);
@@ -95,5 +95,5 @@ int store_file_to_host(const char *filename) {
 	log2("[STORE_FILE_TO_HOST] Données lues (%d caractères) : %s", file.size, file.data)
 	if(fwrite(file.data, sizeof(uchar), file.size, f) != file.size) return 3;
 	fclose(f);
-	return 0;
+	return EXIT_SUCCESS;
 }

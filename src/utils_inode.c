@@ -81,11 +81,11 @@ int read_inodes_table(int startbyte) {
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
 		if((nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE))) == -1) {
 			fprintf(stderr, "Erreur lors de la lecture d'une inode.\n");
-			return 0;
+			return EXIT_FAILURE;
 		}
 		r5Disk.inodes[i] = strtoind(buffer);
 	}
-	return 1;
+	return EXIT_SUCCESS;
 }
 
 int get_unused_inode() {
@@ -121,9 +121,9 @@ int write_super_block() {
     uchar *buffer = sbtostr(r5Disk.super_block);
     if(write_chunk(buffer, sizeof(super_block_t), 0) == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du super block.\n");
-        return 0;
+        return EXIT_FAILURE;
     }
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 super_block_t strtosb(uchar *str) {
@@ -146,10 +146,10 @@ int read_super_block() {
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(super_block_t));
 	if(read_chunk(buffer, sizeof(super_block_t), 0) == -1) {
 		fprintf(stderr, "Erreur lors de la lecture du super block.\n");
-        return 0;
+        return EXIT_FAILURE;
 	}
 	r5Disk.super_block = strtosb(buffer);
-	return 1;
+	return EXIT_SUCCESS;
 }
 
 inode_t init_inode(const char *filename, uint size, uint position) {
@@ -178,10 +178,10 @@ int update_inodes_table(inode_t inode) {
 		r5Disk.number_of_files++;
 		update_first_free_byte((inode.nblock / r5Disk.ndisk) * BLOCK_SIZE);
 		r5Disk.super_block.nb_blocks_used += inode.nblock;
-		return 0;
+		return EXIT_SUCCESS;
 	} else {
 		fprintf(stderr, "Erreur, la table d'inodes est pleine, le fichier n'a pas ete ajoute.\n");
-		return 1;
+		return EXIT_FAILURE;
 	}
 }
 
