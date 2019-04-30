@@ -6,6 +6,10 @@ void delete_inode(int pos){
     * \param[in] pos : position du noeud à supprimer.
     */
 
+	/* super_block */
+	r5Disk.super_block.nb_blocks_used -= r5Disk.inodes[pos].nblock;
+	r5Disk.super_block.first_free_byte -= (r5Disk.inodes[pos].nblock / r5Disk.ndisk) * BLOCK_SIZE;
+
 	/* supprime l'inode */
 	r5Disk.inodes[pos].first_byte = 0;
 	strcpy(r5Disk.inodes[pos].filename, "");
@@ -15,6 +19,8 @@ void delete_inode(int pos){
 	for(i=pos; i < INODE_TABLE_SIZE-1; i++)
 		r5Disk.inodes[i] = r5Disk.inodes[i+1];
 	r5Disk.number_of_files--;
+	write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
+	write_super_block();
 }
 
 uchar *indtostr(inode_t inode) {
@@ -98,21 +104,22 @@ int get_unused_inode() {
 uchar *sbtostr(super_block_t sb) {
 	/// \brief Transforme la structure super_block_t en chaine de caractères
 	/// \return la chaine de caractères
-	unsigned char *str = malloc(sizeof(super_block_t) * sizeof(unsigned char));
+	uchar *str = malloc(sizeof(super_block_t) * sizeof(uchar));
 	memcpy(str, &sb.raid_type, sizeof(sb.raid_type));
 	int i = (int)sizeof(sb.raid_type);
 	memcpy(&str[i], &sb.nb_blocks_used, sizeof(uint));
 	i += (int)sizeof(uint);
 	memcpy(&str[i], &sb.first_free_byte, sizeof(uint));
+
 	return str;
 }
 
-int write_super_block(int *startbyte) {
+int write_super_block() {
 	/// \brief Ecrit le super block sur le système RAID
 	/// \param[out] startbyte : premiere bande libre sur le RAID
 	/// \return 0 s'il y a une erreur, 1 sinon
     uchar *buffer = sbtostr(r5Disk.super_block);
-    if((*startbyte = write_chunk(buffer, sizeof(super_block_t), 0)) == -1) {
+    if(write_chunk(buffer, sizeof(super_block_t), 0) == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du super block.\n");
         return 0;
     }
@@ -123,6 +130,7 @@ super_block_t strtosb(uchar *str) {
 	/// \brief Transforme une chaine de caractères en super block
 	/// \param[in] str : la chaine de caractères
 	/// \return le super block généré
+
 	super_block_t sb;
 	memcpy(&sb.raid_type, str, sizeof(sb.raid_type));
 	int i = (int)sizeof(sb.raid_type);
@@ -150,6 +158,7 @@ inode_t init_inode(const char *filename, uint size, uint position) {
 	/// \param[in] size : la taille du fichier en octets
 	/// \param[in] position : la positon du fichier sur le RAID
 	/// \return l'inode créée
+	log3("[UPDATE_INODES_TABLE] Creation inode : nom %s taille %d position %d", filename, size, position);
 	inode_t inode;
 	strcpy(inode.filename, filename);
 	inode.size = size;
@@ -164,9 +173,11 @@ int update_inodes_table(inode_t inode) {
 	/// \return 0 s'il y a eu une erreur, 1 sinon
 	if(r5Disk.number_of_files < INODE_TABLE_SIZE) {
 		r5Disk.inodes[get_unused_inode()] = inode;
-		log3("[UPDATE_INODES_TABLE] Prochaine inode libre : %d", get_unused_inode()); //TEST ICI ALED OULOULOU
+		log3("[UPDATE_INODES_TABLE] Prochaine inode libre : %d", get_unused_inode());
+
 		r5Disk.number_of_files++;
-		update_first_free_byte(inode.first_byte);
+		update_first_free_byte((inode.nblock / r5Disk.ndisk) * BLOCK_SIZE);
+		r5Disk.super_block.nb_blocks_used += inode.nblock;
 		return 0;
 	} else {
 		fprintf(stderr, "Erreur, la table d'inodes est pleine, le fichier n'a pas ete ajoute.\n");

@@ -2,6 +2,8 @@
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	/// \brief Lis une chaine de caractères du RAID
+	/// \param[out] buffer : Chaine de caractere lue
+	/// \param[in] nChars : Nombre de caracteres a lire
 	/// \param[in] startbyte : Position où lire la chaine en octets
 	int posBuffer = 0;
 	int posDisk = 0;
@@ -106,7 +108,6 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     int i, j, pos = 0;
     int nChunks = compute_nblock(nChars);
     int nStripes = compute_nstripe(nChunks);
-
     stripe_t stripe;
     stripe.nblocks = r5Disk.ndisk;
     stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);

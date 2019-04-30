@@ -13,13 +13,15 @@ void interpreteur() {
         printf("\x1B[94mSysteme RAID\x1B[0m$ ");
         fgets(command, COMMANDS_SIZE + FILENAME_MAX_SIZE + 2, stdin);
         command_option = parser(command);
-        if(command_option) {
+		log1("Parser - Code de retour : %p\n", command_option);
+        if(command_option != NULL) {
             exit = action(command_option);
 			if(exit && exit != -2) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
 			if(exit != -2)  {log1(" "); }
+		} else {
+			fprintf(stdin, "\x1B[91m[ERR]\x1B[0m Usage : command [option]\n");
+			log1("Usage - Error\n");
 		}
-        else
-            fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Usage : command [option]\n");
     }
 	log1("[INTERPRETEUR] Fermeture de l'interpréteur\n");
 
@@ -61,8 +63,11 @@ int ls(char *option) {
 
 int cat(char *filename) {
     file_t file;
-	read_file(filename, &file);
-	printf("%s", file.data);
+	int code = read_file(filename, &file);
+	if(!code) {
+		printf("%s", file.data);
+		return 1;
+	}
     return 0;
 }
 
@@ -96,7 +101,7 @@ int edit(char *filename) {
 	char fullname[FILENAME_MAX_SIZE + 4];
 	sprintf(fullname, "%s.tmp", filename);
 	store_file_to_host(fullname);
-	/*pid_t pid;
+	pid_t pid;
 	switch((pid = fork())) {
 		case -1:
 			fprintf(stderr, "Erreur lors de la creation du fils.\n");
@@ -115,7 +120,7 @@ int edit(char *filename) {
 	fwrite(&file.data, sizeof(uchar), MAX_FILE_SIZE, f);
 	write_file(filename, file);
 	fclose(f);
-	remove(fullname);*/
+	remove(fullname);
     return 0;
 }
 
@@ -140,8 +145,9 @@ char **parser(char *command) {
     token = strtok(command, " \n");
     int i = 0;
     while(token != NULL) {
-        if(i > NB_OPTIONS)
+        if(i > NB_OPTIONS) {
             return NULL;
+		}
         strcpy(command_option[i], token);
         token = strtok(NULL, " \n");
         i++;

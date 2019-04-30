@@ -1,0 +1,2 @@
+ - verifier la taille d'un fichier avant de l'ecrire, que ca ne depasse sur un autre si la taille est trop grande (c'est le cas pour nous)
+ - probleme : ajout de 3 fichiers, en supprimant le 2 puis le 1, le 3 se retrouve avec du texte qui n'est pas a lui (pointe plus au bon endroit ? suppression mal faite ?)

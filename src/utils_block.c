@@ -86,15 +86,14 @@ int read_block (block_t *block, uint pos, FILE *disk) {
 	int i;
 	fseek(disk, pos, SEEK_SET);
 	for (i = 0; i < BLOCK_SIZE; i ++){
-		c = fgetc(disk);
-
-		if (c == 255) {
-			return(1);//inaccessible
+		if (feof(disk)) {
+			log5("[READ_BLOCK] Fin de fichier detectee.\n");
+			return 1;
 		}
-
+		c = fgetc(disk);
 		block->data[i] = c;
 	}
-	return(0);
+	return 0;
 }
 
 char* itoh(int x) {

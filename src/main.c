@@ -11,6 +11,10 @@ int main(int argc, char *argv[]) {
 	log6("[MAIN] Logs de niveau 6 activés");
 	log1(" ");
 	init_disk_raid5("systeme");
+    log1("[R5DISK] nfiles %d", r5Disk.number_of_files);
+    log1("      SP block used %d", r5Disk.super_block.nb_blocks_used);
+    log1("      SP free byte  %d", r5Disk.super_block.first_free_byte);
+    log1("         ndisk %d", r5Disk.ndisk);
     interpreteur();
     return 0;
 }
