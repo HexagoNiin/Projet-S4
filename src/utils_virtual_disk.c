@@ -58,8 +58,10 @@ int init_disk_raid5(const char* repertoryName) {
         int u;
         for(u=0;r5Disk.inodes[u].first_byte;u++);
         r5Disk.number_of_files = u;
-        if(!read_super_block())
+        if(read_super_block()) {
+            fprintf(stderr, "Erreur lors de la lecture du super block.\n");
             exit(3);
+        }
     }
 
 	return EXIT_SUCCESS;

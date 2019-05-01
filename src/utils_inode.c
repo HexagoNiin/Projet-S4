@@ -6,9 +6,10 @@ void delete_inode(int pos){
     * \param[in] pos : position du noeud à supprimer.
     */
 
-	/* super_block */
+	/* mise a jour super_block */
 	r5Disk.super_block.nb_blocks_used -= r5Disk.inodes[pos].nblock;
-	r5Disk.super_block.first_free_byte -= (r5Disk.inodes[pos].nblock / r5Disk.ndisk) * BLOCK_SIZE;
+	if(pos == INODE_TABLE_SIZE - 1 && !r5Disk.inodes[pos+1].first_byte)
+		r5Disk.super_block.first_free_byte -= (r5Disk.inodes[pos].nblock / r5Disk.ndisk) * BLOCK_SIZE;
 
 	/* supprime l'inode */
 	r5Disk.inodes[pos].first_byte = 0;

@@ -65,9 +65,12 @@ int cat(char *filename) {
     file_t file;
 	int code = read_file(filename, &file);
 	if(!code) {
-		printf("%s", file.data);
+		int u;
+		for(u=0;u<file.size;u++)
+			printf("%c", file.data[u]);
 		return EXIT_SUCCESS;
 	}
+	fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'existe pas.\n");
     return EXIT_FAILURE;
 }
 
@@ -96,42 +99,50 @@ int create(char *filename) {
 }
 
 int edit(char *filename) {
-	(void)filename;
-	/*
-	file_t file;
-    read_file(filename, &file);
-	char fullname[FILENAME_MAX_SIZE + 4];
-	sprintf(fullname, "%s.tmp", filename);
-	store_file_to_host(fullname);
-	pid_t pid;
-	switch((pid = fork())) {
-		case -1:
-			fprintf(stderr, "Erreur lors de la creation du fils.\n");
-			return -1;
-		case 0:
-			execlp("nano", "nano", filename, NULL);
-		default:
-			wait(NULL);
+	if(cat(filename)) {
+		return EXIT_FAILURE;
 	}
+	printf("\n ===========================================================\n");
+	printf("         Remplacer ce qu'il y a dans votre fichier :\n");
+	printf("  (Ecrivez votre texte puis appuyez sur Entree puis 'quit')\n");
+	printf("             (64 caracteres par ligne maximum)\n");
+	printf(" ===========================================================\n");
 
-	FILE *f = fopen(fullname, "r");
-	if(!f) {
-		fprintf(stderr, "Erreur ouverture %s.\n", fullname);
-		return -2;
+	char str[MAX_FILE_SIZE];
+	char buffer[65] = "";
+	int size = 0;
+	while(strcmp(buffer, "quit")) {
+		strcat(str, buffer);
+		scanf("%s", buffer);
+		if(strcmp(buffer, "quit")) {
+			size += (strlen(buffer) + 1);
+			strcat(str, "\n");
+		}
 	}
-	fwrite(&file.data, sizeof(uchar), MAX_FILE_SIZE, f);
+	while(fgetc(stdin) != '\n');
+	file_t file;
+	file.size = size;
+	int u;
+	for(u=0;u<size;u++) {
+		file.data[u] = str[u];
+		printf("%c", file.data[u]);
+	}
 	write_file(filename, file);
-	fclose(f);
-	remove(fullname);*/
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int load(char *arguments) {
-    return load_file_from_host(arguments);
+	int exit = load_file_from_host(arguments);
+	if(exit)
+		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'existe pas.\n");
+	return exit;
 }
 
 int store(char *filename) {
-    return store_file_to_host(filename);
+    int exit = store_file_to_host(filename);
+	if(exit)
+		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'existe pas.\n");
+	return exit;
 }
 
 char **parser(char *command) {
