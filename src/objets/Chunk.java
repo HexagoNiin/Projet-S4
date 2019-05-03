@@ -5,13 +5,13 @@ public class Chunk {
 	private int nStripe;
 
 	public Chunk(byte [] buffer, int nChars) {
-		this.stripes = generateStripe(buffer, nChars);
+		this.stripes = generate(buffer, nChars);
 		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 	}
 
 	public Chunk(String Sbuffer, int nChars) {
 		byte [] buffer = Sbuffer.getBytes().clone();
-		this.stripes = generateStripe(buffer, nChars);
+		this.stripes = generate(buffer, nChars);
 		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 	}
 
@@ -21,10 +21,10 @@ public class Chunk {
 	 * @param nb_disks Nombre de disks du systeme
 	 * @return nd_disks - 1 blocks
 	 */
-	private Stripe generate(byte [] buffer, int nChars)  {
+	private Stripe [] generate(byte [] buffer, int nChars)  {
 		Stripe [] stripes = new Stripe[(new VirtualDisk()).getNDisk()];
 
-		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block().BLOCK_SIZE];
+		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block.size];
 		int i = 0;
 		int posStripe = 0;
 		while (i < nChars) {
@@ -50,7 +50,7 @@ public class Chunk {
 	 */
 	public int write(int startbyte) {
 		for(int i = 0; i < nStripe; i++) {
-			if (stripes[i].write_stripes(pos+i) != 0) {
+			if (stripes[i].write(startbyte+i) != 0) {
 				System.err.println("Erreur lors de l'écriture du chunck.");
 				return 1;
 			}
@@ -66,7 +66,7 @@ public class Chunk {
 	 */
 	public int read(int startbyte) {
 		for(int i = 0; i < nStripe; i++) {
-			if (stripes[i] = Stripe.read_stripes(pos+i) != 0) {
+			if (stripes[i].read(startbyte+i) != 0) {
 				System.err.println("Erreur lors de l'écriture du chunck.");
 				return 1;
 			}

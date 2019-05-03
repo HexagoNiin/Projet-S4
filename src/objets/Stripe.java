@@ -68,7 +68,7 @@ public class Stripe {
 
 	public int write(int pos) {
 		for(int i = 0; i < this.getNBlocks(); i++) {
-			if(this.getIStripe(i).write(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
+			if(this.stripe[i].write(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
 				System.err.println("Erreur lors de l'écriture de la bande.");
 				return 1;
 			}
@@ -86,8 +86,8 @@ public class Stripe {
 	 */
 
 	public int read(int pos) {
-		for(int i = 0; i < this.getNblocks(); i++) {
-			if(this.getIStripe(i) = Block.read_block(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
+		for(int i = 0; i < Stripe.nBlocks; i++) {
+			if(this.stripe[i].read(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
 				System.err.println("Erreur lors de la lecture de la bande.");
 				return 1;
 			}
