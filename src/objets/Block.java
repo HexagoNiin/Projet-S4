@@ -31,6 +31,13 @@ public class Block {
 	public void setByte(byte data, int i) {
 		this.data[i] = data;
 	}
+	
+	
+	public Byte getByte(int i) {
+		return this.data[i];
+	}
+	
+	
 	/**
 	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
 	 * @param pos Position o� �crire le block
@@ -86,6 +93,13 @@ public class Block {
 		return 2;
 	}
 	
+	
+	/**
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
+	 * @param pos Position du block à lire
+	 * @param id_disk Index du disk avec le block à lire
+	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
+	 */
 	public int read_block(int pos, File disk_id) {
 		
 		FileInputStream fis = null;
@@ -119,13 +133,12 @@ public class Block {
 				return 1;
 		}
 	}
+	
+	
 	/**
 	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param pos Position du block à lire
-	 * @param id_disk Index du disk avec le block à lire
-	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
+	 * @param this bloc à afficher
 	 */
-
 	
 	public void display_block() {
 		for (int i = 0; i < BLOCK_SIZE; i++ ){
@@ -133,8 +146,5 @@ public class Block {
 		}
 		System.out.print("");
 	}
-	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param this bloc à afficher
-	 */
+	
 }
