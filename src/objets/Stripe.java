@@ -2,16 +2,31 @@ package objets;
 
 public class Stripe {
 	
-	private int nblocks;
+	private static int nblocks = 4;
 	private Block [] stripe;
 	
-	public Stripe(int nblocks) {
-		this.nblocks = nblocks;
+	public Stripe() {
 		this.stripe = new Block[nblocks];
 	}
 	
+	public Stripe(Block blocks[]) {
+		this.stripe = blocks;
+	}
+	
+	public Stripe(byte bytes[]) {
+		for(int i = 0; i < Stripe.nblocks; i++) {
+			this.stripe[i] = new Block(bytes[i]);
+		}
+	}
+	
+	public Stripe(int entiers[]) {
+		for(int i = 0; i < Stripe.nblocks; i++) {
+			this.stripe[i] = new Block(entiers[i]);
+		}
+	}
+	
 	public int getNblocks() {
-		return this.nblocks;
+		return Stripe.nblocks;
 	}
 	
 	public Block getIStripe(int index) {
@@ -19,7 +34,7 @@ public class Stripe {
 	}
 	
 	public void setNblocks(int nblocks) {
-		this.nblocks = nblocks;
+		Stripe.nblocks = nblocks;
 	}
 	
 	public void setIStripe(Block block, int i) {

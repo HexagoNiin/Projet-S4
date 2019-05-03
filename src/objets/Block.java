@@ -14,6 +14,20 @@ public class Block {
 		}
 	}
 	
+	public Block(byte b) {
+		data = new byte[BLOCK_SIZE];
+		for(int i = 0; i < BLOCK_SIZE; i++) {
+			data[i] = b;
+		}
+	}
+	
+	public Block(int nb) {
+		data = new byte[BLOCK_SIZE];
+		for(int i = 0; i < BLOCK_SIZE; i++) {
+			data[i] = (byte) nb;
+		}
+	}
+	
 	public void setByte(byte data, int i) {
 		this.data[i] = data;
 	}
