@@ -3,12 +3,13 @@ package objets;
 import java.io.*;
 
 public class VirtualDisk {
-	private static int number_of_files;
-	private static SuperBlock super_block;
-	private static InodeTable inodes;// tableau
-	private static int ndisk;
-	private static String raid; // type de RAID
-    private static File [] storage; //tab[NUMBER_OF_DISKS];
+	public static int numberOfFiles;
+	public static SuperBlock superBlock;
+	public static InodeTable inodes;// tableau
+	public static int nDisk;
+	public static String raid; // type de RAID
+	public static File [] storage; //tab[NUMBER_OF_DISKS];
+	public static int nextStripe;
     
     public VirtualDisk(String nom_rep) {
 		File repertoire = new File(nom_rep);
@@ -34,12 +35,12 @@ public class VirtualDisk {
     	    // In this snippet, it can only be thrown by newDirectoryStream.
     	    System.err.println(x);
     	}*/ //JE SAIS PAS LIRE DES DOSSIERS EN JAVA C'EST L'ENFER
-    	number_of_files = 0;
+    	numberOfFiles = 0;
     }
     
     public VirtualDisk() {}
     
-    public int getNDisk() { return ndisk; }
+    public int getNDisk() { return nDisk; }
     
     public File [] getStorage() { return storage; }
 }

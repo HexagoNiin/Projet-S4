@@ -1,10 +1,10 @@
 package objets;
 
 public class SuperBlock {
-	private int nb_blocks_used;
-	private int first_free_bytes;
+	private int nbBlocksUsed;
+	private int firstFreeBytes;
 	
-	public void update_first_free_bytes(int new_bytes) {
-		this.first_free_bytes += new_bytes;
+	public void setFirstFreeBytes(int new_bytes) {
+		this.firstFreeBytes += new_bytes;
 	}
 }

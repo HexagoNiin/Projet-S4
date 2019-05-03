@@ -13,12 +13,12 @@ public class cmd_test {
 		b.setByte((byte) 2, 1);
 		b.setByte((byte) 3, 2);
 		b.setByte((byte) 4, 3);
-		b.display_block();
-		b.write_block(0, r5Disk.getStorage()[0]);
+		b.display();
+		b.write(0, r5Disk.getStorage()[0]);
 		
 		System.out.println("Lecture d'un block :");
-		b.read_block(0, r5Disk.getStorage()[0]);
-		b.display_block();
+		b.read(0, r5Disk.getStorage()[0]);
+		b.display();
 		
 		System.out.println();
 	}

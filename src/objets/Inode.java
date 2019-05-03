@@ -3,15 +3,14 @@ package objets;
 public class Inode {
 	private String filename;
 	private int size;
-	private int first_byte;
-	private int nblock;
+	private int firstByte;
+	private int nBlock;
 	
 	public Inode(String filename, int size, int first_byte, int nblock) {
 		super();
 		this.filename = filename;
-		this.size = size;
-		this.first_byte = first_byte;
-		this.nblock = nblock;
+		this.firstByte = first_byte;
+		this.nBlock = nblock;
 	}
 
 	public String getFilename() {
@@ -22,12 +21,11 @@ public class Inode {
 		return size;
 	}
 
-	public int getFirst_byte() {
-		return first_byte;
+	public int getFirstByte() {
+		return firstByte;
 	}
 
 	public int getNblock() {
-		return nblock;
+		return nBlock;
 	}
-	
 }

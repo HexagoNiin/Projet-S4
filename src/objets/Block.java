@@ -4,26 +4,26 @@ import java.io.*;
 
 public class Block {
 	
-	public final static int BLOCK_SIZE = 4;
+	public final static int size = 4;
 	private byte [] data;
 
 	public Block() {
-		data = new byte[BLOCK_SIZE];
-		for(int i = 0; i < BLOCK_SIZE; i++) {
+		data = new byte[size];
+		for(int i = 0; i < size; i++) {
 			data[i] = (byte) '\0';
 		}
 	}
 	
 	public Block(byte b) {
-		data = new byte[BLOCK_SIZE];
-		for(int i = 0; i < BLOCK_SIZE; i++) {
+		data = new byte[size];
+		for(int i = 0; i < size; i++) {
 			data[i] = b;
 		}
 	}
 	
 	public Block(int nb) {
-		data = new byte[BLOCK_SIZE];
-		for(int i = 0; i < BLOCK_SIZE; i++) {
+		data = new byte[size];
+		for(int i = 0; i < size; i++) {
 			data[i] = (byte) nb;
 		}
 	}
@@ -45,7 +45,7 @@ public class Block {
 	 * @return Un entier indiquant si l'opération s'est bien passée (0 : OK, 1 : Erreur cast, 2 ; Erreur �criture) 
 	 */
 	
-	public int write_block(int pos, File disk_id)  {
+	public int write(int pos, File disk_id)  {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(disk_id);
@@ -55,7 +55,7 @@ public class Block {
 			return 2;
 		}
 		try {
-			fos.write(this.data, pos, BLOCK_SIZE);
+			fos.write(this.data, pos, size);
 			fos.close();
 			return 0;
 		} catch (IOException e) {
@@ -74,20 +74,20 @@ public class Block {
 	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur lecture, 2 : Erreur �criture)
 	 */
 	
-	public int block_repair(int pos, int id_disk) {
+	public int repair(int pos, int id_disk) {
 		Block block = new Block();
 		for(int i = 0;i < (new VirtualDisk()).getNDisk(); i++) {
 			if(i != id_disk) {
-				if(block.read_block(pos, (new VirtualDisk()).getStorage()[i]) == 0) {
+				if(block.read(pos, (new VirtualDisk()).getStorage()[i]) == 0) {
 					System.err.println("Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
 					return 1;
 				}
-				for(int j = 0;j < BLOCK_SIZE; j++) {
+				for(int j = 0;j < size; j++) {
 					this.data[i] = (byte)(this.data[i] ^ block.data[i]);
 				}
 			}
 		}
-		if(this.write_block(pos, (new VirtualDisk()).getStorage()[id_disk]) == 0) {
+		if(this.write(pos, (new VirtualDisk()).getStorage()[id_disk]) == 0) {
 			return 0;
 		}
 		return 2;
@@ -100,7 +100,7 @@ public class Block {
 	 * @param id_disk Index du disk avec le block à lire
 	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
 	 */
-	public int read_block(int pos, File disk_id) {
+	public int read(int pos, File disk_id) {
 		
 		FileInputStream fis = null;
 
@@ -113,7 +113,7 @@ public class Block {
 				pos--;
 			}
 			
-			for(int i = 0; i < BLOCK_SIZE; i++){
+			for(int i = 0; i < size; i++){
 				content = fis.read();
 				this.data[i] = (byte)content;
 			}
@@ -140,8 +140,8 @@ public class Block {
 	 * @param this bloc à afficher
 	 */
 	
-	public void display_block() {
-		for (int i = 0; i < BLOCK_SIZE; i++ ){
+	public void display() {
+		for (int i = 0; i < size; i++ ){
 			 System.out.println(String.format("[%2X] ", data[i]));
 		}
 		System.out.print("");

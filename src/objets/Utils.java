@@ -30,7 +30,7 @@ public class Utils {
 		return (new VirtualDisk().getNDisk() - 1) - (numBande % new VirtualDisk().getNDisk());
 	}
 	
-	public Block compute_parity(Block [] blocks, int i) {
+	public Block compute_parity(Block [] blocks, int nBlocks) {
 		return new Block();
 	}
 }

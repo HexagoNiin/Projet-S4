@@ -23,10 +23,10 @@ public class Chunk {
 	 * @param nb_disks Nombre de disks du systeme
 	 * @return nd_disks - 1 blocks
 	 */
-	public Block [] generateStripe()  {
+	public Block [] generate()  {
 		Block [] blocks = new Block[(new VirtualDisk()).getNDisk()-1];
 		for(int i = 0; i < (new VirtualDisk()).getNDisk()-1; i++) {
-			for(int j = 0; j < Block.BLOCK_SIZE; i++) {
+			for(int j = 0; j < Block.size; i++) {
 				if(posCurrent == nChars) {
 					blocks[i].setByte((byte) '\0', j);
 				} else {
@@ -44,13 +44,13 @@ public class Chunk {
 	 * @param disks Systeme RAID.
 	 * @return le nombre de bandes ecrite ou -1 s'il y a eu un probleme.
 	 */
-	public int write_chunk(int startbyte) {
+	public int write(int startbyte) {
 		int NB_DISK = 4;
-		Stripe stripe = new Stripe(NB_DISK);
+		Stripe stripe = new Stripe();
 		int nStripes = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 		
 		for(int i = 0; i < nStripes; i++) {
-			Block [] blocks = this.generateStripe();
+			Block [] blocks = this.generate();
 			int i_blocks = 0;
 			
 			for(int j = 0; j < NB_DISK; j++) {
@@ -62,7 +62,7 @@ public class Chunk {
 				}
 			}
 			
-			if(stripe.write_stripes(startbyte + (i * Block.BLOCK_SIZE)) == 1) {
+			if(stripe.write(startbyte + (i * Block.size)) == 1) {
 				return -1;
 			}
 		}
