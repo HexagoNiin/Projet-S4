@@ -76,8 +76,14 @@ uchar *xor_uchar(uchar *a, uchar *b, int size) {
 	return buffer;
 }
 
+void close_system() {
+	int u;
+	for(u=0;u<r5Disk.ndisk;u++)
+		fclose(r5Disk.storage[u]);
+}
+
 int repair_disk(int num) {
-	int num_ref = (num == 0) ? (1) : (0);
+	int num_ref = (!num) ? (1) : (0);
 	fseek(r5Disk.storage[num_ref], 0, SEEK_END);
 	size_t size = ftell(r5Disk.storage[num_ref]);
 	fseek(r5Disk.storage[num_ref], 0, SEEK_SET);

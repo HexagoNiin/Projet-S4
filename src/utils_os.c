@@ -24,10 +24,6 @@ void interpreteur() {
 		}
     }
 	log1("[INTERPRETEUR] Fermeture de l'interpréteur\n");
-
-	int u;
-	for(u=0;u<r5Disk.ndisk;u++)
-		fclose(r5Disk.storage[u]);
 }
 
 int action(char **command) {
@@ -110,6 +106,7 @@ int edit(char *filename) {
 
 	char str[MAX_FILE_SIZE];
 	char buffer[65] = "";
+	memset(buffer, 0, 0);
 	int size = 0;
 	while(strcmp(buffer, "quit")) {
 		strcat(str, buffer);
@@ -123,10 +120,8 @@ int edit(char *filename) {
 	file_t file;
 	file.size = size;
 	int u;
-	for(u=0;u<size;u++) {
+	for(u=0;u<size;u++)
 		file.data[u] = str[u];
-		printf("%c", file.data[u]);
-	}
 	write_file(filename, file);
     return EXIT_SUCCESS;
 }

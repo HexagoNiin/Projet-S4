@@ -49,7 +49,6 @@ int write_inodes_table(int startbyte) {
     for(i=0;i<INODE_TABLE_SIZE;i++) {
         buffer = indtostr(r5Disk.inodes[i]);
         if((nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE))) == -1) {
-            fprintf(stderr, "Erreur lors de l'ecriture d'une inode.\n");
             return -1;
         }
 		totalStripe += nStripe;
@@ -81,7 +80,6 @@ int read_inodes_table(int startbyte) {
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(inode_t));
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
 		if((nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE))) == -1) {
-			fprintf(stderr, "Erreur lors de la lecture d'une inode.\n");
 			return EXIT_FAILURE;
 		}
 		r5Disk.inodes[i] = strtoind(buffer);
@@ -121,7 +119,6 @@ int write_super_block() {
 	/// \return 0 s'il y a une erreur, 1 sinon
     uchar *buffer = sbtostr(r5Disk.super_block);
     if(write_chunk(buffer, sizeof(super_block_t), 0) == -1) {
-        fprintf(stderr, "Erreur lors de l'ecriture du super block.\n");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -146,7 +143,6 @@ int read_super_block() {
 	/// \return 0 s'il y a eu une erreur, 1 sinon
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(super_block_t));
 	if(read_chunk(buffer, sizeof(super_block_t), 0) == -1) {
-		fprintf(stderr, "Erreur lors de la lecture du super block.\n");
         return EXIT_FAILURE;
 	}
 	r5Disk.super_block = strtosb(buffer);

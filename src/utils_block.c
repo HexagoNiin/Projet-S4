@@ -28,7 +28,7 @@ int compute_nblock(int nb_octets) {
 int write_block(block_t block, int pos, FILE * disk_id) {
     /// \brief Ecrit un block sur un disque à une position donnée
     /// \param[in] block : Block à écrire sur le disk
-    /// \param[in] pos : Position où écrire le block
+    /// \param[in] pos : Position où écrire le block en octet
     /// \param[in] disk_id : Disk sur lequel écrire le block
     /// \return Un entier indiquant si l'opération s'est bien passée
     fseek(disk_id, pos, SEEK_SET);
@@ -78,7 +78,7 @@ int read_block (block_t *block, uint pos, FILE *disk) {
 	/**
 	* \brief Lit le bloc à une position sur un disque.
    	* \param[in] *block : Pointeur du bloc dans lequel on rend la lecture.
-		     pos : Position du bloc.
+		     pos : Position du bloc en octet.
    		     disk : Disque dans lequel on lit.
     * \param[out] Un entier indiquant si l'opération s'est bien passée.
 	*/
@@ -114,23 +114,10 @@ void display_block(block_t block) {
 	/**
 	* \brief Affiche en hexadecimal le contenu du bloc sur la console.
 	* \param[in]  block : bloc dont le contenu sera affiché.
-	* \param[out] 0 = Ack, !0 = Nack.
 	*/
-
 	int i;
-	char *byteHex;
-
-	for(i = 0; i < BLOCK_SIZE; i++){
-
-		byteHex = itoh(block.data[i]);
-
-		if (block.data[i] <= 9)
-		printf("0");
-		printf("%s ", byteHex);
-
-	}
-
-	printf("\n");
+	for(i=0;i<BLOCK_SIZE;i++)
+		printf("%02x ", block.data[i]);
 }
 
 int display_pos(uint pos, FILE* disk) {

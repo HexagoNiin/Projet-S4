@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     int size = atoi(argv[3]);
     if(argc==4) {
         for(int diskid=0; diskid<ndisk; diskid++) {
-	  format(argv[1], size, diskid);
+	           format(argv[1], size, diskid);
         }
     }
     else {

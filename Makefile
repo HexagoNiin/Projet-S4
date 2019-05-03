@@ -6,14 +6,17 @@ OPT=-Wall -g
 HEADDIR=headers
 SRCDIR=src
 TESTSDIR=tests
+OBJECTDIR=objects
+BINDIR=bin
+SYSTEM=systeme
 
 # DÉPENDENCES
-DISK=utils_virtual_disk.o
-BLOCK=utils_block.o $(DISK)
-STRIPE=utils_stripe.o $(BLOCK)
-INODE=utils_inode.o $(STRIPE)
-FILE=utils_file.o $(INODE)
-OS=utils_os.o $(FILE)
+DISK=$(OBJECTDIR)/utils_virtual_disk.o
+BLOCK=$(OBJECTDIR)/utils_block.o $(DISK)
+STRIPE=$(OBJECTDIR)/utils_stripe.o $(BLOCK)
+INODE=$(OBJECTDIR)/utils_inode.o $(STRIPE)
+FILE=$(OBJECTDIR)/utils_file.o $(INODE)
+OS=$(OBJECTDIR)/utils_os.o $(FILE)
 
 # AFFICHAGE DEBUG
 ifeq ($(log),1)
@@ -36,40 +39,45 @@ OPT+=-D _LOG6
 endif
 
 # PROGRAMMES
-cmd_test: cmd_test.o $(STRIPE)
+cmd_test: $(OBJECTDIR)/cmd_test.o $(STRIPE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-cmd_inode: cmd_inode.o $(INODE)
+cmd_inode: $(OBJECTDIR)/cmd_inode.o $(INODE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-cmd_file: cmd_file.o $(FILE)
+cmd_file: $(OBJECTDIR)/cmd_file.o $(FILE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-cmd_format: cmd_format.o
+cmd_format: $(OBJECTDIR)/cmd_format.o
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-cmd_repair: cmd_repair.o $(OS)
+cmd_repair: $(OBJECTDIR)/cmd_repair.o $(INODE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
-raid5: main.o $(OS)
+dump_raid5: $(OBJECTDIR)/dump_raid5.o $(INODE)
+		$(CC) -o $@ $^ $(OPT)
+		mv $@ $@.out
+
+raid5: $(OBJECTDIR)/main.o $(OS)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
 
 # AUTOMATISATION
-%.o: $(SRCDIR)/%.c
+$(OBJECTDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(OPT)
 
 # NETTOYAGE
 clean:
-	rm -rf *.o *.exe *.stackdump
+	rm -rf $(OBJECTDIR)/*.o *.exe *.stackdump
 
-mrproper:
-	rm -rf *.o *.exe *.stackdump *.out
+mrproper: clean
+	rm *.out $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
+	touch $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
 
 
 

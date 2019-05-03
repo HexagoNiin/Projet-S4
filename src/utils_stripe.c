@@ -31,7 +31,7 @@ int read_stripe(stripe_t *stripe, uint pos){
 	/**
 	* \brief Lecture d'une bande de bloc à une position donné sur le disque virtuel.
 	* \param[in] stripe : bande dans laquelle la bande lu sur le disque sera retourné.
-	  	       pos : position de la bande sur le disque.
+	  	       pos : position de la bande sur le disque en octet.
 		       disk : ensemble des disques representants le disque virtuel.
 	* \param[out] boolean : 0 = Ack, !0 = Nack.
 	*/
@@ -49,7 +49,7 @@ int read_stripe(stripe_t *stripe, uint pos){
 int write_stripe(stripe_t stripe, int pos) {
     /// \brief Ecrit une bande sur le système RAID à une position donnée
     /// \param[in] stripe : Bande à écrire sur le disk
-    /// \param[in] pos : Position où écrire le block
+    /// \param[in] pos : Position où écrire le block en octet
     /// \return 0 s'il n'y a pas eu d'erreur, 1 dans le cas contraire
     int i;
     for(i=0;i<stripe.nblocks;i++) {
@@ -90,13 +90,6 @@ int compute_final_nblock(int nChars) {
     int nChunks = compute_nblock(nChars);
     int nStripes = compute_nstripe(nChunks);
     return nChunks + nStripes + ((nChunks + nStripes) / r5Disk.ndisk);
-}
-
-void print_stripe(stripe_t stripe) {
-    int i;
-    for(i=0;i<stripe.nblocks;i++)
-        print_block(stripe.stripe[i]);
-    printf("\n");
 }
 
 int write_chunk(uchar * buffer, int nChars, int startbyte) {
