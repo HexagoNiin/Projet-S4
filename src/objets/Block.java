@@ -112,4 +112,15 @@ public class Block {
 	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
 	 */
 
+	
+	public void display_block() {
+		for (int i = 0; i < BLOCK_SIZE; i++ ){
+			 System.out.printl(String.format("[%2X] ", data[i]));
+		}
+		System.out.println("");
+	}
+	/**
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
+	 * @param this bloc à afficher
+	 */
 }
