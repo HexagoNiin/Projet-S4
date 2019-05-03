@@ -11,7 +11,7 @@ public class VirtualDisk {
     private static File [] storage; //tab[NUMBER_OF_DISKS];
     
     public VirtualDisk(String nom_rep) {
-		File repertoire = new File("systeme");
+		File repertoire = new File(nom_rep);
 		if(!(repertoire.exists() && repertoire.isDirectory())) {
 			System.out.println("Impossible d'initialiser le disque virtuel : répertoire introuvable");
 			return;
