@@ -11,6 +11,12 @@ public class Chunk {
 		this.posCurrent = 0;
 	}
 	
+	public Chunk(String buffer, int nChars) {
+		this.buffer = buffer.getBytes().clone();
+		this.nChars = nChars;
+		this.posCurrent = 0;
+	}
+	
 	/**
 	 * Transforme une partie du buffer en nb_disks - 1 blocks.
 	 * La position courante sur le buffer est incremente du nombre de caracteres lu.
