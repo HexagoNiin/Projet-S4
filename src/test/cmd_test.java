@@ -1,10 +1,12 @@
 package test;
 
+import objets.Chunk;
+
 public class cmd_test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Chunk chaine = new Chunk("banane", 6);
+		chaine.write_chunk(0);
 	}
 
 }
