@@ -5,7 +5,7 @@ import java.io.*;
 public class VirtualDisk {
 	private static int number_of_files;
 	private static SuperBlock super_block;
-	private static TableInode inodes;// tableau
+	private static InodeTable inodes;// tableau
 	private static int ndisk;
 	private static String raid; // type de RAID
     private static File [] storage; //tab[NUMBER_OF_DISKS];
