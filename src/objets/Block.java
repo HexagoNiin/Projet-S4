@@ -115,9 +115,9 @@ public class Block {
 	
 	public void display_block() {
 		for (int i = 0; i < BLOCK_SIZE; i++ ){
-			 System.out.printl(String.format("[%2X] ", data[i]));
+			 System.out.println(String.format("[%2X] ", data[i]));
 		}
-		System.out.println("");
+		System.out.print("");
 	}
 	/**
 	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
