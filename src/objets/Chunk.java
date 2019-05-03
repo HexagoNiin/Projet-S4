@@ -1,20 +1,18 @@
 package objets;
 
 public class Chunk {
-	private byte [] buffer;
-	private int nChars;
-	private int posCurrent;
+	private Stripe [] stripes;
+	private int nStripe;
 	
 	public Chunk(byte [] buffer, int nChars) {
-		this.buffer = buffer.clone();
-		this.nChars = nChars;
-		this.posCurrent = 0;
+		this.stripes = generateStripe(buffer, nChars);
+		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 	}
 	
-	public Chunk(String buffer, int nChars) {
-		this.buffer = buffer.getBytes().clone();
-		this.nChars = nChars;
-		this.posCurrent = 0;
+	public Chunk(String Sbuffer, int nChars) {
+		byte [] buffer = Sbuffer.getBytes().clone();
+		this.stripes = generateStripe(buffer, nChars);
+		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 	}
 	
 	/**
@@ -23,50 +21,58 @@ public class Chunk {
 	 * @param nb_disks Nombre de disks du systeme
 	 * @return nd_disks - 1 blocks
 	 */
-	public Block [] generateStripe()  {
-		Block [] blocks = new Block[(new VirtualDisk()).getNDisk()-1];
-		for(int i = 0; i < (new VirtualDisk()).getNDisk()-1; i++) {
-			for(int j = 0; j < Block.BLOCK_SIZE; i++) {
-				if(posCurrent == nChars) {
-					blocks[i].setByte((byte) '\0', j);
-				} else {
-					blocks[i].setByte(buffer[posCurrent], j);
-					posCurrent++;
-				}
+	private Stripe generateStripe(byte [] buffer, int nChars)  {
+		Stripe [] stripes = new Stripe[(new VirtualDisk()).getNDisk()];
+		
+		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block().BLOCK_SIZE];
+		int i = 0;
+		int posStripe = 0;
+		while (i < nChars) {
+			for(int u = 0; u < writeBuffer.length ; u++) {
+				
+				writeBuffer[u] = buffer[i + u];
 			}
+			i += writeBuffer.length;
+			
+			stripes[posStripe] = new Stripe(writeBuffer); 
+			posStripe ++;
+			
 		}
-		return blocks;
+		
+		return stripes;
 	}
 	
 	/**
 	 * Ecrit une chaine de bytes sur le systeme RAID.
 	 * @param startbyte Position ou ecrire la bande sur le systeme RAID.
 	 * @param disks Systeme RAID.
-	 * @return le nombre de bandes ecrite ou -1 s'il y a eu un probleme.
+	 * @return 0 si OK, 1 si Erreur.
 	 */
 	public int write_chunk(int startbyte) {
-		int NB_DISK = 4;
-		Stripe stripe = new Stripe(NB_DISK);
-		int nStripes = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
-		
-		for(int i = 0; i < nStripes; i++) {
-			Block [] blocks = this.generateStripe();
-			int i_blocks = 0;
-			
-			for(int j = 0; j < NB_DISK; j++) {
-				if(j == new Utils().compute_parity_index(i)) {
-					stripe.setIStripe(new Utils().compute_parity(blocks, NB_DISK-1), j); // compute_parity...
-				} else {
-					stripe.setIStripe(blocks[i_blocks], j);
-					i_blocks++;
-				}
-			}
-			
-			if(stripe.write_stripes(startbyte + (i * Block.BLOCK_SIZE)) == 1) {
-				return -1;
+		for(int i = 0; i < nStripe; i++) {
+			if (stripes[i].write_stripes(pos+i) != 0) {
+				System.err.println("Erreur lors de l'écriture du chunck.");
+				return 1;
 			}
 		}
-		return nStripes;
+		return 0;
 	}
+	
+	/**
+	 * lit une chaine de bytes sur le systeme RAID.
+	 * @param startbyte Position ou lire la bande sur le systeme RAID.
+	 * @param disks Systeme RAID.
+	 * @return 0 si OK, 1 si Erreur.
+	 */
+	public int read_chunck(int startbyte) {
+		for(int i = 0; i < nStripe; i++) {
+			if (stripes[i] = Stripe.read_stripes(pos+i) != 0) {
+				System.err.println("Erreur lors de l'écriture du chunck.");
+				return 1;
+			}
+		}
+		return 0;	
+	}
+	
 
 }
