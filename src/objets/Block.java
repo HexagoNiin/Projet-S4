@@ -94,16 +94,15 @@ public class Block {
 			System.err.println("Le fichier n'a pas ete correctement ouvert en lecture.");
 			e.printStackTrace();
 			return 2;
-		} finally {
-			try {
+		} 
+		try {
 				if (fis != null)
 					fis.close();
 				return 0;
-			} catch (IOException ex) {
+		} catch (IOException ex) {
 				System.err.println("Une erreur est survenue lors de la lecture du fichier.");
 				ex.printStackTrace();
 				return 1;
-			}
 		}
 	}
 	/**
