@@ -109,10 +109,8 @@ public class Block {
 	/**
 	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
 	 * @param pos Position du block à lire
-	 * @param disks Tableau des disks utilis�s par le RAID
-	 * @param id_disk Index du disk avec le block eronn�
-	 * @param nbr_disks
-	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur lecture, 2 : Erreur �criture)
+	 * @param id_disk Index du disk avec le block à lire
+	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
 	 */
 
 }
