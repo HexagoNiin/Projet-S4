@@ -81,12 +81,12 @@ public class Block {
 			int content;
 
 			while (pos != 0) {
-				(content = fis.read());
+				content = fis.read();
 				pos--;
 			}
 			
 			for(int i = 0; i < BLOCK_SIZE; i++){
-				(content = fis.read());
+				content = fis.read();
 				this.data[i] = (byte)content;
 			}
 			
