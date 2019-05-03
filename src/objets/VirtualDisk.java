@@ -1,7 +1,6 @@
 package objets;
 
 import java.io.*;
-import java.nio.file.*;
 
 public class VirtualDisk {
 	private static int number_of_files;
@@ -12,6 +11,12 @@ public class VirtualDisk {
     private static File [] storage; //tab[NUMBER_OF_DISKS];
     
     public VirtualDisk(String nom_rep) {
+		File repertoire = new File("systeme");
+		if(!(repertoire.exists() && repertoire.isDirectory())) {
+			System.out.println("Impossible d'initialiser le disque virtuel : répertoire introuvable");
+			return;
+		}
+    	storage = repertoire.listFiles();
     	/*Path chemin = Paths.get(nom_rep);
     	try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)) {
     		int tailleStorage = 0;
