@@ -76,9 +76,9 @@ public class Block {
 	
 	public int repair(int pos, int id_disk) {
 		Block block = new Block();
-		for(int i = 0;i < (new VirtualDisk()).getNDisk(); i++) {
+		for(int i = 0;i < VirtualDisk.nDisk; i++) {
 			if(i != id_disk) {
-				if(block.read(pos, (new VirtualDisk()).getStorage()[i]) == 0) {
+				if(block.read(pos, VirtualDisk.storage[i]) == 0) {
 					System.err.println("Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
 					return 1;
 				}
@@ -87,7 +87,7 @@ public class Block {
 				}
 			}
 		}
-		if(this.write(pos, (new VirtualDisk()).getStorage()[id_disk]) == 0) {
+		if(this.write(pos, VirtualDisk.storage[id_disk]) == 0) {
 			return 0;
 		}
 		return 2;

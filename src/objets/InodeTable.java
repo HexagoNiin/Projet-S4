@@ -2,7 +2,7 @@ package objets;
 
 public class InodeTable {
 	private Inode [] tab;
-	private static int tabSize = 10;
+	public static int tabSize = 10;
 	private int nbInodes;
 	
 	public InodeTable() {

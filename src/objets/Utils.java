@@ -1,7 +1,7 @@
 package objets;
 
 public class Utils {
-	public int compute_nblock(int nb_octets) {
+	public static int compute_nblock(int nb_octets) {
 		int nb_blocks = nb_octets / 4;
 		if(nb_octets % 4 != 0) {
 			nb_blocks++;
@@ -22,15 +22,15 @@ public class Utils {
 	}*/
 
 	
-	public int compute_nstripe(int nb_blocks) {
-		return nb_blocks / (new VirtualDisk().getNDisk() - 1) + ((nb_blocks % (new VirtualDisk().getNDisk() - 1) != 0) == true ? 1 : 0);
+	public static int compute_nstripe(int nb_blocks) {
+		return nb_blocks / (VirtualDisk.nDisk - 1) + ((nb_blocks % (VirtualDisk.nDisk - 1) != 0) == true ? 1 : 0);
 	}
 	
-	public int compute_parity_index(int numBande) {
-		return (new VirtualDisk().getNDisk() - 1) - (numBande % new VirtualDisk().getNDisk());
+	public static int compute_parity_index(int numBande) {
+		return (VirtualDisk.nDisk - 1) - (numBande % VirtualDisk.nDisk);
 	}
 	
-	public Block compute_parity(Block [] blocks, int nBlocks) {
+	public static Block compute_parity(Block [] blocks, int nBlocks) {
 		return new Block();
 	}
 }

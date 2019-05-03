@@ -6,13 +6,13 @@ public class Chunk {
 
 	public Chunk(byte [] buffer, int nChars) {
 		this.stripes = generate(buffer, nChars);
-		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
+		this.nStripe = Utils.compute_nstripe(Utils.compute_nblock(nChars));
 	}
 
 	public Chunk(String Sbuffer, int nChars) {
 		byte [] buffer = Sbuffer.getBytes().clone();
 		this.stripes = generate(buffer, nChars);
-		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
+		this.nStripe = Utils.compute_nstripe(Utils.compute_nblock(nChars));
 	}
 
 	/**
@@ -22,9 +22,9 @@ public class Chunk {
 	 * @return nd_disks - 1 blocks
 	 */
 	private Stripe [] generate(byte [] buffer, int nChars)  {
-		Stripe [] stripes = new Stripe[(new VirtualDisk()).getNDisk()];
+		Stripe [] stripes = new Stripe[VirtualDisk.nDisk];
 
-		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block.size];
+		byte [] writeBuffer = new byte [(VirtualDisk.nDisk-1) * Block.size];
 		int i = 0;
 		int posStripe = 0;
 		while (i < nChars) {

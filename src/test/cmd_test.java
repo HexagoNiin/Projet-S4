@@ -14,10 +14,10 @@ public class cmd_test {
 		b.setByte((byte) 3, 2);
 		b.setByte((byte) 4, 3);
 		b.display();
-		b.write(0, r5Disk.getStorage()[0]);
+		b.write(0, VirtualDisk.storage[0]);
 		
 		System.out.println("Lecture d'un block :");
-		b.read(0, r5Disk.getStorage()[0]);
+		b.read(0, VirtualDisk.storage[0]);
 		b.display();
 		
 		System.out.println();
