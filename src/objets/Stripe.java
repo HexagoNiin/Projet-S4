@@ -70,7 +70,7 @@ public class Stripe {
 	
 	public int read_stripe(int pos) {
 		for(int i = 0; i < this.getNblocks(); i++) {
-			if(this.getIStripe(i).read_block(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
+			if(this.getIStripe(i) = Block.read_block(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
 				System.err.println("Erreur lors de la lecture de la bande.");
 				return 1;
 			}
