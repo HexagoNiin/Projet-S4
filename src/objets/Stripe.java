@@ -43,5 +43,24 @@ public class Stripe {
 		}
 		return 0;
 	}
+	
+	
+	/**
+	 * 
+	 * @param stripe La bande a lire sur le systeme.
+	 * @param pos La position ou lire la bande sur le systeme.
+	 * @param disks Systeme RAID.
+	 * @return 0 si l'operation s'est bien passee, 1 s'il y a eu un probleme de lecture.
+	 */
+	
+	public int read_stripe(int pos) {
+		for(int i = 0; i < this.getNblocks(); i++) {
+			if(this.getIStripe(i).read_block(pos, (new VirtualDisk()).getStorage()[i]) != 0) {
+				System.err.println("Erreur lors de la lecture de la bande.");
+				return 1;
+			}
+		}
+		return 0;
+	}
 
 }
