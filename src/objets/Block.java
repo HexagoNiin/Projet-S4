@@ -72,9 +72,47 @@ public class Block {
 		return 2;
 	}
 	
-	public int read_block(int pos, File disk) {
-		//TODO
-		return 0;
+	public int read_block(int pos, File disk_id) {
+		
+		FileInputStream fis = null;
+
+		try {
+			fis = new FileInputStream(disk_id);
+			int content;
+
+			while (pos != 0) {
+				(content = fis.read());
+				pos--;
+			}
+			
+			for(int i = 0; i < BLOCK_SIZE; i++){
+				(content = fis.read());
+				this.data[i] = (byte)content;
+			}
+			
+		} catch (IOException e) {
+			System.err.println("Le fichier n'a pas ete correctement ouvert en lecture.");
+			e.printStackTrace();
+			return 2;
+		} finally {
+			try {
+				if (fis != null)
+					fis.close();
+				return 0;
+			} catch (IOException ex) {
+				System.err.println("Une erreur est survenue lors de la lecture du fichier.");
+				ex.printStackTrace();
+				return 1;
+			}
+		}
 	}
+	/**
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
+	 * @param pos Position du block à lire
+	 * @param disks Tableau des disks utilis�s par le RAID
+	 * @param id_disk Index du disk avec le block eronn�
+	 * @param nbr_disks
+	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur lecture, 2 : Erreur �criture)
+	 */
 
 }
