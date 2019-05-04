@@ -43,5 +43,16 @@ public class InodeTable {
 		return -1;
 	}
 	
+	public Inode get(int pos) {
+		return tab[pos];
+	}
 	
+	public Inode get(String filename) {
+		for(int i = 0; i < nbInodes; i++) {
+			if(tab[i].getFilename().contentEquals(filename)) {
+				return tab[i];
+			}
+		}
+		return null;
+	}
 }
