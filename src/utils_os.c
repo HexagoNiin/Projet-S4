@@ -23,6 +23,12 @@ void interpreteur() {
 			log1("Usage - Error\n");
 		}
     }
+
+	free(command);
+	int u;
+	for(u=0;u<NB_OPTIONS + 1;u++)
+		free(command_option[u]);
+	free(command_option);
 	log1("[INTERPRETEUR] Fermeture de l'interpréteur\n");
 }
 
@@ -49,9 +55,11 @@ int ls(char *option) {
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
 		if(r5Disk.inodes[i].first_byte) {
 			printf("%s", r5Disk.inodes[i].filename);
-			if(!strcmp(option, "-l")) {
-				printf(" : %d octets %d sur le disque %d nombre de blocks", r5Disk.inodes[i].size, r5Disk.inodes[i].first_byte, r5Disk.inodes[i].nblock);
-			} printf("\n");
+			if(option) {
+				if(!strcmp(option, "-l")) {
+					printf(" : %d octets %d sur le disque %d nombre de blocks", r5Disk.inodes[i].size, r5Disk.inodes[i].first_byte, r5Disk.inodes[i].nblock);
+				} printf("\n");
+			}
 		}
 	}
 	return EXIT_SUCCESS;
@@ -104,24 +112,23 @@ int edit(char *filename) {
 	printf("             (64 caracteres par ligne maximum)\n");
 	printf(" ===========================================================\n");
 
-	char str[MAX_FILE_SIZE];
+	char str[MAX_FILE_SIZE] = "";
 	char buffer[65] = "";
 	memset(buffer, 0, 0);
 	int size = 0;
-	while(strcmp(buffer, "quit")) {
-		strcat(str, buffer);
-		scanf("%s", buffer);
-		if(strcmp(buffer, "quit")) {
-			size += (strlen(buffer) + 1);
-			strcat(str, "\n");
+	while(strcmp(buffer, "quit\n")) {
+		fgets(buffer, 32, stdin);
+		if(strcmp(buffer, "quit\n")) {
+			size += strlen(buffer);
+			strcat(str, buffer);
 		}
 	}
-	while(fgetc(stdin) != '\n');
+
 	file_t file;
 	file.size = size;
 	int u;
 	for(u=0;u<size;u++)
-		file.data[u] = str[u];
+		file.data[u] = (uchar)str[u];
 	write_file(filename, file);
     return EXIT_SUCCESS;
 }

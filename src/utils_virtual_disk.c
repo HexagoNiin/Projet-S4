@@ -25,7 +25,7 @@ int init_disk_raid5(const char* repertoryName) {
 	int i = 0;
 	while((disk = readdir(rep))) {
 		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
-			char* chemin = malloc(sizeof(char*));
+			char *chemin = malloc(sizeof(char) * (strlen(repertoryName) + strlen(disk->d_name) + 2));
 			sprintf(chemin, "%s/%s", repertoryName, disk->d_name);
 			/* ouverture des disks du repertoire */
 			if(!(storage[i] = fopen(chemin, "r+"))) {
@@ -33,6 +33,7 @@ int init_disk_raid5(const char* repertoryName) {
 				return 2;
 			}
 			i++;
+            free(chemin);
 		}
     }
     closedir(rep);

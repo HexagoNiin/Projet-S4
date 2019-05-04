@@ -63,6 +63,10 @@ dump_raid5: $(OBJECTDIR)/dump_raid5.o $(INODE)
 		$(CC) -o $@ $^ $(OPT)
 		mv $@ $@.out
 
+defragmentation: $(OBJECTDIR)/defragmentation.o $(INODE)
+		$(CC) -o $@ $^ $(OPT)
+		mv $@ $@.out
+
 raid5: $(OBJECTDIR)/main.o $(OS)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
@@ -76,8 +80,9 @@ clean:
 	rm -rf $(OBJECTDIR)/*.o *.exe *.stackdump
 
 mrproper: clean
-	rm *.out $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
+	rm $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
 	touch $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
+	rm *.out 
 
 
 

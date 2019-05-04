@@ -80,10 +80,12 @@ int read_inodes_table(int startbyte) {
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(inode_t));
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
 		if((nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE))) == -1) {
+			free(buffer);
 			return EXIT_FAILURE;
 		}
 		r5Disk.inodes[i] = strtoind(buffer);
 	}
+	free(buffer);
 	return EXIT_SUCCESS;
 }
 
@@ -121,6 +123,7 @@ int write_super_block() {
     if(write_chunk(buffer, sizeof(super_block_t), 0) == -1) {
         return EXIT_FAILURE;
     }
+	free(buffer);
     return EXIT_SUCCESS;
 }
 
@@ -146,6 +149,7 @@ int read_super_block() {
         return EXIT_FAILURE;
 	}
 	r5Disk.super_block = strtosb(buffer);
+	free(buffer);
 	return EXIT_SUCCESS;
 }
 
