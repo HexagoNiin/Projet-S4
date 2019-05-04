@@ -74,5 +74,7 @@ public class Chunk {
 		return 0;
 	}
 
-
+	public String toString() {
+		return stripes.toString();
+	}
 }
