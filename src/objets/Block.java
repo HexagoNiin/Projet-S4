@@ -21,10 +21,24 @@ public class Block {
 		}
 	}
 	
+	public Block(byte b []) {
+		data = new byte[nBytes];
+		for(int i = 0; i < nBytes; i++) {
+			data[i] = b[i];
+		}
+	}
+	
 	public Block(int nb) {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
 			data[i] = (byte) nb;
+		}
+	}
+	
+	public Block(int nb[]) {
+		data = new byte[nBytes];
+		for(int i = 0; i < nBytes; i++) {
+			data[i] = (byte) nb[i];
 		}
 	}
 	
