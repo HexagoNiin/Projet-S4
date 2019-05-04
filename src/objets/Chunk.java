@@ -2,17 +2,22 @@ package objets;
 
 public class Chunk {
 	private Stripe [] stripes;
-	private int nStripe;
-
+	private int nStripes;
+	
+	public Chunk(int nChars) {
+		nStripes = Utils.compute_nstripe(Utils.compute_nblock(nChars));
+		stripes = new Stripe[nStripes];
+	}
+	
 	public Chunk(byte [] buffer, int nChars) {
-		this.stripes = generate(buffer, nChars);
-		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
+		this(nChars);
+		for(int i = 0; i < nChars / nStripes; i++) {
+			stripes[i] = new Stripe(Utils.subArray(buffer, i * Stripe.nBlocks * Block.nBytes, Stripe.nBlocks * Block.nBytes));
+		}
 	}
 
-	public Chunk(String Sbuffer, int nChars) {
-		byte [] buffer = Sbuffer.getBytes().clone();
-		this.stripes = generate(buffer, nChars);
-		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
+	public Chunk(String buffer, int nChars) {
+		this(buffer.getBytes(), nChars);
 	}
 
 	/**
