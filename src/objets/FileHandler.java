@@ -3,11 +3,13 @@ package objets;
 import java.io.*;
 
 public class FileHandler {
+	private String filename;
 	private int size;
 	private Chunk data;
 	
 	public FileHandler(String filename) {
 		try {
+			this.filename = filename;
 			FileInputStream file = new FileInputStream(new File(filename));
 			size = file.available();
 			byte buffer[] = new byte[size];
