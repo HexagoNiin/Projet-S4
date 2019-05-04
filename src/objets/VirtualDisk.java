@@ -8,7 +8,7 @@ public class VirtualDisk {
 	public static InodeTable inodes;// tableau
 	public static int nDisk;
 	public static String raid; // type de RAID
-	public static File [] storage; //tab[NUMBER_OF_DISKS];
+	public static File [] storage = new File[nDisk]; //tab[NUMBER_OF_DISKS];
 	public static int nextParityPos;
     
     public VirtualDisk(String nom_rep) {
