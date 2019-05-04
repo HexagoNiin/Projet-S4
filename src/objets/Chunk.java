@@ -24,7 +24,7 @@ public class Chunk {
 	private Stripe generate(byte [] buffer, int nChars)  {
 		Stripe [] stripes = new Stripe[(new VirtualDisk()).getNDisk()];
 
-		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block().BLOCK_SIZE];
+		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block.BLOCK_SIZE];
 		int i = 0;
 		int posStripe = 0;
 		while (i < nChars) {
@@ -66,7 +66,7 @@ public class Chunk {
 	 **/
 	public byte [] read(int startbyte) {
 		Block block;
-		byte [] buffer = new byte [nStripe * ((new VirtualDisk()).getNDisk()-1) * Block().BLOCK_SIZE];
+		byte [] buffer = new byte [nStripe * ((new VirtualDisk()).getNDisk()-1) * Block.BLOCK_SIZE];
 		int pos = 0;
 
 		if (this.preread(startbyte) != 0)
