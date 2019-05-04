@@ -3,12 +3,12 @@ package objets;
 public class Chunk {
 	private Stripe [] stripes;
 	private int nStripes;
-	
+
 	public Chunk(int nChars) {
 		nStripes = Utils.compute_nstripe(Utils.compute_nblock(nChars));
 		stripes = new Stripe[nStripes];
 	}
-	
+
 	public Chunk(byte [] buffer, int nChars) {
 		this(nChars);
 		for(int i = 0; i < nChars / nStripes; i++) {
@@ -29,13 +29,13 @@ public class Chunk {
 	public int write(int startbyte) {
 		for(int i = 0; i < nStripes; i++) {
 			if (stripes[i].write(startbyte + (i * Stripe.nBlocks * Block.nBytes)) != 0) {
-				System.err.println("Erreur lors de l'écriture du chunk.");
+				System.err.println("Erreur lors de l'ï¿½criture du chunk.");
 				return 1;
 			}
 		}
 		return 0;
 	}
-	
+
 	public int read(int startbyte) {
 		for(int i = 0; i < nStripes; i++) {
 			if(stripes[i].read(startbyte + (i * Stripe.nBlocks * Block.nBytes)) != 0) {
@@ -45,11 +45,11 @@ public class Chunk {
 		}
 		return 0;
 	}
-	
+
 	public String toString() {
 		return stripes.toString();
 	}
-	
+
 	/**
 	 * Transforme une partie du buffer en nb_disks - 1 blocks.
 	 * La position courante sur le buffer est incremente du nombre de caracteres lu.
@@ -59,7 +59,7 @@ public class Chunk {
 	/*private Stripe [] generate(byte [] buffer, int nChars)  {
 		Stripe [] stripes = new Stripe[VirtualDisk.nDisk];
 
-		byte [] writeBuffer = new byte [(VirtualDisk.nDisk-1) * Block.size];
+		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block.BLOCK_SIZE];
 		int i = 0;
 		int posStripe = 0;
 		while (i < nChars) {
@@ -85,7 +85,7 @@ public class Chunk {
 	 **/
 	/*public byte [] read(int startbyte) {
 		Block block;
-		byte [] buffer = new byte [nStripe * (VirtualDisk.nDisk-1) * Block.size];
+		byte [] buffer = new byte [nStripe * ((new VirtualDisk()).getNDisk()-1) * Block.BLOCK_SIZE];
 		int pos = 0;
 
 		if (this.preread(startbyte) != 0)
