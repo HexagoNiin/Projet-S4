@@ -33,13 +33,13 @@ public class Stripe {
 		int i = 0;
 		int j = 0;
 		while(j < nBlocks-1) {
-			if(i != VirtualDisk.nextStripe) {
+			if(i != VirtualDisk.nextParityPos) {
 				reference[j] = stripe[i];
 				i++;
 			}
 			j++;
 		}
-		VirtualDisk.nextStripe = (VirtualDisk.nextStripe + nBlocks-1) % nBlocks;
+		VirtualDisk.nextParityPos = (VirtualDisk.nextParityPos + nBlocks-1) % nBlocks;
 	}
 
 	public int getNBlocks() {
