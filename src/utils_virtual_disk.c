@@ -8,7 +8,7 @@ int init_disk_raid5(const char* repertoryName) {
     DIR *rep;
 	if(!(rep = opendir(repertoryName))) {
 		fprintf(stderr, "Erreur lors de l'ouverture du repertoire.\n");
-		exit(1);
+		return 1;
 	}
 
 	/* compte nombre de disks */
@@ -30,7 +30,7 @@ int init_disk_raid5(const char* repertoryName) {
 			/* ouverture des disks du repertoire */
 			if(!(storage[i] = fopen(chemin, "w+"))) {
 				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
-				exit(2);
+				return 2;
 			}
 			i++;
 		}
