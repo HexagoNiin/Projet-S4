@@ -28,12 +28,12 @@ int compute_nblock(int nb_octets) {
 int write_block(block_t block, int pos, FILE * disk_id) {
     /// \brief Ecrit un block sur un disque à une position donnée
     /// \param[in] block : Block à écrire sur le disk
-    /// \param[in] pos : Position où écrire le block
+    /// \param[in] pos : Position où écrire le block en octet
     /// \param[in] disk_id : Disk sur lequel écrire le block
     /// \return Un entier indiquant si l'opération s'est bien passée
     fseek(disk_id, pos, SEEK_SET);
     if(fwrite(&block, sizeof(block_t), 1, disk_id) != 1) {
-        fprintf(stderr, "Une erreur est survenue lors de l'ecriture du block.\n");
+        log5("[WRITE_BLOCK] Une Erreur est survenue lors de l'ecriture du block.");
         return EXIT_FAILURE; //1
     }
     return EXIT_SUCCESS; //0
@@ -62,7 +62,7 @@ int block_repair(int pos, int id_disk) {
     for(i=0;i<r5Disk.ndisk;i++) {
         if(i != id_disk) {
             if(!read_block(&block, pos, r5Disk.storage[i])) {
-                fprintf(stderr, "Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.\n");
+                log5("[BLOCK_REPAIR] Une Erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
                 return 1;
             }
             for(j=0;j<BLOCK_SIZE;j++)
@@ -70,37 +70,30 @@ int block_repair(int pos, int id_disk) {
         }
     }
     if(!write_block(block_repare, pos, r5Disk.storage[id_disk])) {
-        return 0;
+        return EXIT_SUCCESS;
     } return 2;
 }
 
-int read_block (block_t *block, uint pos /*position d'un block*/ , FILE *disk) {
+int read_block (block_t *block, uint pos, FILE *disk) {
 	/**
 	* \brief Lit le bloc à une position sur un disque.
    	* \param[in] *block : Pointeur du bloc dans lequel on rend la lecture.
-		     pos : Position du bloc.
+		     pos : Position du bloc en octet.
    		     disk : Disque dans lequel on lit.
-    	* \param[out] Un entier indiquant si l'opération s'est bien passée.
+    * \param[out] Un entier indiquant si l'opération s'est bien passée.
 	*/
 	uchar c;
 	int i;
-
-	/*for (i = 0; i < (pos * BLOCK_SIZE); i++){ //offset
-		c = fgetc(disk);
-
-		if (c == EOF)
-			return(1);//inaccessible
-	}*/
 	fseek(disk, pos, SEEK_SET);
 	for (i = 0; i < BLOCK_SIZE; i ++){
+		if (feof(disk)) {
+			log5("[READ_BLOCK] Fin de fichier detectee.\n");
+			return EXIT_FAILURE;
+		}
 		c = fgetc(disk);
-
-		if (c == EOF)
-			return(1);//inaccessible
-
 		block->data[i] = c;
 	}
-	return(0);
+	return EXIT_SUCCESS;
 }
 
 char* itoh(int x) {
@@ -121,23 +114,10 @@ void display_block(block_t block) {
 	/**
 	* \brief Affiche en hexadecimal le contenu du bloc sur la console.
 	* \param[in]  block : bloc dont le contenu sera affiché.
-	* \param[out] 0 = Ack, !0 = Nack.
 	*/
-
 	int i;
-	char *byteHex;
-
-	for(i = 0; i < BLOCK_SIZE; i++){
-
-		byteHex = itoh(block.data[i]);
-
-		if (block.data[i] <= 9)
-		printf("0");
-		printf("%s ", byteHex);
-
-	}
-
-	printf("\n");
+	for(i=0;i<BLOCK_SIZE;i++)
+		printf("%02x ", block.data[i]);
 }
 
 int display_pos(uint pos, FILE* disk) {
@@ -151,11 +131,11 @@ int display_pos(uint pos, FILE* disk) {
 	block_t block;
 
 	if (read_block(&block, pos, disk)){
-		printf("erreur de lecture [read_block]\n");
-		return 1;
+		log5("[DISLAY_POS] Erreur de lecture du bloc");
+		return EXIT_FAILURE;
 	}
 
 	display_block(block);
 
-	return 0;
+	return EXIT_SUCCESS;
 }

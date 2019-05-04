@@ -1,8 +1,9 @@
 #ifndef _UTILS_OS
 #define _UTILS_OS
 
-#include <string.h>
 #include "utils_file.h"
+#include "couleur.h"
+#include <wait.h>
 
 #define NB_COMMANDS 7
 #define COMMANDS_SIZE 16
@@ -16,7 +17,7 @@ int ls(char *option);
 int rm(char *filename);
 int create(char *filename);
 int edit(char *filename);
-int load(char *filename);
+int load(char *arguments);
 int store(char *filename);
 
 

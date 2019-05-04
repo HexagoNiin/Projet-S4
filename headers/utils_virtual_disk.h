@@ -7,16 +7,18 @@
 #ifndef _UTILS_VIRTUAL_DISK
 #define _UTILS_VIRTUAL_DISK
 
-
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "raid_defines.h"
+#include "utils_inode.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
 
 virtual_disk_t r5Disk;
 int init_disk_raid5(const char* repertoryName);
+int repair_disk(int num);
+void close_system();
 
 #endif

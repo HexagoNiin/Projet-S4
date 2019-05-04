@@ -8,7 +8,6 @@
 #define _UTILS_INODE
 
 #include "utils_stripe.h"
-#include "string.h"
 
 void delete_inode(int pos);
 int write_inodes_table(int startbyte);
@@ -16,8 +15,9 @@ int get_unused_inode();
 int read_inodes_table();
 uchar *indtostr(inode_t inode);
 uchar *sbtostr();
-int write_super_block(int *startbyte);
+int write_super_block();
 inode_t init_inode(const char *filename, uint size, uint position);
+int read_super_block();
 int update_inodes_table(inode_t inode);
 void update_first_free_byte(int new_byte);
 #endif

@@ -9,7 +9,7 @@
 
 #include "utils_block.h"
 
-int read_chunk(uchar *buffer, int nStripe, int startbyte);
+int read_chunk(uchar *buffer, int nChars, int startbyte);
 int read_stripe(stripe_t *stripe, uint pos);
 int write_stripe(stripe_t stripe, int pos);
 int write_chunk(uchar * buffer, int nChars, int startbyte);

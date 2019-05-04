@@ -5,6 +5,7 @@
 #define __R5_DEFINES__
 
 #include <stdio.h>
+#include "debug_log.h"
 
 #define ERREUR -1
 #define BLOCK_SIZE 4 // octets
@@ -14,7 +15,7 @@
 #define MAX_MSG 1024 // uchar
 #define SUPER_BLOCK_SIZE 4 // nb blocs avec parité
 #define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE+1 // en octets
-#define INODE_SIZE 11 // en blocks avec parité
+#define INODE_SIZE 16 // en blocks avec parité
 
 typedef unsigned int uint; // même taille que int
 typedef unsigned char uchar; // 8 bits = octet
@@ -40,7 +41,7 @@ typedef inode_t inode_table_t[INODE_TABLE_SIZE];// la taille est fixe
 typedef struct super_block_s{
   enum raid raid_type;
   uint nb_blocks_used ; //
-  uint first_free_byte; // premier block libre
+  uint first_free_byte; // premier octet libre
   } super_block_t;
 
 /* Type of the virtual disk system */

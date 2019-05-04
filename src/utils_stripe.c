@@ -2,12 +2,17 @@
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
 	/// \brief Lis une chaine de caractères du RAID
+	/// \param[out] buffer : Chaine de caractere lue
+	/// \param[in] nChars : Nombre de caracteres a lire
 	/// \param[in] startbyte : Position où lire la chaine en octets
 	int posBuffer = 0;
 	int posDisk = 0;
 	while(posBuffer < nChars) {
 		stripe_t stripe;
-		read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE);
+		if(read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE)) {
+			log4("[READ_CHUNK] Erreur lecture du chunk");
+			return -1;
+		}
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
 			if(i != compute_parity_index(startbyte + posDisk)) {
@@ -26,31 +31,30 @@ int read_stripe(stripe_t *stripe, uint pos){
 	/**
 	* \brief Lecture d'une bande de bloc à une position donné sur le disque virtuel.
 	* \param[in] stripe : bande dans laquelle la bande lu sur le disque sera retourné.
-	  	       pos : position de la bande sur le disque.
+	  	       pos : position de la bande sur le disque en octet.
 		       disk : ensemble des disques representants le disque virtuel.
 	* \param[out] boolean : 0 = Ack, !0 = Nack.
 	*/
 	stripe->nblocks = r5Disk.ndisk;
 	stripe->stripe = malloc((r5Disk.ndisk)* sizeof(block_t));
-
 	for(int i = 0; i < r5Disk.ndisk; i++) {
 		if (read_block(&(stripe->stripe[i]), pos , r5Disk.storage[i])) {
-			printf("erreur de lecture [read_block]\n");
-			return 1;
+			log4("[READ_STRIPE] Erreur de lecture du bloc\n");
+			return EXIT_FAILURE;
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 int write_stripe(stripe_t stripe, int pos) {
     /// \brief Ecrit une bande sur le système RAID à une position donnée
     /// \param[in] stripe : Bande à écrire sur le disk
-    /// \param[in] pos : Position où écrire le block
+    /// \param[in] pos : Position où écrire le block en octet
     /// \return 0 s'il n'y a pas eu d'erreur, 1 dans le cas contraire
     int i;
     for(i=0;i<stripe.nblocks;i++) {
             if(write_block(stripe.stripe[i], pos, r5Disk.storage[i])) {
-                fprintf(stderr, "Erreur lors de l'ecriture de la bande.\n");
+                log4("[WRITE_STRIPE] Erreur lors de l'ecriture de la bande.\n");
                 return EXIT_FAILURE;
             }
     }
@@ -86,13 +90,6 @@ int compute_final_nblock(int nChars) {
     int nChunks = compute_nblock(nChars);
     int nStripes = compute_nstripe(nChunks);
     return nChunks + nStripes + ((nChunks + nStripes) / r5Disk.ndisk);
-}
-
-void print_stripe(stripe_t stripe) {
-    int i;
-    for(i=0;i<stripe.nblocks;i++)
-        print_block(stripe.stripe[i]);
-    printf("\n");
 }
 
 int write_chunk(uchar * buffer, int nChars, int startbyte) {
@@ -139,15 +136,8 @@ int compute_parity_index(int numBande){
 }
 
 
-int compute_nstripev1(int nb_blocks) {
-    return nb_blocks / (r5Disk.ndisk - 1) + ((nb_blocks / (r5Disk.ndisk - 1)) % 2 != 0);
-}
-
 int compute_nstripe(int nb_blocks) {
-	int nb_block_parite = (nb_blocks / (r5Disk.ndisk - 1)) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
-	if((nb_block_parite + nb_blocks) % r5Disk.ndisk == 0)
-		return (nb_block_parite + nb_blocks) / r5Disk.ndisk;
-	return (nb_block_parite + nb_blocks + (r5Disk.ndisk - (nb_blocks + nb_block_parite) % r5Disk.ndisk)) / r5Disk.ndisk;
+    return nb_blocks / (r5Disk.ndisk - 1) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
 }
 
 block_t xor(block_t a, block_t b) {
