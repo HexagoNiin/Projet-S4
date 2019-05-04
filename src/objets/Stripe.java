@@ -94,5 +94,15 @@ public class Stripe {
 		}
 		return 0;
 	}
-
+	
+	public String toString() {
+		String buffer = "[";
+		for(int i = 0; i < nBlocks; i++) {
+			buffer += blocks[i].toString();
+			if(i != nBlocks-1) {
+				buffer += ", ";
+			}
+		}
+		return buffer + "]";
+	}
 }
