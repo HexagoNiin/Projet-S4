@@ -9,7 +9,7 @@ public class InodeTable {
 		nbInodes = 0;
 	}
 	
-	public int add(Inode inode) {
+	public int add(Inode inode) { //update_inode_table
 		tab[nbInodes] = inode;
 		nbInodes++;
 		return 0;
