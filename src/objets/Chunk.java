@@ -6,13 +6,13 @@ public class Chunk {
 
 	public Chunk(byte [] buffer, int nChars) {
 		this.stripes = generate(buffer, nChars);
-		this.nStripe = Utils.compute_nstripe(Utils.compute_nblock(nChars));
+		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 	}
 
 	public Chunk(String Sbuffer, int nChars) {
 		byte [] buffer = Sbuffer.getBytes().clone();
 		this.stripes = generate(buffer, nChars);
-		this.nStripe = Utils.compute_nstripe(Utils.compute_nblock(nChars));
+		this.nStripe = new Utils().compute_nstripe(new Utils().compute_nblock(nChars));
 	}
 
 	/**
@@ -21,10 +21,10 @@ public class Chunk {
 	 * @param nb_disks Nombre de disks du systeme
 	 * @return nd_disks - 1 blocks
 	 */
-	private Stripe [] generate(byte [] buffer, int nChars)  {
-		Stripe [] stripes = new Stripe[VirtualDisk.nDisk];
+	private Stripe generate(byte [] buffer, int nChars)  {
+		Stripe [] stripes = new Stripe[(new VirtualDisk()).getNDisk()];
 
-		byte [] writeBuffer = new byte [(VirtualDisk.nDisk-1) * Block.size];
+		byte [] writeBuffer = new byte [((new VirtualDisk()).getNDisk()-1) * Block().BLOCK_SIZE];
 		int i = 0;
 		int posStripe = 0;
 		while (i < nChars) {
@@ -50,28 +50,50 @@ public class Chunk {
 	 */
 	public int write(int startbyte) {
 		for(int i = 0; i < nStripe; i++) {
-			if (stripes[i].write(startbyte+i) != 0) {
+			if (stripes[i].write(pos+i) != 0) {
 				System.err.println("Erreur lors de l'écriture du chunck.");
 				return 1;
 			}
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * lit une chaine de bytes sur le systeme RAID.
 	 * @param startbyte Position ou lire la bande sur le systeme RAID.
 	 * @param disks Systeme RAID.
-	 * @return 0 si OK, 1 si Erreur.
-	 */
-	public int read(int startbyte) {
+	 * @return Buffer l'ensemble des données lus.
+	 **/
+	public byte [] read(int startbyte) {
+		Block block;
+		byte [] buffer = new byte [nStripe * ((new VirtualDisk()).getNDisk()-1) * Block().BLOCK_SIZE];
+		int pos = 0;
+
+		if (this.preread(startbyte) != 0)
+			return buffer;
+
 		for(int i = 0; i < nStripe; i++) {
-			if (stripes[i].read(startbyte+i) != 0) {
+			for(int j = 0; j < (new VirtualDisk()).getNDisk(); j++) {
+				if ( new Utils().compute_parity_index(startbyte + i) != j ) {
+					block = stripes[i].getIStripe(j);
+					for(int u = 0; u < Block.BLOCK_SIZE; u++) {
+						buffer[pos++] = block.getByte(u);
+					}
+				}
+		}
+
+
+		return buffer;
+	}
+
+	private int preread(int startbyte) {
+		for(int i = 0; i < nStripe; i++) {
+			if (stripes[i] = Stripe.read_stripes(startbyte+i) != 0) {
 				System.err.println("Erreur lors de l'écriture du chunck.");
 				return 1;
-			}
 		}
 		return 0;
+
 	}
 
 	public String toString() {
