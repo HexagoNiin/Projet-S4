@@ -14,9 +14,11 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 			free(stripe.stripe);
 			return -1;
 		}
+		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk);
+		//printf("index : %d pos : %d\n", parity_index, startbyte + posDisk);
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
-			if(i != compute_parity_index(startbyte + posDisk)) {
+			if(i != parity_index) {
 				for(int j = 0; j < BLOCK_SIZE && posBuffer < nChars; j++) {
 					buffer[posBuffer] = block.data[j];
 					posBuffer++;
@@ -26,10 +28,11 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 		posDisk++;
 		free(stripe.stripe);
 	}
+	printf("\n\n");
 	return posDisk;
 }
 
-int read_stripe(stripe_t *stripe, uint pos){
+int read_stripe(stripe_t *stripe, uint pos) {
 	/**
 	* \brief Lecture d'une bande de bloc à une position donné sur le disque virtuel.
 	* \param[in] stripe : bande dans laquelle la bande lu sur le disque sera retourné.
@@ -110,21 +113,26 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     for(i=0;i<nStripes;i++) {
         block_t *blocks = generateStripe(buffer, nChars, &pos);
         int i_blocks = 0;
+		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk));
+		//printf("index : %d\n", index);
         for(j=0;j<r5Disk.ndisk;j++) {
-            if(j == compute_parity_index(i)) {
+            if(j == index) {
                 stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
             } else {
                 stripe.stripe[j] = blocks[i_blocks];
                 i_blocks++;
             }
         }
-        if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE)))
+        if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE))) {
+			log4("[WRITE_CHUNK] : Erreur ecriture stripe");
             return -1;
+		}
 
         free(blocks);
     }
 
     free(stripe.stripe);
+	printf("nstripes : %d\n", nStripes);
     return nStripes;
 }
 

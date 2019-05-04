@@ -3,10 +3,10 @@
 block_t create_block() { //Utilisé dans utils_stripe.c
 	/// \brief Crée un block vide
     /// \return Un block initialisé à 0
-	block_t block; //Block renvoyé
-    for(int i = 0; i < BLOCK_SIZE; i++) { //Initialisation du block de parité
-        block.data[i] = 0;
-    }
+	block_t block;
+	int i;
+    for(i = 0; i < BLOCK_SIZE; i++)
+		block.data[i] = 0;
 	return block;
 }
 
@@ -96,20 +96,6 @@ int read_block (block_t *block, uint pos, FILE *disk) {
 	return EXIT_SUCCESS;
 }
 
-char* itoh(int x) {
-	/**
-	* \brief Converti un entier en hexadécimal.
-	* \param[in] x : entier à convertir.
-	* \param[out] h : hexadécimal converti.
-	*/
-
-
-	char *h;
-	h = malloc(2 * sizeof(char));
-	sprintf(h, "%x", x);
-	return h;
-}
-
 void display_block(block_t block) {
 	/**
 	* \brief Affiche en hexadecimal le contenu du bloc sur la console.
@@ -127,15 +113,11 @@ int display_pos(uint pos, FILE* disk) {
 		      disk : disque sur lequel on souhaite lire le bloc.
 	* \param[out] 0 = Ack, !0 = Nack.
 	*/
-
 	block_t block;
-
-	if (read_block(&block, pos, disk)){
+	if(read_block(&block, pos, disk)) {
 		log5("[DISLAY_POS] Erreur de lecture du bloc");
 		return EXIT_FAILURE;
 	}
-
 	display_block(block);
-
 	return EXIT_SUCCESS;
 }

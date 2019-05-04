@@ -23,13 +23,14 @@ int init_disk_raid5(const char* repertoryName) {
 	rewinddir(rep);
 	FILE **storage = malloc(sizeof(FILE *) * nbFiles);
 	int i = 0;
+    char *chemin = NULL;
 	while((disk = readdir(rep))) {
 		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
-			char *chemin = malloc(sizeof(char) * (strlen(repertoryName) + strlen(disk->d_name) + 2));
+			chemin = malloc(sizeof(char) * (strlen(repertoryName) + strlen(disk->d_name) + 2));
 			sprintf(chemin, "%s/%s", repertoryName, disk->d_name);
-			/* ouverture des disks du repertoire */
 			if(!(storage[i] = fopen(chemin, "r+"))) {
 				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
+                free(chemin);
 				return 2;
 			}
 			i++;
@@ -43,6 +44,8 @@ int init_disk_raid5(const char* repertoryName) {
     r5Disk.storage = storage;
     r5Disk.super_block.raid_type = CINQ;
     r5Disk.raidmode = CINQ;
+
+    /* detection de la table d'inode */
     if(read_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE)) {
         printf("Systeme inexistant : mise en place du systeme RAID\n");
         r5Disk.number_of_files = 0;
@@ -52,8 +55,12 @@ int init_disk_raid5(const char* repertoryName) {
         for(u=0;u<INODE_TABLE_SIZE;u++) {
             r5Disk.inodes[u].first_byte = 0;
         }
-        write_super_block();
-        write_inodes_table(r5Disk.super_block.first_free_byte);
+        if(write_super_block()) {
+            printf("[DBG] : erreur super block\n");
+        }
+        if(write_inodes_table(r5Disk.super_block.first_free_byte) == -1) {
+            printf("[DBG] : erreur super block\n");
+        }
     } else {
         printf("Detection du systeme RAID\n");
         int u;

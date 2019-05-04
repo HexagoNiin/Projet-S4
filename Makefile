@@ -80,9 +80,9 @@ clean:
 	rm -rf $(OBJECTDIR)/*.o *.exe *.stackdump
 
 mrproper: clean
-	rm $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
+	rm $(SYSTEM)/d*
 	touch $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
-	rm *.out 
+	rm *.out
 
 
 

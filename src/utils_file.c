@@ -95,7 +95,8 @@ int load_file_from_host(const char *filename) {
 	fseek(f, 0, SEEK_END);
 	file.size = ftell(f);
 	fseek(f, 0, SEEK_SET);
-	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++) file.data[i] = fgetc(f);
+	for(int i = 0; i < file.size && i < MAX_FILE_SIZE; i++)
+		file.data[i] = fgetc(f);
 	fclose(f);
 	return write_file(filename, file);
 }

@@ -121,6 +121,7 @@ int write_super_block() {
 	/// \return 0 s'il y a une erreur, 1 sinon
     uchar *buffer = sbtostr(r5Disk.super_block);
     if(write_chunk(buffer, sizeof(super_block_t), 0) == -1) {
+		log3("[WRITE_SUPER_BLOCK] Erreur ecriture du chunk");
         return EXIT_FAILURE;
     }
 	free(buffer);
