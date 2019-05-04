@@ -28,8 +28,11 @@ public class FileHandler {
 		data = null;
 	}
 	
-	public int store() {
-		data.write(startbyte);
-		return 0;
+	public int load() {
+		return data.read(VirtualDisk.inodes.get(filename).getFirstByte());
+	}
+	
+	public int write() {
+		return data.write(SuperBlock.getFirstFreeBytes());
 	}
 }
