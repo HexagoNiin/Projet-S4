@@ -154,11 +154,14 @@ public class Block {
 	 * @param this bloc à afficher
 	 */
 	
-	public void display() {
-		for (int i = 0; i < size; i++ ){
-			 System.out.println(String.format("[%2X] ", data[i]));
+	public String toString() {
+		String buffer = "[";
+		for(int i = 0; i < nBytes; i++) {
+			buffer += data[i];
+			if(i != nBytes-1) {
+				buffer += ", ";
+			}
 		}
-		System.out.print("");
+		return buffer + "]";
 	}
-	
 }
