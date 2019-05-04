@@ -39,6 +39,7 @@ public class Stripe {
 			}
 			j++;
 		}
+		stripe[VirtualDisk.nextParityPos] = Utils.compute_parity(reference, nBlocks-1);
 		VirtualDisk.nextParityPos = (VirtualDisk.nextParityPos + nBlocks-1) % nBlocks;
 	}
 
@@ -75,7 +76,6 @@ public class Stripe {
 		}
 		return 0;
 	}
-
 
 	/**
 	 *
