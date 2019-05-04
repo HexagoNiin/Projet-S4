@@ -4,26 +4,26 @@ import java.io.*;
 
 public class Block {
 	
-	public final static int size = 4;
+	public final static int nBytes = 4;
 	private byte [] data;
 
 	public Block() {
-		data = new byte[size];
-		for(int i = 0; i < size; i++) {
+		data = new byte[nBytes];
+		for(int i = 0; i < nBytes; i++) {
 			data[i] = (byte) '\0';
 		}
 	}
 	
 	public Block(byte b) {
-		data = new byte[size];
-		for(int i = 0; i < size; i++) {
+		data = new byte[nBytes];
+		for(int i = 0; i < nBytes; i++) {
 			data[i] = b;
 		}
 	}
 	
 	public Block(int nb) {
-		data = new byte[size];
-		for(int i = 0; i < size; i++) {
+		data = new byte[nBytes];
+		for(int i = 0; i < nBytes; i++) {
 			data[i] = (byte) nb;
 		}
 	}
@@ -55,7 +55,7 @@ public class Block {
 			return 2;
 		}
 		try {
-			fos.write(this.data, pos, size);
+			fos.write(this.data, pos, nBytes);
 			fos.close();
 			return 0;
 		} catch (IOException e) {
@@ -82,7 +82,7 @@ public class Block {
 					System.err.println("Une erreur est survenue, il y a au moins deux blocks qui ont ete corrompus.");
 					return 1;
 				}
-				for(int j = 0;j < size; j++) {
+				for(int j = 0;j < nBytes; j++) {
 					this.data[i] = (byte)(this.data[i] ^ block.data[i]);
 				}
 			}
@@ -113,7 +113,7 @@ public class Block {
 				pos--;
 			}
 			
-			for(int i = 0; i < size; i++){
+			for(int i = 0; i < nBytes; i++){
 				content = fis.read();
 				this.data[i] = (byte)content;
 			}
