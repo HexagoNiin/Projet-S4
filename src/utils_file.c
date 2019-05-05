@@ -51,7 +51,12 @@ int write_file(const char *filename, file_t file) {
     inode_t inode = init_inode(filename, file.size, r5Disk.super_block.first_free_byte);
 
     /* ecriture fichier */
-    int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
+    int size;
+	if(r5Disk.raidmode == CINQ)
+		size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
+	else
+		size = write_chunk_raid0(file.data, file.size, r5Disk.super_block.first_free_byte);
+
     if(size == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
 		return EXIT_FAILURE;

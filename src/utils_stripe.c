@@ -148,7 +148,6 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
         block_t *blocks = generateStripe(buffer, nChars, &pos);
         int i_blocks = 0;
 		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk));
-		//printf("index : %d\n", index);
         for(j=0;j<r5Disk.ndisk;j++) {
             if(j == index) {
                 stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
@@ -183,8 +182,8 @@ int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
 			log4("[WRITE_CHUNK] : Erreur ecriture stripe");
             return -1;
 		}
+		free(stripe.stripe);
     }
-    free(stripe.stripe);
     return nStripes;
 }
 
