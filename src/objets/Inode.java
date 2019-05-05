@@ -4,13 +4,17 @@ public class Inode {
 	private String filename;
 	private int size;
 	private int firstByte;
-	private int nBlock;
 	
-	public Inode(String filename, int size, int first_byte, int nblock) {
-		super();
+	public Inode() {
+		filename = null;
+		size = 0;
+		firstByte = 0;
+	}
+	
+	public Inode(String filename, int size, int first_byte) {
 		this.filename = filename;
+		this.size = size;
 		this.firstByte = first_byte;
-		this.nBlock = nblock;
 	}
 
 	public String getFilename() {
@@ -23,9 +27,5 @@ public class Inode {
 
 	public int getFirstByte() {
 		return firstByte;
-	}
-
-	public int getNblock() {
-		return nBlock;
 	}
 }
