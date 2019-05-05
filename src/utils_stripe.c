@@ -12,6 +12,8 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
+<<<<<<< HEAD
+=======
 	/// \brief Lis une chaine de caractères du RAID
 	/// \param[out] buffer : Chaine de caractere lue
 	/// \param[in] nChars : Nombre de caracteres a lire
@@ -43,6 +45,7 @@ int read_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
+>>>>>>> f13b88474b0c98cd2ed8d1e957661b3a09da6f34
 	/// \brief Lis une chaine de caractères du RAID
 	/// \param[out] buffer : Chaine de caractere lue
 	/// \param[in] nChars : Nombre de caracteres a lire
@@ -316,13 +319,6 @@ int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 				}
 			}
 		}
-		printf("Position : %d\n", startbyte + (i * BLOCK_SIZE));
-		print_block(stripe.stripe[0]);
-		print_block(stripe.stripe[1]);
-		print_block(stripe.stripe[2]);
-		print_block(stripe.stripe[3]);
-		print_block(stripe.stripe[4]);
-		print_block(stripe.stripe[5]);
 		if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE))) {
 			log4("[WRITE_CHUNK] : Erreur ecriture stripe");
 			return -1;
