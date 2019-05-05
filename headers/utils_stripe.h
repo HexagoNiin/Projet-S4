@@ -12,8 +12,13 @@
 int read_chunk(uchar *buffer, int nChars, int startbyte);
 int read_chunk_raid5(uchar * buffer, int nChars, int startbyte);
 int read_chunk_raid0(uchar *buffer, int nChars, int startbyte);
+<<<<<<< HEAD
 int read_chunk_raid1(uchar * buffer, int nChars, int startbyte);
 int read_chunk_raid50(uchar * buffer, int nChars, int startbyte);
+=======
+int read_chunk_raid1(uchar *buffer, int nChars, int startbyte);
+int read_chunk_raid5(uchar *buffer, int nChars, int startbyte);
+>>>>>>> ac7e15c2497d3d8491cef6a0ebf7990fce4e0ea6
 int read_stripe(stripe_t *stripe, uint pos);
 int write_stripe(stripe_t stripe, int pos);
 int write_chunk(uchar * buffer, int nChars, int startbyte);
