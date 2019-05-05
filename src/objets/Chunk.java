@@ -51,7 +51,14 @@ public class Chunk {
 	}
 
 	public String toString() {
-		return stripes.toString();
+		String buffer = "[";
+		for(int i = 0; i < nStripes; i++) {
+			if(i != 0) buffer += " ";
+			buffer += stripes[i];
+			if(i != nStripes - 1) buffer += ",\n";
+		}
+		return buffer + "]";
+	}
 	
 	public String content() {
 		String buffer = "";
