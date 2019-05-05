@@ -30,10 +30,6 @@ public class Utils {
 		return (VirtualDisk.nDisk - 1) - (numBande % VirtualDisk.nDisk);
 	}
 	
-	public static Block compute_parity(Block [] blocks, int nBlocks) {
-		return new Block();
-	}
-	
 	public static byte [] subArray(byte [] original, int begin, int size) {
 		byte newArray[] = new byte [size];
 		for(int i = 0; i < size; i++) {

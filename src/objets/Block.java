@@ -148,6 +148,14 @@ public class Block {
 		}
 	}
 	
+	public void	computeParity(Block blocks []) {
+		data = blocks[0].data.clone();
+		for(int i = 1; i < blocks.length; i++) {
+			for(int j = 0; j < nBytes; j++) {
+				data[j] ^= blocks[i].data[j];
+			}
+		}
+	}
 	
 	/**
 	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
