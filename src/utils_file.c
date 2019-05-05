@@ -20,7 +20,12 @@ int write_file(const char *filename, file_t file) {
 			log2("[WRITE_FILE] Le fichier est plus petit ou egal a l'original.");
 
             /* écriture du fichier */
-            int size = write_chunk(file.data, file.size, r5Disk.inodes[i].first_byte);
+            int size;
+			if(r5Disk.raidmode == CINQ)
+				size = write_chunk(file.data, file.size, r5Disk.inodes[i].first_byte);
+			else
+				size = write_chunk_raid0(file.data, file.size, r5Disk.inodes[i].first_byte);
+
 			if(size == -1) {
 		        fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
 				return EXIT_FAILURE;
@@ -81,8 +86,10 @@ int read_file(const char* filename, file_t *file){
 	if(!file_exist)
 		return EXIT_FAILURE;
 	file->size = r5Disk.inodes[i].size;
-	read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
-
+	if(r5Disk.raidmode == CINQ)
+		read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
+	else
+		read_chunk_raid0(file->data, file->size, r5Disk.inodes[i].first_byte);
 	return EXIT_SUCCESS;
 }
 
