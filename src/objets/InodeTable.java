@@ -7,6 +7,10 @@ public class InodeTable {
 	
 	public InodeTable() {
 		nbInodes = 0;
+		tab = new Inode[tabSize];
+		for(int i = 0; i < tabSize; i++) {
+			tab[i] = new Inode();
+		}
 	}
 	
 	public int add(Inode inode) { //update_inode_table
