@@ -48,7 +48,7 @@ int write_inodes_table(int startbyte) {
 	uchar *buffer = NULL;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
         buffer = indtostr(r5Disk.inodes[i]);
-		if(r5Disk.raidmode == CINQ)
+		if(r5Disk.super_block.raid_type == CINQ)
 			nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
 		else
 			nStripe = write_chunk_raid0(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
@@ -83,7 +83,7 @@ int read_inodes_table(int startbyte) {
 	int i, nStripe = 0;
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(inode_t));
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
-		if(r5Disk.raidmode == CINQ)
+		if(r5Disk.super_block.raid_type == CINQ)
 			nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
 		else
 			nStripe = read_chunk_raid0(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
@@ -129,7 +129,7 @@ int write_super_block() {
 	/// \return 0 s'il y a une erreur, 1 sinon
     uchar *buffer = sbtostr(r5Disk.super_block);
 	int code_retour;
-	if(r5Disk.raidmode == CINQ)
+	if(r5Disk.super_block.raid_type == CINQ)
 		code_retour = write_chunk(buffer, sizeof(super_block_t), 0);
 	else
 		code_retour = write_chunk_raid0(buffer, sizeof(super_block_t), 0);
@@ -160,7 +160,7 @@ int read_super_block() {
 	/// \return 0 s'il y a eu une erreur, 1 sinon
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(super_block_t));
 	int code_retour;
-	if(r5Disk.raidmode == CINQ)
+	if(r5Disk.super_block.raid_type == CINQ)
 		code_retour = read_chunk(buffer, sizeof(super_block_t), 0);
 	else
 		code_retour = read_chunk_raid0(buffer, sizeof(super_block_t), 0);

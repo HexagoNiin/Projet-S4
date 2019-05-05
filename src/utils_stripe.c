@@ -15,7 +15,7 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 			free(stripe.stripe);
 			return -1;
 		}
-		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk);
+		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk, r5Disk.ndisk);
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
 			if(i != parity_index) {
@@ -129,11 +129,11 @@ int compute_final_nblock(int nChars) {
 }
 
 int write_chunk(uchar * buffer, int nChars, int startbyte) {
-	if(r5Disk.raidmode == ZERO)
+	if(r5Disk.super_block.raid_type == ZERO)
 		return write_chunk_raid0(buffer, nChars, startbyte);
-	if(r5Disk.raidmode == UN)
+	if(r5Disk.super_block.raid_type == UN)
 		return write_chunk_raid1(buffer, nChars, startbyte);
-	if(r5Disk.raidmote == CINQUANTE)
+	if(r5Disk.super_block.raid_type == CINQUANTE)
 		return write_chunk_raid50(buffer, nChars, startbyte);
 	else
 		return write_chunk_raid5(buffer, nChars, startbyte);
@@ -156,7 +156,7 @@ int write_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
 	for(i=0;i<nStripes;i++) {
 		block_t *blocks = generateStripe(buffer, nChars, &pos);
 		int i_blocks = 0;
-		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk));
+		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk), r5Disk.ndisk);
 		for(j=0;j<r5Disk.ndisk;j++) {
 			if(j == index) {
 				stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
@@ -184,19 +184,7 @@ int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 	/// \param[in] startbyte : Position où écrire la chaine en octets
 	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
 	log4("[WRITE_CHUNK] RAID UN");
-	int nblocks = compute_nblock(nChars);
-	stripe_t s;
-	s.nblocks = r5Disk.ndisk;
-	s.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
-	for(int i = 0; i < nblocks; i++) {
-		for(int j = 0; j < r5Disk.ndisk; j++) {
-			for(int k = 0; k < BLOCK_SIZE; i++) {
-				s.stripe[j].data[k] = buffer[i * BLOCK_SIZE + j * r5Disk.ndisk];
-			}
-		}
-		if(write_stripe(s, i * BLOCK_SIZE)) return -1;
-	}
-	return nblocks;
+
 }
 
 int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
@@ -206,8 +194,7 @@ int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 	/// \param[in] startbyte : Position où écrire la chaine en octets
 	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
 	log4("[WRITE_CHUNK] RAID CINQUANTE");
-
-
+	
 }
 
 int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
