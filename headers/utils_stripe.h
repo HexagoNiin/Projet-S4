@@ -15,6 +15,8 @@ int read_stripe(stripe_t *stripe, uint pos);
 int write_stripe(stripe_t stripe, int pos);
 int write_chunk(uchar * buffer, int nChars, int startbyte);
 int write_chunk_raid0(uchar * buffer, int nChars, int startbyte);
+int write_chunk_raid1(uchar * buffer, int nChars, int startbyte);
+int write_chunk_raid5(uchar * buffer, int nChars, int startbyte);
 int compute_parity_index(int i);
 int compute_nstripe(int i);
 block_t compute_parity(block_t *blocks, int nb_disks);

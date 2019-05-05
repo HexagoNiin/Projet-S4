@@ -131,41 +131,60 @@ int compute_final_nblock(int nChars) {
 }
 
 int write_chunk(uchar * buffer, int nChars, int startbyte) {
-    /// \brief Ecrit une chaine de caractères sur le système RAID.
-    /// \param[in] buffer : Chaine de caractères à écrire
-    /// \param[in] nChars : Nombre de caractères de la chaine
-    /// \param[in] startbyte : Position où écrire la chaine en octets
-    /// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
-	log4("[WRITE_CHUNK] RAID CINQ");
-    int i, j, pos = 0;
-    int nChunks = compute_nblock(nChars);
-    int nStripes = compute_nstripe(nChunks);
-    stripe_t stripe;
-    stripe.nblocks = r5Disk.ndisk;
-    stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
+	if(r5Disk.raidmode == ZERO)
+		return write_chunk_raid0(buffer, nChars, startbyte);
+	if (r5Disk.raidmode == UN)
+		return write_chunk_raid1(buffer, nChars, startbyte);
+	else
+		return write_chunk_raid5(buffer, nChars, startbyte);
+}
 
-    for(i=0;i<nStripes;i++) {
-        block_t *blocks = generateStripe(buffer, nChars, &pos);
-        int i_blocks = 0;
+int write_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \param[in] buffer : Chaine de caractères à écrire
+	/// \param[in] nChars : Nombre de caractères de la chaine
+	/// \param[in] startbyte : Position où écrire la chaine en octets
+	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
+	log4("[WRITE_CHUNK] RAID CINQ");
+	int i, j, pos = 0;
+	int nChunks = compute_nblock(nChars);
+	int nStripes = compute_nstripe(nChunks);
+	stripe_t stripe;
+	stripe.nblocks = r5Disk.ndisk;
+	stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
+
+	for(i=0;i<nStripes;i++) {
+		block_t *blocks = generateStripe(buffer, nChars, &pos);
+		int i_blocks = 0;
 		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk));
-        for(j=0;j<r5Disk.ndisk;j++) {
-            if(j == index) {
-                stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
-            } else {
-                stripe.stripe[j] = blocks[i_blocks];
-                i_blocks++;
-            }
-        }
-        if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE))) {
+		for(j=0;j<r5Disk.ndisk;j++) {
+			if(j == index) {
+				stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
+			} else {
+				stripe.stripe[j] = blocks[i_blocks];
+				i_blocks++;
+			}
+		}
+		if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE))) {
 			log4("[WRITE_CHUNK] : Erreur ecriture stripe");
-            return -1;
+			return -1;
 		}
 
-        free(blocks);
-    }
+		free(blocks);
+	}
 
-    free(stripe.stripe);
-    return nStripes;
+	free(stripe.stripe);
+	return nStripes;
+}
+
+int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \param[in] buffer : Chaine de caractères à écrire
+	/// \param[in] nChars : Nombre de caractères de la chaine
+	/// \param[in] startbyte : Position où écrire la chaine en octets
+	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
+	log4("[WRITE_CHUNK] RAID UN");
+
 }
 
 int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
@@ -195,7 +214,6 @@ int compute_parity_index(int numBande){
     */
     return (r5Disk.ndisk - 1) - (numBande % r5Disk.ndisk);
 }
-
 
 int compute_nstripe(int nb_blocks) {
 	if(r5Disk.raidmode == CINQ)
