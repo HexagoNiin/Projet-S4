@@ -5,7 +5,7 @@ import java.io.*;
 public class VirtualDisk {
 	public static int numberOfFiles;
 	public static SuperBlock superBlock;
-	public static InodeTable inodes;// tableau
+	public static InodeTable inodes = new InodeTable();// tableau
 	public static int nDisk = 4;
 	public static String raid; // type de RAID
 	public static File [] storage = new File[nDisk]; //tab[NUMBER_OF_DISKS];
@@ -17,6 +17,7 @@ public class VirtualDisk {
 			System.out.println("Impossible d'initialiser le disque virtuel : répertoire introuvable");
 			return;
 		}
+		nextParityPos = nDisk-1;
     	storage = repertoire.listFiles();
     	nDisk = storage.length;
     	/*Path chemin = Paths.get(nom_rep);
