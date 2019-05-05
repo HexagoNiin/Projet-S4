@@ -33,7 +33,11 @@ public class Utils {
 	public static byte [] subArray(byte [] original, int begin, int size) {
 		byte newArray[] = new byte [size];
 		for(int i = 0; i < size; i++) {
-			newArray[i] = original[i + begin];
+			if(i + begin >= original.length) {
+				newArray[i] = 0;
+			} else {
+				newArray[i] = original[i + begin];
+			}
 		}
 		return newArray;
 	}
