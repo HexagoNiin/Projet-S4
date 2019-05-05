@@ -8,8 +8,8 @@ public class FileHandler {
 	private Chunk data;
 	
 	public FileHandler(String filename) {
+		this.filename = filename;
 		try {
-			this.filename = filename;
 			FileInputStream file = new FileInputStream(new File(filename));
 			size = file.available();
 			byte buffer[] = new byte[size];
@@ -24,6 +24,7 @@ public class FileHandler {
 	}
 	
 	public FileHandler() {
+		filename = null;
 		size = 0;
 		data = null;
 	}
