@@ -48,6 +48,13 @@ public class Chunk {
 
 	public String toString() {
 		return stripes.toString();
+	
+	public String content() {
+		String buffer = "";
+		for(int i = 0; i < nStripes; i++) {
+			buffer += stripes[i].content();
+		}
+		return buffer;
 	}
 
 	/**

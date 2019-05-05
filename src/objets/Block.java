@@ -172,4 +172,12 @@ public class Block {
 		}
 		return buffer + "]";
 	}
+	
+	public String content() {
+		String buffer = "";
+		for(int i = 0; i < nBytes && data[i] != 0; i++) {
+			buffer += (char) data[i];
+		}
+		return buffer;
+	}
 }

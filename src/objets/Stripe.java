@@ -117,4 +117,14 @@ public class Stripe {
 		}
 		return buffer + "]";
 	}
+	
+	public String content() {
+		String buffer = "";
+		for(int i = 0; i < nBlocks; i++) {
+			if(i != parityPos) {
+				buffer += blocks[i].content();
+			}
+		}
+		return buffer;
+	}
 }
