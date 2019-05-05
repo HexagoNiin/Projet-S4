@@ -103,8 +103,6 @@ block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
 	int size;
 	if(r5Disk.raidmode == CINQ)
 	 	size = r5Disk.ndisk - 1;
-	else if(r5Disk.raidmode == ZERO)
-		size = r5Disk.ndisk;
 	else
 		size = r5Disk.ndisk;
     block_t *blocks = malloc(sizeof(block_t) * (size));
@@ -133,8 +131,10 @@ int compute_final_nblock(int nChars) {
 int write_chunk(uchar * buffer, int nChars, int startbyte) {
 	if(r5Disk.raidmode == ZERO)
 		return write_chunk_raid0(buffer, nChars, startbyte);
-	if (r5Disk.raidmode == UN)
+	if(r5Disk.raidmode == UN)
 		return write_chunk_raid1(buffer, nChars, startbyte);
+	if(r5Disk.raidmote == CINQUANTE)
+		return write_chunk_raid50(buffer, nChars, startbyte);
 	else
 		return write_chunk_raid5(buffer, nChars, startbyte);
 }
@@ -187,6 +187,17 @@ int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 
 }
 
+int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \param[in] buffer : Chaine de caractères à écrire
+	/// \param[in] nChars : Nombre de caractères de la chaine
+	/// \param[in] startbyte : Position où écrire la chaine en octets
+	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
+	log4("[WRITE_CHUNK] RAID CINQUANTE");
+
+
+}
+
 int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
 	log4("[WRITE_CHUNK] RAID ZERO");
 	int nBlock = compute_nblock(nChars);
@@ -206,13 +217,13 @@ int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
     return nStripes;
 }
 
-int compute_parity_index(int numBande){
+int compute_parity_index(int numBande, int ndisk){
     /**
     * \brief Indique le disque sur lequel se trouve le bloc de parité.
     * \param[in] i : Position sur le disque virtuel.
     * \param[out] indPar : Numéro du disque où se situera le bloc de parité.
     */
-    return (r5Disk.ndisk - 1) - (numBande % r5Disk.ndisk);
+    return (ndisk - 1) - (numBande % ndisk);
 }
 
 int compute_nstripe(int nb_blocks) {
