@@ -160,10 +160,7 @@ int read_super_block() {
 	/// \return 0 s'il y a eu une erreur, 1 sinon
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(super_block_t));
 	int code_retour;
-	if(r5Disk.super_block.raid_type == CINQ)
-		code_retour = read_chunk(buffer, sizeof(super_block_t), 0);
-	else
-		code_retour = read_chunk_raid0(buffer, sizeof(super_block_t), 0);
+	code_retour = read_chunk(buffer, sizeof(super_block_t), 0);
 
 	if(code_retour == -1)
         return EXIT_FAILURE;
