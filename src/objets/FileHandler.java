@@ -62,9 +62,11 @@ public class FileHandler {
 	}
 	
 	public int toHost() {
+		System.out.println(content());
 		try {
 			RandomAccessFile file = new RandomAccessFile(filename, "rw");
 			file.write(data.content().getBytes());
+			file.setLength(data.content().length());
 			file.close();
 		} catch (IOException e) {
 			System.err.println("Probl�me rencontr� lors de l'�criture");
@@ -88,15 +90,5 @@ public class FileHandler {
 	
 	public int getSize() {
 		return size;
-	}
-	
-	public int edit(String buffer, String filename) {
-	    size = buffer.length();
-	    data = new Chunk(buffer, size);
-	    int code = data.write(SuperBlock.getFirstFreeBytes());
-		if(code != 0) return code;
-		VirtualDisk.inodes.delete(filename);
-		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
-		return 0;
 	}
 }
