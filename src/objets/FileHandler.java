@@ -42,6 +42,10 @@ public class FileHandler {
 	}
 	
 	public int write() {
-		return data.write(SuperBlock.getFirstFreeBytes());
+		int code = data.write(SuperBlock.getFirstFreeBytes());
+		if(code != 0) return code;
+		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
+		return 0;
+	}
 	}
 }
