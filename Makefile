@@ -39,6 +39,10 @@ OPT+=-D _LOG6
 endif
 
 # PROGRAMMES
+raid5: $(OBJECTDIR)/main.o $(OS)
+	$(CC) -o $@ $^ $(OPT)
+	mv $@ $@.out
+
 cmd_test: $(OBJECTDIR)/cmd_test.o $(STRIPE)
 	$(CC) -o $@ $^ $(OPT)
 	mv $@ $@.out
@@ -66,10 +70,6 @@ dump_raid5: $(OBJECTDIR)/dump_raid5.o $(INODE)
 defragmentation: $(OBJECTDIR)/defragmentation.o $(INODE)
 		$(CC) -o $@ $^ $(OPT)
 		mv $@ $@.out
-
-raid5: $(OBJECTDIR)/main.o $(OS)
-	$(CC) -o $@ $^ $(OPT)
-	mv $@ $@.out
 
 # AUTOMATISATION
 $(OBJECTDIR)/%.o: $(SRCDIR)/%.c

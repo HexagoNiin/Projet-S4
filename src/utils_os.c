@@ -13,14 +13,14 @@ void interpreteur() {
         printf("\x1B[94mSysteme RAID\x1B[0m$ ");
         fgets(command, COMMANDS_SIZE + FILENAME_MAX_SIZE + 2, stdin);
         command_option = parser(command);
-		log1("Parser - Code de retour : %p\n", command_option);
+		log1("[INTERPRETEUR] Parser - Code de retour : %p\n", command_option);
         if(command_option != NULL) {
             exit = action(command_option);
-			if(exit && exit != -2) {log1("Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
+			if(exit && exit != -2) {log1("[INTERPRETEUR] Erreur lors de l'exécution de la commande\nCode de retour : %d", exit);}
 			if(exit != -2)  {log1(" "); }
 		} else {
 			fprintf(stdin, "\x1B[91m[ERR]\x1B[0m Usage : command [option]\n");
-			log1("Usage - Error\n");
+			log1("[INTERPRETEUR] Usage - Error\n");
 		}
     }
 
