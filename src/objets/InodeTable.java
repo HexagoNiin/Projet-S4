@@ -13,6 +13,13 @@ public class InodeTable {
 		}
 	}
 	
+	public int add(String filename, int size, int first_byte) { //update_inode_table
+		tab[nbInodes] = new Inode(filename, size, first_byte);
+		nbInodes++;
+		SuperBlock.setFirstFreeBytes(first_byte + size);
+		return 0;
+	}
+	
 	public int add(Inode inode) { //update_inode_table
 		tab[nbInodes] = inode;
 		nbInodes++;
