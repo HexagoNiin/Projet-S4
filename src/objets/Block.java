@@ -59,24 +59,39 @@ public class Block {
 	 * @return Un entier indiquant si l'opération s'est bien passée (0 : OK, 1 : Erreur cast, 2 ; Erreur �criture) 
 	 */
 	
-	public int write(int pos, File disk_id)  {
-		FileOutputStream fos = null;
+	public int write(int pos, File disk_id) {
 		try {
-			fos = new FileOutputStream(disk_id);
-		} catch (FileNotFoundException e1) {
-			System.err.println("Le fichier n'a pas ete correctement ouvert en ecriture.");
-			e1.printStackTrace();
-			return 2;
-		}
-		try {
-			fos.write(this.data, pos, nBytes);
-			fos.close();
-			return 0;
+			RandomAccessFile file = new RandomAccessFile(disk_id, "rw");
+			file.seek(pos);
+			file.write(data);
+			file.close();
 		} catch (IOException e) {
-			System.err.println("Une erreur est survenue lors de l'ecriture du fichier.");
+			System.err.println("Une erreur est survenue lors de l'�criture du bloc");
 			e.printStackTrace();
 			return 1;
 		}
+		return 0;
+	}
+	
+	/**
+	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
+	 * @param pos Position du block à lire
+	 * @param id_disk Index du disk avec le block à lire
+	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
+	 */
+	public int read(int pos, File disk_id) {
+		try {
+			RandomAccessFile file = new RandomAccessFile(disk_id, "r");
+			file.seek(pos);
+			file.read(data);
+			file.close();
+			
+		} catch (IOException e) {
+			System.err.println("Une erreur est survenue lors de la lecture du bloc.");
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
 	}
 	
 	/**
@@ -107,46 +122,6 @@ public class Block {
 		return 2;
 	}
 	
-	
-	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param pos Position du block à lire
-	 * @param id_disk Index du disk avec le block à lire
-	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
-	 */
-	public int read(int pos, File disk_id) {
-		
-		FileInputStream fis = null;
-
-		try {
-			fis = new FileInputStream(disk_id);
-			int content;
-
-			while (pos != 0) {
-				content = fis.read();
-				pos--;
-			}
-			
-			for(int i = 0; i < nBytes; i++){
-				content = fis.read();
-				this.data[i] = (byte)content;
-			}
-			
-		} catch (IOException e) {
-			System.err.println("Le fichier n'a pas ete correctement ouvert en lecture.");
-			e.printStackTrace();
-			return 2;
-		} 
-		try {
-				if (fis != null)
-					fis.close();
-				return 0;
-		} catch (IOException ex) {
-				System.err.println("Une erreur est survenue lors de la lecture du fichier.");
-				ex.printStackTrace();
-				return 1;
-		}
-	}
 	
 	public void	computeParity(Block blocks []) {
 		data = blocks[0].data.clone();
