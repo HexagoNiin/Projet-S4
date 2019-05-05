@@ -100,6 +100,7 @@ public class Stripe {
 	 */
 
 	public int read(int pos) {
+		parityPos = Utils.compute_parity_index(pos / Block.nBytes);
 		for(int i = 0; i < Stripe.nBlocks; i++) {
 			if(this.blocks[i].read(pos, VirtualDisk.storage[i]) != 0) {
 				System.err.println("Erreur lors de la lecture de la bande.");
