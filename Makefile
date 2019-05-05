@@ -73,6 +73,7 @@ defragmentation: $(OBJECTDIR)/defragmentation.o $(INODE)
 
 # AUTOMATISATION
 $(OBJECTDIR)/%.o: $(SRCDIR)/%.c
+	[ ! -d objects ] && mkdir objects || true
 	$(CC) -o $@ -c $< $(OPT)
 
 # NETTOYAGE
