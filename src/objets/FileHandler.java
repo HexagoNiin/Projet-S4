@@ -60,5 +60,16 @@ public class FileHandler {
 		}
 		return 0;
 	}
+	
+	public String toString() {
+		return "Nom du fichier : " + filename + "\nTaille : " + size + "\nContenu :\n" + data.content();
+	}
+	
+	public String content() {
+		return data.content();
+	}
+	
+	public Chunk getData() {
+		return data;
 	}
 }
