@@ -17,14 +17,19 @@ int main(int argc, char *argv[]) {
 	log4("[MAIN] Logs de niveau 4 activés");
 	log5("[MAIN] Logs de niveau 5 activés");
 	log6("[MAIN] Logs de niveau 6 activés");
-    if(argc != 3) {
+    if(argc < 2) {
         fprintf(stderr, "Usage : <%s> repertory type_raid\n", argv[0]);
         return 1;
     }
 	char raid_type[NB_RAIDS][32] = {"zero", "un", "cinq", "zero_un", "un_zero", "cinquante", "cent"};
-	int raid = check_raid_exists(argv[2], raid_type);
+	int raid;
+	if(argc == 2) {
+		raid = 2;
+	} else {
+		raid = check_raid_exists(argv[2], raid_type);
+	}
 	if(!raid) {
-		fprintf(stderr, "Les types de raids sont : zero, un, cinq, zero_un, un_zero, cinquante, cent");
+		fprintf(stderr, "Les types de raids sont : zero, un, cinq, zero_un, un_zero, cinquante, cent\n");
 		return 2;
 	}
 
