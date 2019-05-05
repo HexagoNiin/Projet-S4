@@ -47,5 +47,18 @@ public class FileHandler {
 		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
 		return 0;
 	}
+	
+	public int toHost() {
+		try {
+			RandomAccessFile file = new RandomAccessFile(filename, "rw");
+			file.write(data.content().getBytes());
+			file.close();
+		} catch (IOException e) {
+			System.err.println("Probl�me rencontr� lors de l'�criture");
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
+	}
 	}
 }
