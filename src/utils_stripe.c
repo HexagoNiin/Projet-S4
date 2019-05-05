@@ -47,7 +47,7 @@ int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 	/// \param[out] buffer : Chaine de caractere lue
 	/// \param[in] nChars : Nombre de caracteres a lire
 	/// \param[in] startbyte : Position où lire la chaine en octets
-	log4("[READ_CHUNK] RAID CINQ");
+	log4("[READ_CHUNK] RAID UN");
 	int posBuffer = 0;
 	int posDisk = 0;
 	while(posBuffer < nChars) {
