@@ -7,6 +7,9 @@ public class Chunk {
 	public Chunk(int nChars) {
 		nStripes = Utils.compute_nstripe(Utils.compute_nblock(nChars));
 		stripes = new Stripe[nStripes];
+		for(int i = 0; i < nStripes; i++) {
+			stripes[i] = new Stripe();
+		}
 	}
 
 	public Chunk(byte [] buffer, int nChars) {
@@ -32,7 +35,7 @@ public class Chunk {
 	 */
 	public int write(int startbyte) {
 		for(int i = 0; i < nStripes; i++) {
-			if (stripes[i].write(startbyte + (i * Stripe.nBlocks * Block.nBytes)) != 0) {
+			if (stripes[i].write(startbyte + (i * Stripe.nBlocks)) != 0) {
 				System.err.println("Erreur lors de l'�criture du chunk.");
 				return 1;
 			}
@@ -42,7 +45,7 @@ public class Chunk {
 
 	public int read(int startbyte) {
 		for(int i = 0; i < nStripes; i++) {
-			if(stripes[i].read(startbyte + (i * Stripe.nBlocks * Block.nBytes)) != 0) {
+			if(stripes[i].read(startbyte + (i * Stripe.nBlocks)) != 0) {
 				System.err.println("Erreur lors de la lecture du chunk.");
 				return 1;
 			}
