@@ -41,6 +41,10 @@ public class FileHandler {
 		return this.read(filename);
 	}
 	
+	public int read(Inode i) {
+		return this.read(i.getFilename());
+	}
+	
 	public int write() {
 		int code = data.write(SuperBlock.getFirstFreeBytes());
 		if(code != 0) return code;

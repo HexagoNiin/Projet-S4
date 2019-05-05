@@ -57,9 +57,8 @@ public class cmd_test {
 		
 		System.out.println("\nLecture d'un fichier :");
 		FileHandler f2 = new FileHandler();
-		f2.read("tests/paperboats.txt");
+		f2.read(VirtualDisk.inodes.get(0));
 		f2.toHost();
 		System.out.println(f2);
 	}
-
 }
