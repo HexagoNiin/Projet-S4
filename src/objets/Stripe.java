@@ -4,9 +4,11 @@ public class Stripe {
 
 	public static int nBlocks = VirtualDisk.nDisk;
 	private Block [] blocks;
+	private int parityPos;
 
 	public Stripe() {
-		this.blocks = new Block[nBlocks];
+		parityPos = VirtualDisk.nextParityPos;
+		blocks = new Block[nBlocks];
 		for(int i = 0; i < nBlocks; i++) {
 			blocks[i] = new Block();
 		}
@@ -25,7 +27,7 @@ public class Stripe {
 	public Stripe(byte bytes[]) {
 		this();
 		for(int i = 0; i < Stripe.nBlocks-1; i++) {
-			blocks[i + (i>=VirtualDisk.nextParityPos?1:0)] = new Block(Utils.subArray(bytes, i * Block.nBytes, Block.nBytes));
+			blocks[i + (i>=parityPos?1:0)] = new Block(Utils.subArray(bytes, i * Block.nBytes, Block.nBytes));
 		}
 		this.generateParity();
 	}
@@ -45,13 +47,13 @@ public class Stripe {
 		int i = 0;
 		int j = 0;
 		while(i < nBlocks) {
-			if(i != VirtualDisk.nextParityPos) {
+			if(i != parityPos) {
 				reference[j] = blocks[i];
 				j++;
 			}
 			i++;
 		}		
-		blocks[VirtualDisk.nextParityPos].computeParity(reference);
+		blocks[parityPos].computeParity(reference);
 		VirtualDisk.nextParityPos = (VirtualDisk.nextParityPos + nBlocks-1) % nBlocks;
 	}
 
