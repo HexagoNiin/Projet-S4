@@ -140,7 +140,7 @@ public class Block {
 	public String toString() {
 		String buffer = "[";
 		for(int i = 0; i < nBytes; i++) {
-			buffer += data[i];
+			buffer += String.format("%2h", data[i]);
 			if(i != nBytes-1) buffer += ", ";
 		}
 		return buffer + "]";

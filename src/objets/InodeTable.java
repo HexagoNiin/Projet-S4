@@ -14,15 +14,14 @@ public class InodeTable {
 	}
 	
 	public int add(String filename, int size, int first_byte) { //update_inode_table
-		tab[nbInodes] = new Inode(filename, size, first_byte);
+		tab[this.getUnused()] = new Inode(filename, size, first_byte);
 		nbInodes++;
-		SuperBlock.setFirstFreeBytes(first_byte + size);
+		SuperBlock.addFirstFreeBytes(Utils.compute_nstripe(Utils.compute_nblock(size)) * Block.nBytes);
 		return 0;
 	}
 	
-	public int add(Inode inode) { //update_inode_table
-		tab[nbInodes] = inode;
-		nbInodes++;
+	public int add(Inode inode) {
+		add(inode.getFilename(), inode.getSize(), inode.getFirstByte());
 		return 0;
 	}
 	
@@ -45,9 +44,18 @@ public class InodeTable {
 		return 0;
 	}
 	
+	public int delete(String filename) {
+		int i = 0;
+		while(!tab[i].getFilename().equals(filename) && i < nbInodes) { i++; }
+		if(i == nbInodes) { return -1; }
+		tab[i] = new Inode();
+		nbInodes--;
+		return 0;
+	}
+	
 	public int getUnused() {
 		for(int i = 0; i < tabSize; i++) {
-			if(tab[i].getFirstByte() == 0) {
+			if(tab[i].getFirstByte() == -1) {
 				return i;
 			}
 		}
@@ -65,5 +73,13 @@ public class InodeTable {
 			}
 		}
 		return null;
+	}
+	
+	public String toString() {
+		String buffer = new String();
+		for(int i = 0; i < nbInodes; i++) {
+			buffer += "[" + i + "] " + tab[i] + "\n";
+		}
+		return buffer;
 	}
 }

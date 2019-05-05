@@ -5,7 +5,7 @@ public class SuperBlock {
 	//private static int nbBlocksUsed;
 	private static int firstFreeBytes;
 	
-	public static void setFirstFreeBytes(int new_bytes) {
+	public static void addFirstFreeBytes(int new_bytes) {
 		firstFreeBytes += new_bytes;
 	}
 	

@@ -6,9 +6,9 @@ public class Inode {
 	private int firstByte;
 	
 	public Inode() {
-		filename = null;
+		filename = "";
 		size = 0;
-		firstByte = 0;
+		firstByte = -1;
 	}
 	
 	public Inode(String filename, int size, int first_byte) {
@@ -27,5 +27,9 @@ public class Inode {
 
 	public int getFirstByte() {
 		return firstByte;
+	}
+	
+	public String toString() {
+		return "(" + firstByte + ", " + filename + ", " + size + ")";
 	}
 }

@@ -8,6 +8,7 @@ public class FileHandler {
 	private Chunk data;
 	
 	public FileHandler(String filename) {
+		System.out.println(filename);
 		this.filename = filename;
 		try {
 			FileInputStream file = new FileInputStream(new File(filename));
@@ -29,6 +30,12 @@ public class FileHandler {
 		data = null;
 	}
 	
+	public FileHandler(String filename, byte buffer []) {
+		this.filename = filename;
+		size = buffer.length;
+		data = new Chunk(buffer, size);
+	}
+	
 	public int read(String filename) {
 		Inode i = VirtualDisk.inodes.get(filename);
 		this.filename = filename;
@@ -46,9 +53,11 @@ public class FileHandler {
 	}
 	
 	public int write() {
+		if(VirtualDisk.inodes.get(filename) != null) return 2;
 		int code = data.write(SuperBlock.getFirstFreeBytes());
 		if(code != 0) return code;
 		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
+		System.out.println(this);
 		return 0;
 	}
 	
@@ -66,7 +75,7 @@ public class FileHandler {
 	}
 	
 	public String toString() {
-		return "Nom du fichier : " + filename + "\nTaille : " + size + "\nContenu :\n" + data.content();
+		return "Nom du fichier : " + filename + "\nTaille : " + size + " octets, " + Utils.compute_nstripe(Utils.compute_nblock(size)) + " bandes\nPosition : " + VirtualDisk.inodes.get(filename).getFirstByte() + "\nContenu :\n" + data;
 	}
 	
 	public String content() {
@@ -75,5 +84,19 @@ public class FileHandler {
 	
 	public Chunk getData() {
 		return data;
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	
+	public int edit(String buffer, String filename) {
+	    size = buffer.length();
+	    data = new Chunk(buffer, size);
+	    int code = data.write(SuperBlock.getFirstFreeBytes());
+		if(code != 0) return code;
+		VirtualDisk.inodes.delete(filename);
+		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
+		return 0;
 	}
 }
