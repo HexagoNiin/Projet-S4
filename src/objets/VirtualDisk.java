@@ -6,10 +6,10 @@ public class VirtualDisk {
 	public static int numberOfFiles;
 	public static SuperBlock superBlock;
 	public static InodeTable inodes;// tableau
-	public static int nDisk;
+	public static int nDisk = 4;
 	public static String raid; // type de RAID
 	public static File [] storage = new File[nDisk]; //tab[NUMBER_OF_DISKS];
-	public static int nextParityPos;
+	public static int nextParityPos = nDisk-1;
     
     public VirtualDisk(String nom_rep) {
 		File repertoire = new File(nom_rep);
