@@ -15,7 +15,6 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 			return -1;
 		}
 		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk);
-		//printf("index : %d pos : %d\n", parity_index, startbyte + posDisk);
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
 			if(i != parity_index) {
@@ -28,7 +27,6 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 		posDisk++;
 		free(stripe.stripe);
 	}
-	printf("\n\n");
 	return posDisk;
 }
 
@@ -132,7 +130,6 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
     }
 
     free(stripe.stripe);
-	printf("nstripes : %d\n", nStripes);
     return nStripes;
 }
 
