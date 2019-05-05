@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 	log5("[MAIN] Logs de niveau 5 activés");
 	log6("[MAIN] Logs de niveau 6 activés");
     if(argc < 2) {
-        fprintf(stderr, "Usage : <%s> repertory type_raid\n", argv[0]);
+        fprintf(stderr, "Usage : <%s> repertory [type_raid]\n", argv[0]);
         return 1;
     }
 	char raid_type[NB_RAIDS][32] = {"zero", "un", "cinq", "zero_un", "un_zero", "cinquante", "cent"};
