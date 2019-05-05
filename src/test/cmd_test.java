@@ -38,15 +38,15 @@ public class cmd_test {
 		
 		/* CHUNK */
 		System.out.println("\n…criture d'un chunk :");
-		String message = "J'aime les bananes !";
+		String message = "Yo wot da fuk you're sniffing in a plastic bag, the boosta stincka glue to be the supa street fighter";
 		Chunk c1 = new Chunk(message);
-		System.out.println(c1.content() + " :\n" +c1);
+		System.out.println(c1.content() + " :\n" + c1);
 		c1.write(0);
 		
 		System.out.println("\nLecture d'un chunk :");
 		Chunk c2 = new Chunk(message.length());
 		c2.read(0);
-		System.out.println(c2);
+		System.out.println(c2.content() + " :\n" + c2);
 	}
 
 }
