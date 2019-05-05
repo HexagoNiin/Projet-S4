@@ -7,39 +7,51 @@ public class Stripe {
 
 	public Stripe() {
 		this.blocks = new Block[nBlocks];
+		for(int i = 0; i < nBlocks; i++) {
+			blocks[i] = new Block();
+		}
 	}
 
-	public Stripe(Block blocks[]) {
-		for(int i = 0; i < Stripe.nBlocks-1; i++) {
+	/*public Stripe(Block blocks[]) {
+		this();
+		int offset = 0;
+		for(int i = 0; i < Stripe.nBlocks; i++) {
+			if(i == VirtualDisk.nextParityPos) offset++;
 			this.blocks[i] = blocks[i];
 		}
-	}
+		this.generateParity();
+	}*/
 
 	public Stripe(byte bytes[]) {
+		this();
 		for(int i = 0; i < Stripe.nBlocks-1; i++) {
-			this.blocks[i] = new Block(bytes[i]);
-		}
-	}
-
-	public Stripe(int entiers[]) {
-		for(int i = 0; i < Stripe.nBlocks-1; i++) {
-			this.blocks[i] = new Block(entiers[i]);
+			blocks[i + (i>=VirtualDisk.nextParityPos?1:0)] = new Block(Utils.subArray(bytes, i * Block.nBytes, Block.nBytes));
 		}
 		this.generateParity();
 	}
+
+	/*public Stripe(int entiers[]) {
+		this();
+		int offset = 0;
+		for(int i = 0; i < Stripe.nBlocks; i++) {
+			if(i == VirtualDisk.nextParityPos) offset++;
+			this.blocks[i] = new Block(entiers[i]);
+		}
+		this.generateParity();
+	}*/
 
 	public void generateParity() {
 		Block reference[] = new Block[nBlocks-1];
 		int i = 0;
 		int j = 0;
-		while(j < nBlocks-1) {
+		while(i < nBlocks) {
 			if(i != VirtualDisk.nextParityPos) {
 				reference[j] = blocks[i];
-				i++;
+				j++;
 			}
-			j++;
-		}
-		blocks[VirtualDisk.nextParityPos] = Utils.compute_parity(reference, nBlocks-1);
+			i++;
+		}		
+		blocks[VirtualDisk.nextParityPos].computeParity(reference);
 		VirtualDisk.nextParityPos = (VirtualDisk.nextParityPos + nBlocks-1) % nBlocks;
 	}
 
