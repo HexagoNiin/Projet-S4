@@ -10,7 +10,7 @@ public class Block {
 	public Block() {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
-			data[i] = (byte) '\0';
+			data[i] = 0;
 		}
 	}
 	
