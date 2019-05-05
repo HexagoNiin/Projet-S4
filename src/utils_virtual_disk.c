@@ -41,6 +41,7 @@ int init_disk_raid5(const char *repertoryName, int raid) {
 
     r5Disk.ndisk = nbFiles;
     r5Disk.storage = storage;
+    r5Disk.raidmode = raid;
 
     /* detection de la table d'inode */
     int exit_read = read_super_block();
@@ -49,7 +50,6 @@ int init_disk_raid5(const char *repertoryName, int raid) {
 
         /* initialisation r5Disk */
         r5Disk.super_block.raid_type = raid;
-        r5Disk.raidmode = raid;
         r5Disk.number_of_files = 0;
         r5Disk.super_block.nb_blocks_used = INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE;
         r5Disk.super_block.first_free_byte = ((INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE) / nbFiles) * BLOCK_SIZE;
@@ -57,7 +57,7 @@ int init_disk_raid5(const char *repertoryName, int raid) {
         for(u=0;u<INODE_TABLE_SIZE;u++)
             r5Disk.inodes[u].first_byte = 0;
         write_super_block();
-        write_inodes_table(r5Disk.super_block.first_free_byte);
+        write_inodes_table((SUPER_BLOCK_SIZE / nbFiles) * BLOCK_SIZE);
     } else {
         printf("Detection du systeme RAID\n");
         int u;
@@ -104,11 +104,10 @@ int repair_disk(int num) {
 }
 
 bool check_super_block() {
+    log1("[CHECK_SUPER_BLOCK] raid_type : %d first_free_byte : %d blocks : %d", r5Disk.super_block.raid_type, r5Disk.super_block.first_free_byte, r5Disk.super_block.nb_blocks_used);
     if(r5Disk.super_block.raid_type < 1 || r5Disk.super_block.raid_type > 7)
         return false;
     if(r5Disk.super_block.first_free_byte < 0 || r5Disk.super_block.nb_blocks_used <0)
-        return false;
-    if(r5Disk.super_block.nb_blocks_used > r5Disk.super_block.first_free_byte)
         return false;
     return true;
 }

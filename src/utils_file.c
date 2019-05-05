@@ -20,11 +20,7 @@ int write_file(const char *filename, file_t file) {
 			log2("[WRITE_FILE] Le fichier est plus petit ou egal a l'original.");
 
             /* écriture du fichier */
-            int size;
-			if(r5Disk.raidmode == CINQ)
-				size = write_chunk(file.data, file.size, r5Disk.inodes[i].first_byte);
-			else
-				size = write_chunk_raid0(file.data, file.size, r5Disk.inodes[i].first_byte);
+            int size = write_chunk(file.data, file.size, r5Disk.inodes[i].first_byte);
 
 			if(size == -1) {
 		        fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
@@ -51,18 +47,14 @@ int write_file(const char *filename, file_t file) {
     inode_t inode = init_inode(filename, file.size, r5Disk.super_block.first_free_byte);
 
     /* ecriture fichier */
-    int size;
-	if(r5Disk.raidmode == CINQ)
-		size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
-	else
-		size = write_chunk_raid0(file.data, file.size, r5Disk.super_block.first_free_byte);
-
+    int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
     if(size == -1) {
         fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
 		return EXIT_FAILURE;
     }
 
 	/* mise a jour de la table */
+	log2("[WRITE_FILE] size : %d", size);
     inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
 	write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
@@ -91,10 +83,7 @@ int read_file(const char* filename, file_t *file){
 	if(!file_exist)
 		return EXIT_FAILURE;
 	file->size = r5Disk.inodes[i].size;
-	if(r5Disk.raidmode == CINQ)
-		read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
-	else
-		read_chunk_raid0(file->data, file->size, r5Disk.inodes[i].first_byte);
+	read_chunk(file->data, file->size, r5Disk.inodes[i].first_byte);
 	return EXIT_SUCCESS;
 }
 

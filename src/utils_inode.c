@@ -48,10 +48,8 @@ int write_inodes_table(int startbyte) {
 	uchar *buffer = NULL;
     for(i=0;i<INODE_TABLE_SIZE;i++) {
         buffer = indtostr(r5Disk.inodes[i]);
-		if(r5Disk.super_block.raid_type == CINQ)
-			nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
-		else
-			nStripe = write_chunk_raid0(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
+		log3("[WRITE_INODES_TABLE] Ecriture inode num %d", i);
+		nStripe = write_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
         if(nStripe == -1) {
             return -1;
         }
@@ -83,10 +81,7 @@ int read_inodes_table(int startbyte) {
 	int i, nStripe = 0;
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(inode_t));
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
-		if(r5Disk.super_block.raid_type == CINQ)
-			nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
-		else
-			nStripe = read_chunk_raid0(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
+		nStripe = read_chunk(buffer, sizeof(inode_t), startbyte + (i * nStripe * BLOCK_SIZE));
 		if(nStripe == -1) {
 			free(buffer);
 			return EXIT_FAILURE;
@@ -128,11 +123,7 @@ int write_super_block() {
 	/// \param[out] startbyte : premiere bande libre sur le RAID
 	/// \return 0 s'il y a une erreur, 1 sinon
     uchar *buffer = sbtostr(r5Disk.super_block);
-	int code_retour;
-	if(r5Disk.super_block.raid_type == CINQ)
-		code_retour = write_chunk(buffer, sizeof(super_block_t), 0);
-	else
-		code_retour = write_chunk_raid0(buffer, sizeof(super_block_t), 0);
+	int code_retour = write_chunk(buffer, sizeof(super_block_t), 0);
     if(code_retour == -1) {
 		log3("[WRITE_SUPER_BLOCK] Erreur ecriture du chunk");
         return EXIT_FAILURE;
@@ -160,11 +151,14 @@ int read_super_block() {
 	/// \return 0 s'il y a eu une erreur, 1 sinon
 	uchar *buffer = malloc(sizeof(uchar) * sizeof(super_block_t));
 	int code_retour;
-	if(r5Disk.super_block.raid_type == CINQ)
-		code_retour = read_chunk(buffer, sizeof(super_block_t), 0);
-	else
-		code_retour = read_chunk_raid0(buffer, sizeof(super_block_t), 0);
-
+		if(r5Disk.raidmode == ZERO)
+			code_retour = read_chunk_raid0(buffer, sizeof(super_block_t), 0);
+		if(r5Disk.raidmode == UN)
+			code_retour = read_chunk_raid1(buffer, sizeof(super_block_t), 0);
+		if(r5Disk.raidmode == CINQUANTE)
+			code_retour = read_chunk_raid50(buffer, sizeof(super_block_t), 0);
+		else
+			code_retour = read_chunk_raid5(buffer, sizeof(super_block_t), 0);
 	if(code_retour == -1)
         return EXIT_FAILURE;
 	r5Disk.super_block = strtosb(buffer);
