@@ -12,11 +12,45 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
+<<<<<<< HEAD
+=======
 	/// \brief Lis une chaine de caractères du RAID
 	/// \param[out] buffer : Chaine de caractere lue
 	/// \param[in] nChars : Nombre de caracteres a lire
 	/// \param[in] startbyte : Position où lire la chaine en octets
 	log4("[READ_CHUNK] RAID CINQ");
+	int posBuffer = 0;
+	int posDisk = 0;
+	while(posBuffer < nChars) {
+		stripe_t stripe;
+		if(read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE)) {
+			log4("[READ_CHUNK] Erreur lecture du chunk");
+			free(stripe.stripe);
+			return -1;
+		}
+		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk, r5Disk.ndisk);
+		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
+			block_t block = stripe.stripe[i];
+			if(i != parity_index) {
+				for(int j = 0; j < BLOCK_SIZE && posBuffer < nChars; j++) {
+					buffer[posBuffer] = block.data[j];
+					posBuffer++;
+				}
+			}
+		}
+		posDisk++;
+		free(stripe.stripe);
+	}
+	return posDisk;
+}
+
+int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
+>>>>>>> f13b88474b0c98cd2ed8d1e957661b3a09da6f34
+	/// \brief Lis une chaine de caractères du RAID
+	/// \param[out] buffer : Chaine de caractere lue
+	/// \param[in] nChars : Nombre de caracteres a lire
+	/// \param[in] startbyte : Position où lire la chaine en octets
+	log4("[READ_CHUNK] RAID UN");
 	int posBuffer = 0;
 	int posDisk = 0;
 	while(posBuffer < nChars) {
@@ -102,16 +136,6 @@ int read_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 	}
 	return posDisk;
 }
-
-
-int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
-	log4("[READ_CHUNK] RAID UN");
-	(void)buffer;
-	(void)nChars;
-	(void)startbyte;
-	return 0;
-}
-
 
 int read_stripe(stripe_t *stripe, uint pos) {
 	/**
