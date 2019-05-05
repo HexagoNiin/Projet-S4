@@ -153,9 +153,9 @@ int read_super_block() {
 	int code_retour;
 		if(r5Disk.raidmode == ZERO)
 			code_retour = read_chunk_raid0(buffer, sizeof(super_block_t), 0);
-		if(r5Disk.raidmode == UN)
+		else if(r5Disk.raidmode == UN)
 			code_retour = read_chunk_raid1(buffer, sizeof(super_block_t), 0);
-		if(r5Disk.raidmode == CINQUANTE)
+		else if(r5Disk.raidmode == CINQUANTE)
 			code_retour = read_chunk_raid50(buffer, sizeof(super_block_t), 0);
 		else
 			code_retour = read_chunk_raid5(buffer, sizeof(super_block_t), 0);
