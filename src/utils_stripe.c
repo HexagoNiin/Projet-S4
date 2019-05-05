@@ -5,50 +5,13 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 		return read_chunk_raid0(buffer, nChars, startbyte);
 	if(r5Disk.super_block.raid_type == UN)
 		return read_chunk_raid1(buffer, nChars, startbyte);
-<<<<<<< HEAD
 	if(r5Disk.super_block.raid_type == CINQUANTE)
 		return read_chunk_raid50(buffer, nChars, startbyte);
-=======
->>>>>>> ac7e15c2497d3d8491cef6a0ebf7990fce4e0ea6
 	else
 		return read_chunk_raid5(buffer, nChars, startbyte);
 }
 
 int read_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
-<<<<<<< HEAD
-=======
-	/// \brief Lis une chaine de caractères du RAID
-	/// \param[out] buffer : Chaine de caractere lue
-	/// \param[in] nChars : Nombre de caracteres a lire
-	/// \param[in] startbyte : Position où lire la chaine en octets
-	log4("[READ_CHUNK] RAID CINQ");
-	int posBuffer = 0;
-	int posDisk = 0;
-	while(posBuffer < nChars) {
-		stripe_t stripe;
-		if(read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE)) {
-			log4("[READ_CHUNK] Erreur lecture du chunk");
-			free(stripe.stripe);
-			return -1;
-		}
-		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk, r5Disk.ndisk);
-		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
-			block_t block = stripe.stripe[i];
-			if(i != parity_index) {
-				for(int j = 0; j < BLOCK_SIZE && posBuffer < nChars; j++) {
-					buffer[posBuffer] = block.data[j];
-					posBuffer++;
-				}
-			}
-		}
-		posDisk++;
-		free(stripe.stripe);
-	}
-	return posDisk;
-}
-
-int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
->>>>>>> ac7e15c2497d3d8491cef6a0ebf7990fce4e0ea6
 	/// \brief Lis une chaine de caractères du RAID
 	/// \param[out] buffer : Chaine de caractere lue
 	/// \param[in] nChars : Nombre de caracteres a lire
@@ -123,7 +86,7 @@ int read_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 			free(stripe.stripe);
 			return -1;
 		}
-		
+
 		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk, 3);
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
@@ -330,13 +293,6 @@ int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 				}
 			}
 		}
-		printf("Position : %d\n", startbyte + (i * BLOCK_SIZE));
-		print_block(stripe.stripe[0]);
-		print_block(stripe.stripe[1]);
-		print_block(stripe.stripe[2]);
-		print_block(stripe.stripe[3]);
-		print_block(stripe.stripe[4]);
-		print_block(stripe.stripe[5]);
 		if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE))) {
 			log4("[WRITE_CHUNK] : Erreur ecriture stripe");
 			return -1;
