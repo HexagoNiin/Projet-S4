@@ -24,9 +24,11 @@ int main(int argc, char *argv[]) {
 	char raid_type[NB_RAIDS][32] = {"zero", "un", "cinq", "zero_un", "un_zero", "cinquante", "cent"};
 	int raid;
 	if(argc == 2) {
-		raid = 2;
+		log1("[MAIN] Mode par défaut : cinq");
+		raid = 3;
 	} else {
 		raid = check_raid_exists(argv[2], raid_type);
+		log1("[MAIN] Mode sélectionné : %s", raid_type[raid-1]);
 	}
 	if(!raid) {
 		fprintf(stderr, "Les types de raids sont : zero, un, cinq, zero_un, un_zero, cinquante, cent\n");
