@@ -47,6 +47,19 @@ public class cmd_test {
 		Chunk c2 = new Chunk(message.length());
 		c2.read(0);
 		System.out.println(c2.content() + " :\n" + c2);
+		
+		/*FILEHANDLER*/
+		new VirtualDisk("systeme");
+		System.out.println("\n…criture d'un fichier :");
+		FileHandler f1 = new FileHandler("tests/paperboats.txt");
+		f1.write();
+		System.out.println(f1);
+		
+		System.out.println("\nLecture d'un fichier :");
+		FileHandler f2 = new FileHandler();
+		f2.read("tests/paperboats.txt");
+		f2.toHost();
+		System.out.println(f2);
 	}
 
 }
