@@ -184,7 +184,19 @@ int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 	/// \param[in] startbyte : Position où écrire la chaine en octets
 	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
 	log4("[WRITE_CHUNK] RAID UN");
-
+	int nblocks = compute_nblock(nChars);
+	stripe_t s;
+	s.nblocks = r5Disk.ndisk;
+	s.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
+	for(int i = 0; i < nblocks; i++) {
+		for(int j = 0; j < r5Disk.ndisk; j++) {
+			for(int k = 0; k < BLOCK_SIZE; i++) {
+				s.stripe[j].data[k] = buffer[i * BLOCK_SIZE + j * r5Disk.ndisk];
+			}
+		}
+		if(write_stripe(s, i * BLOCK_SIZE)) return -1;
+	}
+	return nblocks;
 }
 
 int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
