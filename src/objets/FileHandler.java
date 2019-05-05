@@ -29,8 +29,16 @@ public class FileHandler {
 		data = null;
 	}
 	
-	public int load() {
-		return data.read(VirtualDisk.inodes.get(filename).getFirstByte());
+	public int read(String filename) {
+		Inode i = VirtualDisk.inodes.get(filename);
+		this.filename = filename;
+		size = i.getSize();
+		data = new Chunk(size);
+		return data.read(i.getFirstByte());
+	}
+	
+	public int read() {
+		return this.read(filename);
 	}
 	
 	public int write() {
