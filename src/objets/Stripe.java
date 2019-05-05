@@ -83,7 +83,7 @@ public class Stripe {
 
 	public int write(int pos) {
 		for(int i = 0; i < this.getNBlocks(); i++) {
-			if(this.blocks[i].write(pos, VirtualDisk.storage[i]) != 0) {
+			if(this.blocks[i].write(pos , VirtualDisk.storage[i]) != 0) {
 				System.err.println("Erreur lors de l'écriture de la bande.");
 				return 1;
 			}

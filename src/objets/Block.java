@@ -166,9 +166,7 @@ public class Block {
 		String buffer = "[";
 		for(int i = 0; i < nBytes; i++) {
 			buffer += data[i];
-			if(i != nBytes-1) {
-				buffer += ", ";
-			}
+			if(i != nBytes-1) buffer += ", ";
 		}
 		return buffer + "]";
 	}
