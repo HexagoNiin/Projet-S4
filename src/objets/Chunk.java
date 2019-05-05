@@ -11,13 +11,17 @@ public class Chunk {
 
 	public Chunk(byte [] buffer, int nChars) {
 		this(nChars);
-		for(int i = 0; i < nChars / nStripes; i++) {
-			stripes[i] = new Stripe(Utils.subArray(buffer, i * Stripe.nBlocks * Block.nBytes, Stripe.nBlocks * Block.nBytes));
+		for(int i = 0; i < nStripes; i++) {
+			stripes[i] = new Stripe(Utils.subArray(buffer, i * (Stripe.nBlocks - 1) * Block.nBytes, (Stripe.nBlocks - 1) * Block.nBytes));
 		}
 	}
 
 	public Chunk(String buffer, int nChars) {
 		this(buffer.getBytes(), nChars);
+	}
+	
+	public Chunk(String buffer) {
+		this(buffer, buffer.length());
 	}
 
 	/**
