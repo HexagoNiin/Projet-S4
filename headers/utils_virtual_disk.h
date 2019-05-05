@@ -15,10 +15,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <stdbool.h>
 
 virtual_disk_t r5Disk;
-int init_disk_raid5(const char* repertoryName);
+int init_disk_raid5(const char* repertoryName, int raid);
 int repair_disk(int num);
 void close_system();
+bool check_super_block();
 
 #endif

@@ -16,10 +16,11 @@
 #define SUPER_BLOCK_SIZE 4 // nb blocs avec parité
 #define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE+1 // en octets
 #define INODE_SIZE 16 // en blocks avec parité
+#define NB_RAIDS 7
 
 typedef unsigned int uint; // même taille que int
 typedef unsigned char uchar; // 8 bits = octet
-enum raid {ZERO,UN,CINQ,ZERO_UN,UN_ZERO,CINQUANTE,CENT};
+enum raid {ZERO=1,UN=2,CINQ=3,ZERO_UN=4,UN_ZERO=5,CINQUANTE=6,CENT=7};
 
 /* Type of a block of data */
 typedef struct block_s{

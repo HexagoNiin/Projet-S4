@@ -1,6 +1,6 @@
 #include "../headers/utils_virtual_disk.h"
 
-int init_disk_raid5(const char* repertoryName) {
+int init_disk_raid5(const char *repertoryName, int raid) {
 	/// \brief Initialise la variable globale r5Disk
     /// \param[in] repertoryName : le repertoire ou se situe les disks
 
@@ -39,37 +39,32 @@ int init_disk_raid5(const char* repertoryName) {
     }
     closedir(rep);
 
-	/* initialisation r5Disk */
     r5Disk.ndisk = nbFiles;
     r5Disk.storage = storage;
-    r5Disk.super_block.raid_type = CINQ;
-    r5Disk.raidmode = CINQ;
 
     /* detection de la table d'inode */
-    if(read_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE)) {
+    int exit_read = read_super_block();
+    if(exit_read || !check_super_block()) {
         printf("Systeme inexistant : mise en place du systeme RAID\n");
+
+        /* initialisation r5Disk */
+        r5Disk.super_block.raid_type = raid;
+        r5Disk.raidmode = raid;
         r5Disk.number_of_files = 0;
         r5Disk.super_block.nb_blocks_used = INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE;
         r5Disk.super_block.first_free_byte = ((INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE) / nbFiles) * BLOCK_SIZE;
         int u;
-        for(u=0;u<INODE_TABLE_SIZE;u++) {
+        for(u=0;u<INODE_TABLE_SIZE;u++)
             r5Disk.inodes[u].first_byte = 0;
-        }
-        if(write_super_block()) {
-            printf("[DBG] : erreur super block\n");
-        }
-        if(write_inodes_table(r5Disk.super_block.first_free_byte) == -1) {
-            printf("[DBG] : erreur super block\n");
-        }
+        write_super_block();
+        write_inodes_table(r5Disk.super_block.first_free_byte);
     } else {
         printf("Detection du systeme RAID\n");
         int u;
+        if(read_inodes_table(SUPER_BLOCK_SIZE / r5Disk.ndisk * BLOCK_SIZE))
+            return EXIT_FAILURE;
         for(u=0;r5Disk.inodes[u].first_byte;u++);
         r5Disk.number_of_files = u;
-        if(read_super_block()) {
-            fprintf(stderr, "Erreur lors de la lecture du super block.\n");
-            return 3;
-        }
     }
 
 	return EXIT_SUCCESS;
@@ -77,10 +72,8 @@ int init_disk_raid5(const char* repertoryName) {
 
 uchar *xor_uchar(uchar *a, uchar *b, int size) {
 	uchar *buffer = malloc(size * sizeof(uchar));
-	for(int i = 0; i < size; i++) {
+	for(int i = 0; i < size; i++)
 		buffer[i] = a[i] ^ b[i];
-		//printf("%x xor %x\n", a[i], b[i]);
-	}
 	return buffer;
 }
 
@@ -108,4 +101,14 @@ int repair_disk(int num) {
 	fseek(r5Disk.storage[num], 0, SEEK_SET);
 	fwrite(buffer_ecriture, sizeof(uchar), size, r5Disk.storage[num]);
 	return EXIT_SUCCESS;
+}
+
+bool check_super_block() {
+    if(r5Disk.super_block.raid_type < 1 || r5Disk.super_block.raid_type > 7)
+        return false;
+    if(r5Disk.super_block.first_free_byte < 0 || r5Disk.super_block.nb_blocks_used <0)
+        return false;
+    if(r5Disk.super_block.nb_blocks_used > r5Disk.super_block.first_free_byte)
+        return false;
+    return true;
 }

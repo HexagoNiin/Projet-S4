@@ -72,8 +72,15 @@ block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
     /// \param[in, out] posCurrent : Curseur dans la chaine de caractères
     /// \return Un pointeur de blocks
     int i, j;
-    block_t *blocks = malloc(sizeof(block_t) * (r5Disk.ndisk-1));
-    for(i=0;i<r5Disk.ndisk-1;i++) {
+	int size;
+	if(r5Disk.raidmode == CINQ)
+	 	size = r5Disk.ndisk - 1;
+	else if(r5Disk.raidmode == ZERO)
+		size = r5Disk.ndisk;
+	else
+		size = r5Disk.ndisk;
+    block_t *blocks = malloc(sizeof(block_t) * (size));
+    for(i=0;i<size;i++) {
         for(j=0;j<BLOCK_SIZE;j++) {
             if(*posCurrent == nChars) {
                 blocks[i].data[j] = '\0';
@@ -131,6 +138,12 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
 
     free(stripe.stripe);
     return nStripes;
+}
+
+int write_chunk_raid_0(uchar *buffer, int nChars, int startbyte) {
+	/*int nBlock = compute_nblock(nChars);
+	stripe_t stripe;*/
+	return 0;
 }
 
 int compute_parity_index(int numBande){
