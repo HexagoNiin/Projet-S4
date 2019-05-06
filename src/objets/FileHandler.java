@@ -30,6 +30,11 @@ public class FileHandler {
 		data = null;
 	}
 	
+	public void create(String filename) {
+		this.filename = filename;
+		data = new Chunk("");
+	}
+	
 	public FileHandler(String filename, byte buffer []) {
 		this.filename = filename;
 		size = buffer.length;
@@ -54,6 +59,7 @@ public class FileHandler {
 	
 	public int write() {
 		if(VirtualDisk.inodes.get(filename) != null) return 2;
+		System.out.println(VirtualDisk.inodes.get(filename));
 		int code = data.write(SuperBlock.getFirstFreeBytes());
 		if(code != 0) return code;
 		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());

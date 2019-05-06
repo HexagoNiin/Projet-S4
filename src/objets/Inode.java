@@ -32,4 +32,8 @@ public class Inode {
 	public String toString() {
 		return "(" + firstByte + ", " + filename + ", " + size + ")";
 	}
+	
+	public boolean empty() {
+		return firstByte == -1;
+	}
 }

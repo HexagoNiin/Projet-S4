@@ -202,9 +202,11 @@ public class Gui {
 	private void addElement() {
 		String name;
 		if ( (name = JOptionPane.showInputDialog("Name File :")) != null) {
-			FileHandler f = new FileHandler(name);
-			if (f.write() == 0) {
-				model.addElement(name);
+			if(VirtualDisk.inodes.get(name) == null) {
+				FileHandler f = new FileHandler(name);
+				if (f.write() == 0) {
+					model.addElement(name);
+				}
 			}
 		}
 	}

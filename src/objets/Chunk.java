@@ -15,6 +15,7 @@ public class Chunk {
 	public Chunk(byte [] buffer, int nChars) {
 		this(nChars);
 		for(int i = 0; i < nStripes; i++) {
+			System.out.println("Next Parity : " + VirtualDisk.nextParityPos);
 			stripes[i] = new Stripe(Utils.subArray(buffer, i * (Stripe.nBlocks - 1) * Block.nBytes, (Stripe.nBlocks - 1) * Block.nBytes));
 		}
 	}

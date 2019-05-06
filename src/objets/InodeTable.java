@@ -40,6 +40,7 @@ public class InodeTable {
 		for(int j = i; j <= nbInodes; j++) {
 			tab[j] = tab[j++];
 		}
+		tab[i] = new Inode();
 		nbInodes--;
 		return 0;
 	}
@@ -48,6 +49,7 @@ public class InodeTable {
 		int i = 0;
 		while(!tab[i].getFilename().equals(filename) && i < nbInodes) { i++; }
 		if(i == nbInodes) { return -1; }
+		tab[i] = new Inode();
 		tab[i] = new Inode();
 		nbInodes--;
 		return 0;
