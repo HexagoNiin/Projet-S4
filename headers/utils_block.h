@@ -14,7 +14,7 @@
 #include "raid_defines.h"
 #include "utils_virtual_disk.h"
 
-#define BLOCKS_ARE_STRINGS 1
+#define BLOCKS_ARE_STRINGS 0
 
 block_t create_block();
 block_t tab_to_block(uchar *tab);
