@@ -83,7 +83,7 @@ public class Gui {
 		frmRaid = new JFrame();
 		frmRaid.setTitle("RAID 5");
 		frmRaid.setResizable(false);
-		frmRaid.setBounds(100, 100, 942, 589);
+		frmRaid.setBounds(100, 100, 942, 575);
 		frmRaid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		frmRaid.getContentPane().setLayout(springLayout);
@@ -97,7 +97,7 @@ public class Gui {
 		panel.setLayout(null);
 		
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(394, 10, 532, 534);
+		scrollPane_1.setBounds(394, 10, 532, 524);
 		panel.add(scrollPane_1);
 		
 		textArea = new JTextArea();
