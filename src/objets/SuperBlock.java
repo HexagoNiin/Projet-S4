@@ -25,11 +25,17 @@ public class SuperBlock {
 		return firstFreeBytes;
 	}
 	
+	/**
+	 *  Write the SuperBlock on the disk
+	 */
 	public static void write() {
 		System.out.println(Utils.toBytes(firstFreeBytes));
 		new Chunk(Utils.toBytes(firstFreeBytes), size).write(0);
 	}
 	
+	/**
+	 * Read the SuperBlock on the disk
+	 */
 	public static void read() {
 		Chunk c = new Chunk(size);
 		c.read(0);

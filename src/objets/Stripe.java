@@ -150,6 +150,10 @@ public class Stripe {
 		return buffer;
 	}
 	
+	/**
+	 * retrieve the raw content of the stripe
+	 * @return the raw content of the stripe
+	 */
 	public String rawContent() {
 		String buffer = "";
 		for(int i = 0; i < nBlocks; i++) {

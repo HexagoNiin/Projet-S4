@@ -2,6 +2,10 @@ package objets;
 
 import java.nio.ByteBuffer;
 
+/**
+ * @author MARTIN Cedric, GAUTHIER Axel && EB-LEVADOUX Ugo
+ *	
+ */
 public class Inode {
 	private String filename;
 	private int size;
@@ -67,12 +71,20 @@ public class Inode {
 		return firstByte == 0;
 	}
 
+	/**
+	 * encodes a writable (on disk) representation of an inode
+	 * @return a writable (on disk) representation of an inode
+	 */
 	public String writable() {
 		byte [] sizeBytes = Utils.toBytes(size);
 		byte [] firstByteBytes = Utils.toBytes(firstByte);
 		return Utils.setSize(filename, 32) + (char)sizeBytes[0] + (char)sizeBytes[1] + (char)sizeBytes[2] + (char)sizeBytes[3] + (char)firstByteBytes[0] + (char)firstByteBytes[1] + (char)firstByteBytes[2] + (char)firstByteBytes[3];
 	}
 	
+	/**
+	 * decodes an on disk representation of an inode
+	 * @param raw on disk representation of an inode
+	 */
 	public void decode(String raw) {
 		filename = Utils.trim(raw.substring(0, 32));
 		size = Utils.toInt(raw.substring(32, 36).getBytes());

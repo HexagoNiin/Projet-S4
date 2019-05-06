@@ -5,13 +5,17 @@ package objets;
  * @author MARTIN Cedric, GAUTHIER Axel && EB-LEVADOUX Ugo
  *	
  */
+/**
+ * @author Niin
+ *
+ */
 public class Chunk {
 	private Stripe [] stripes;
 	private int nStripes;
 
 	/**
 	 * Chunck creation
-	 * @param nChars size of chunck
+	 * @param nChars size of chunk
 	 */
 	public Chunk(int nChars) {
 		nStripes = Utils.compute_nstripe(Utils.compute_nblock(nChars));
@@ -24,7 +28,7 @@ public class Chunk {
 	/**
 	 * Chunck creation
 	 * @param buffer writing byte area
-	 * @param nChars size of chunck
+	 * @param nChars size of chunk
 	 */
 	public Chunk(byte [] buffer, int nChars) {
 		this(nChars);
@@ -38,7 +42,7 @@ public class Chunk {
 	/**
 	 * Chunck creation
 	 * @param buffer writing string
-	 * @param nChars size of chunck
+	 * @param nChars size of chunk
 	 */
 	public Chunk(String buffer, int nChars) {
 		this(buffer.getBytes(), nChars);
@@ -97,8 +101,8 @@ public class Chunk {
 	}
 	
 	/**
-	 * retrieve buffer of chunck's data
-	 * @return chunck's content
+	 * retrieve buffer of chunk's data
+	 * @return chunk's content
 	 */
 	public String content() {
 		String buffer = "";
@@ -107,6 +111,12 @@ public class Chunk {
 		}
 		return buffer;
 	}
+	
+	
+	/**
+	 * retrieve the raw content of the chunk's data
+	 * @return a string containing the chunk's content
+	 */
 	public String rawContent() {
 		String buffer = "";
 		for(int i = 0; i < nStripes; i++) {

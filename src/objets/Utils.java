@@ -54,6 +54,12 @@ public class Utils {
 		return newArray;
 	}
 
+	/**
+	 * Set a string's size
+	 * @param s a string
+	 * @param n the string's size
+	 * @return a substring of s or s followed by some '\0'
+	 */
 	public static String setSize(String s, int n) {
 		if(s.length() >= n) {
 			return s.substring(0, n);

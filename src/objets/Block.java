@@ -187,6 +187,10 @@ public class Block {
 		return buffer;
 	}
 	
+	/**
+	 * retrive the block's raw content
+	 * @return a string containing the block's content
+	 */
 	public String rawContent() {
 		String buffer = "";
 		for(int i = 0; i < nBytes/* && data[i] != 0*/; i++) {
