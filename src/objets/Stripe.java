@@ -1,11 +1,18 @@
 package objets;
 
+/**
+ * @author MARTIN Cedric, GAUTHIER Axel && EB-LEVADOUX Ugo
+ *	
+ */
 public class Stripe {
 
 	public static int nBlocks = VirtualDisk.nDisk;
 	private Block [] blocks;
 	private int parityPos;
 
+	/**
+	 * Stripe creation
+	 */
 	public Stripe() {
 		parityPos = VirtualDisk.nextParityPos;
 		blocks = new Block[nBlocks];
@@ -13,17 +20,11 @@ public class Stripe {
 			blocks[i] = new Block();
 		}
 	}
-
-	/*public Stripe(Block blocks[]) {
-		this();
-		int offset = 0;
-		for(int i = 0; i < Stripe.nBlocks; i++) {
-			if(i == VirtualDisk.nextParityPos) offset++;
-			this.blocks[i] = blocks[i];
-		}
-		this.generateParity();
-	}*/
-
+	
+	/**
+	 * Stripe creation
+	 * @param bytes byte array to store
+	 */
 	public Stripe(byte bytes[]) {
 		this();
 		for(int i = 0; i < Stripe.nBlocks-1; i++) {
@@ -32,16 +33,9 @@ public class Stripe {
 		this.generateParity();
 	}
 
-	/*public Stripe(int entiers[]) {
-		this();
-		int offset = 0;
-		for(int i = 0; i < Stripe.nBlocks; i++) {
-			if(i == VirtualDisk.nextParityPos) offset++;
-			this.blocks[i] = new Block(entiers[i]);
-		}
-		this.generateParity();
-	}*/
-
+	/**
+	 * generate parity to Stripe
+	 */
 	public void generateParity() {
 		Block reference[] = new Block[nBlocks-1];
 		int i = 0;
@@ -57,30 +51,45 @@ public class Stripe {
 		VirtualDisk.nextParityPos = (VirtualDisk.nextParityPos + nBlocks-1) % nBlocks;
 	}
 
+	/**
+	 * retrieve number of blocks
+	 * @return length retrieved
+	 */
 	public int getNBlocks() {
 		return Stripe.nBlocks;
 	}
 
+	/**
+	 * retrieve block at index position
+	 * @param index retrieving position
+	 * @return block retrieved
+	 */
 	public Block getIStripe(int index) {
 		return this.blocks[index];
 	}
 
+	/**
+	 * set the number of block
+	 * @param nblocks number of block
+	 */
 	public void setNBlocks(int nblocks) {
 		Stripe.nBlocks = nblocks;
 	}
 
+	/**
+	 * set block at i position in stripe
+	 * @param block to set in stripe
+	 * @param i position to set in stripe
+	 */
 	public void setIStripe(Block block, int i) {
 		this.blocks[i] = block;
 	}
 
 	/**
-	 *
-	 * @param blocks La bande a ecrire sur le systeme.
-	 * @param pos La position ou ecrire la bande sur le systeme.
-	 * @param disks Systeme RAID.
-	 * @return 0 si l'operation s'est bien passee, 1 s'il y a eu un probleme d'ecriture.
+	 * write stripe at pos position in virtualdisk
+	 * @param pos writing position
+	 * @return 0 if OK else 1 if writing issue
 	 */
-
 	public int write(int pos) {
 		parityPos = Utils.compute_parity_index(pos / Block.nBytes);
 		for(int i = 0; i < this.getNBlocks(); i++) {
@@ -93,13 +102,10 @@ public class Stripe {
 	}
 
 	/**
-	 *
-	 * @param blocks La bande a lire sur le systeme.
-	 * @param pos La position ou lire la bande sur le systeme.
-	 * @param disks Systeme RAID.
-	 * @return 0 si l'operation s'est bien passee, 1 s'il y a eu un probleme de lecture.
+	 * read virtualdisk at pos position and restore it in stripe 
+	 * @param pos reading position
+	 * @return 0 if OK else 1 if reading issue
 	 */
-
 	public int read(int pos) {
 		parityPos = Utils.compute_parity_index(pos / Block.nBytes);
 		for(int i = 0; i < Stripe.nBlocks; i++) {
@@ -111,6 +117,9 @@ public class Stripe {
 		return 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		String buffer = "[";
 		for(int i = 0; i < nBlocks; i++) {
@@ -124,6 +133,10 @@ public class Stripe {
 		return buffer + "]";
 	}
 	
+	/**
+	 * retrieve buffer of stripe's data
+	 * @return stripe's content
+	 */
 	public String content() {
 		String buffer = "";
 		for(int i = 0; i < nBlocks; i++) {

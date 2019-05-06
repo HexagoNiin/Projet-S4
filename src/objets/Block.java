@@ -77,7 +77,7 @@ public class Block {
 		
 	/**
 	 * retrieve data at i position
-	 * @param i retrieve position
+	 * @param i retrieving position
 	 * @return byte retrieved
 	 */
 	public Byte getByte(int i) {
