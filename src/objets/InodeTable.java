@@ -1,5 +1,7 @@
 package objets;
 
+import java.nio.ByteBuffer;
+
 public class InodeTable {
 	private Inode [] tab;
 	public static int tabSize = 10;
@@ -17,6 +19,7 @@ public class InodeTable {
 		tab[this.getUnused()] = new Inode(filename, size, first_byte);
 		nbInodes++;
 		SuperBlock.addFirstFreeBytes(Utils.compute_nstripe(Utils.compute_nblock(size)) * Block.nBytes);
+		write();
 		return 0;
 	}
 	
@@ -83,5 +86,18 @@ public class InodeTable {
 			buffer += "[" + i + "] " + tab[i] + "\n";
 		}
 		return buffer;
+	}
+	
+	public int write() {
+		for(int i = 0; i < tabSize; i++) {
+			String rawWritable = tab[i].writable();
+			System.out.println(rawWritable);
+			String filename = rawWritable.substring(0, 32);
+			int size = Utils.toInt(rawWritable.substring(32, 36).getBytes());
+			int firstByte = Utils.toInt(rawWritable.substring(36, 40).getBytes());
+			System.out.println(tab[i]);
+			System.out.println(filename + "" + rawWritable.substring(32, 36) + Utils.toBytes(firstByte));
+		}
+		return 0;
 	}
 }

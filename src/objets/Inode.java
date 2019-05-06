@@ -1,5 +1,7 @@
 package objets;
 
+import java.nio.ByteBuffer;
+
 public class Inode {
 	private String filename;
 	private int size;
@@ -35,5 +37,12 @@ public class Inode {
 	
 	public boolean empty() {
 		return firstByte == -1;
+	}
+	
+	public String writable() {
+		byte [] sizeBytes = Utils.toBytes(size);
+		byte [] firstByteBytes = Utils.toBytes(firstByte);
+		System.out.println(sizeBytes + " " + firstByteBytes);
+		return Utils.setSize(filename, 32) + sizeBytes.toString() + firstByteBytes.toString();
 	}
 }

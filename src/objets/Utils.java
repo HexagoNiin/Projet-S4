@@ -1,5 +1,7 @@
 package objets;
 
+import java.nio.ByteBuffer;
+
 public class Utils {
 	public static int compute_nblock(int nb_octets) {
 		int nb_blocks = nb_octets / 4;
@@ -40,5 +42,24 @@ public class Utils {
 			}
 		}
 		return newArray;
+	}
+	
+	public static String setSize(String s, int n) {
+		if(s.length() >= n) {
+			return s.substring(0, n);
+		} else {
+			while(s.length() < n) {
+				s += '\0';
+			}
+			return s;
+		}
+	}
+	
+	public static byte[] toBytes(int value) {
+		return  ByteBuffer.allocate(4).putInt(value).array();
+	}
+	
+	public static int toInt(byte[] bytes) {
+	     return ByteBuffer.wrap(bytes).getInt();
 	}
 }
