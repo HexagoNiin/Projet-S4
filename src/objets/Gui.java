@@ -43,7 +43,7 @@ public class Gui {
 	private JTextField informationField;
 	private final JButton EditButton = new JButton("");
 	private JButton HostButton, RemoveButton, ImportButton, LeaveButton, CreateButton;
-	private Color buttonColor = new Color(106, 90, 205);
+	private Color buttonColor = new Color(104, 124, 196);
 	private final Action EditFile = new SwingAction();
 	private final Action EditDone = new SwingAction_1();
 	private final Action Export = new SwingAction_2();
