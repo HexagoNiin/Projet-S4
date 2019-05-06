@@ -41,9 +41,8 @@ public class Gui {
 	private DefaultListModel model = new DefaultListModel();
 	private JTextField sizeField;
 	private JTextField informationField;
-	private JTextField textField;
 	private final JButton EditButton = new JButton("");
-	private JButton HostButton, RemoveButton, NewButton, LeaveButton;
+	private JButton HostButton, RemoveButton, ImportButton, LeaveButton, CreateButton;
 	private final Action EditFile = new SwingAction();
 	private final Action EditDone = new SwingAction_1();
 	private final Action Export = new SwingAction_2();
@@ -114,16 +113,10 @@ public class Gui {
 		sizeField.setColumns(10);
 		
 		informationField = new JTextField();
-		informationField.setBounds(268, 370, 116, 22);
+		informationField.setBounds(138, 370, 246, 22);
 		informationField.setEditable(false);
 		panel.add(informationField);
 		informationField.setColumns(10);
-		
-		textField = new JTextField();
-		textField.setBounds(139, 370, 116, 22);
-		textField.setEditable(false);
-		panel.add(textField);
-		textField.setColumns(10);
 		EditButton.setBounds(10, 412, 116, 50);
 		EditButton.setAction(EditFile);
 		EditButton.addActionListener(new ActionListener() {
@@ -142,10 +135,10 @@ public class Gui {
 		RemoveButton.setAction(Remove);
 		panel.add(RemoveButton);
 		
-		NewButton = new JButton("New button");
-		NewButton.setBounds(139, 472, 116, 50);
-		NewButton.setAction(Import);
-		panel.add(NewButton);
+		ImportButton = new JButton("New button");
+		ImportButton.setBounds(139, 472, 116, 50);
+		ImportButton.setAction(Import);
+		panel.add(ImportButton);
 		
 		LeaveButton = new JButton("New button");
 		LeaveButton.setBounds(268, 472, 116, 50);
@@ -166,14 +159,14 @@ public class Gui {
 		});
 		list.setModel(model);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
+		CreateButton = new JButton("New button");
+		CreateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setAction(Create);
-		btnNewButton.setBounds(10, 474, 116, 47);
-		panel.add(btnNewButton);
+		CreateButton.setAction(Create);
+		CreateButton.setBounds(10, 474, 116, 47);
+		panel.add(CreateButton);
 	}
 	
 	private void displayContent() {
@@ -273,8 +266,9 @@ public class Gui {
 			EditButton.setAction(EditDone);
 			HostButton.setEnabled(false);
 			RemoveButton.setEnabled(false);
-			NewButton.setEnabled(false);
+			ImportButton.setEnabled(false);
 			LeaveButton.setEnabled(false);
+			CreateButton.setEnabled(false);
 			
 		}
 	}	
@@ -321,8 +315,9 @@ public class Gui {
 			EditButton.setAction(EditFile);
 			HostButton.setEnabled(true);
 			RemoveButton.setEnabled(true);
-			NewButton.setEnabled(true);
+			ImportButton.setEnabled(true);
 			LeaveButton.setEnabled(true);
+			CreateButton.setEnabled(true);
 		}
 	}
 	
