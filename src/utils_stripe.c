@@ -7,6 +7,8 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 		return read_chunk_raid1(buffer, nChars, startbyte);
 	if(r5Disk.super_block.raid_type == CINQUANTE)
 		return read_chunk_raid50(buffer, nChars, startbyte);
+	if(r5Disk.super_block.raid_type == ZERO_UN)
+		return read_chunk_raid01(buffer, nChars, startbyte);
 	else
 		return read_chunk_raid5(buffer, nChars, startbyte);
 }
@@ -50,16 +52,12 @@ int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 	log4("[Read_CHUNK] RAID UN");
 	int nblocks = compute_nblock(nChars);
 	log4("[Read_CHUNK] Lecture en %d sur %d bandes de :\n%s", startbyte, nblocks, buffer);
+	stripe_t stripe;
 	for(int i = 0; i < nblocks; i++) {
-		stripe_t stripe;
 		read_stripe(&stripe, startbyte + i*BLOCK_SIZE);
-		for(int j = 0; j < r5Disk.ndisk; j++) {
-			for(int k = 0; k < BLOCK_SIZE && i * BLOCK_SIZE + k < nChars; k++) {
+		for(int j = 0; j < r5Disk.ndisk; j++)
+			for(int k = 0; k < BLOCK_SIZE && i * BLOCK_SIZE + k < nChars; k++)
 				buffer[i * BLOCK_SIZE + k] = stripe.stripe[j].data[k];
-				//if(startbyte == 124) {log4("%d", buffer[i * BLOCK_SIZE + k]);}
-			}
-		}
-		//if(startbyte == 124) {print_stripe(stripe); printf("\n");}
 	}
 	return nblocks;
 }
@@ -125,6 +123,35 @@ int read_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 	return posDisk;
 }
 
+int read_chunk_raid01(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Lis une chaine de caractères du RAID
+	/// \param[out] buffer : Chaine de caractere lue
+	/// \param[in] nChars : Nombre de caracteres a lire
+	/// \param[in] startbyte : Position où lire la chaine en octets
+	log4("[READ_CHUNK] RAID ZERO UN");
+	int posBuffer = 0;
+	int posDisk = 0;
+	log4("[READ_CHUNK] nChars : %d", nChars);
+	log4("[Read_CHUNK] Lecture en %d bandes de :\n%s", startbyte, buffer);
+
+	while(posBuffer < nChars) {
+		stripe_t stripe;
+		if(read_stripe(&stripe, startbyte + posDisk*BLOCK_SIZE)) {
+			free(stripe.stripe);
+			return -1;
+		}
+		for(int i = 0; i < r5Disk.size_grappe && posBuffer < nChars; i++) {
+			for(int j = 0; j < BLOCK_SIZE && posBuffer < nChars; j++) {
+				buffer[posBuffer] = stripe.stripe[i + i * r5Disk.size_grappe].data[j];
+				posBuffer++;
+			}
+		}
+		posDisk++;
+		free(stripe.stripe);
+	}
+	return posDisk;
+}
+
 int read_stripe(stripe_t *stripe, uint pos) {
 	/**
 	* \brief Lecture d'une bande de bloc à une position donné sur le disque virtuel.
@@ -171,7 +198,9 @@ block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
 	if(r5Disk.raidmode == CINQ)
 	 	size = r5Disk.ndisk - 1;
 	else if(r5Disk.raidmode == CINQUANTE)
-		size = r5Disk.ndisk - r5Disk.nb_grappe; // -grappe
+		size = r5Disk.ndisk - r5Disk.nb_grappe;
+	else if(r5Disk.raidmode == ZERO_UN)
+		size = r5Disk.size_grappe;
 	else
 		size = r5Disk.ndisk;
     block_t *blocks = malloc(sizeof(block_t) * (size));
@@ -205,6 +234,8 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
 		return write_chunk_raid1(buffer, nChars, startbyte);
 	if(r5Disk.super_block.raid_type == CINQUANTE)
 		return write_chunk_raid50(buffer, nChars, startbyte);
+	if(r5Disk.super_block.raid_type == ZERO_UN)
+		return write_chunk_raid01(buffer, nChars, startbyte);
 	else
 		return write_chunk_raid5(buffer, nChars, startbyte);
 }
@@ -228,9 +259,9 @@ int write_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
 		int i_blocks = 0;
 		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk), r5Disk.ndisk);
 		for(j=0;j<r5Disk.ndisk;j++) {
-			if(j == index) {
+			if(j == index)
 				stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
-			} else {
+			else {
 				stripe.stripe[j] = blocks[i_blocks];
 				i_blocks++;
 			}
@@ -262,15 +293,41 @@ int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 		stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
 		for(int j = 0; j < r5Disk.ndisk; j++) {
 			stripe.stripe[j] = create_block();
-			for(int k = 0; k < BLOCK_SIZE && i * BLOCK_SIZE + k < nChars; k++) {
+			for(int k = 0; k < BLOCK_SIZE && i * BLOCK_SIZE + k < nChars; k++)
 				stripe.stripe[j].data[k] = buffer[i * BLOCK_SIZE + k];
-				//if(startbyte == 124) {log4("%d", buffer[i * BLOCK_SIZE + k]);}
-			}
 		}
 		if(startbyte == 124) {print_stripe(stripe); printf("\n");}
 		if(write_stripe(stripe, startbyte + i*BLOCK_SIZE)) return -1;
 	}
 	return nblocks;
+}
+
+int write_chunk_raid01(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \param[in] buffer : Chaine de caractères à écrire
+	/// \param[in] nChars : Nombre de caractères de la chaine
+	/// \param[in] startbyte : Position où écrire la chaine en octets
+	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
+	log4("[WRITE_CHUNK] RAID ZERO UN");
+	stripe_t stripe;
+	stripe.nblocks = r5Disk.ndisk;
+	stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
+	int i, j, u, pos = 0;
+	int nChunks = compute_nblock(nChars);
+	int nStripes = compute_nstripe(nChunks);
+	log4("[WRITE_CHUNK] nChunks : %d nStripe : %d startbyte : %d", nChunks, nStripes, startbyte);
+	for(i=0;i<nStripes;i++) {
+		block_t *blocks_par_grappe = malloc(sizeof(block_t) * r5Disk.size_grappe);
+		blocks_par_grappe = generateStripe(buffer, nChars, &pos);
+		for(u=0;u<r5Disk.nb_grappe;u++)
+			for(j=0;j<r5Disk.size_grappe;j++)
+				stripe.stripe[u * r5Disk.size_grappe + j] = blocks_par_grappe[j];
+		if(write_stripe(stripe, startbyte + (i * BLOCK_SIZE))) {
+			log4("[WRITE_CHUNK] : Erreur ecriture stripe");
+			return -1;
+		}
+	}
+	return nStripes;
 }
 
 int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
@@ -346,7 +403,9 @@ int compute_nstripe(int nb_blocks) {
 	if(r5Disk.raidmode == CINQ)
     	return nb_blocks / (r5Disk.ndisk - 1) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
 	else if(r5Disk.raidmode == CINQUANTE)
-		return nb_blocks / (r5Disk.ndisk - r5Disk.nb_grappe) + (nb_blocks % (r5Disk.ndisk - r5Disk.nb_grappe) != 0); // -4 => -grappe
+		return nb_blocks / (r5Disk.size_grappe) + (nb_blocks % (r5Disk.size_grappe) != 0);
+	else if(r5Disk.raidmode == ZERO_UN)
+		return nb_blocks / (r5Disk.ndisk - r5Disk.nb_grappe) + (nb_blocks % (r5Disk.ndisk - r5Disk.nb_grappe) != 0);
 	else
 		return nb_blocks / r5Disk.ndisk + (nb_blocks % r5Disk.ndisk != 0);
 }
