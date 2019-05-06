@@ -30,6 +30,8 @@ import javax.swing.JList;
 import javax.swing.JRadioButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollBar;
+import javax.swing.JTree;
 
 public class Gui {
 
@@ -38,16 +40,19 @@ public class Gui {
 	private JList list;
 	private DefaultListModel model = new DefaultListModel();
 	private JTextField sizeField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField informationField;
+	private JTextField textField;
 	private final JButton EditButton = new JButton("");
 	private JButton HostButton, RemoveButton, NewButton, LeaveButton;
 	private final Action EditFile = new SwingAction();
 	private final Action EditDone = new SwingAction_1();
-	private final Action action = new SwingAction_2();
-	private final Action action_1 = new SwingAction_3();
-	private final Action action_2 = new SwingAction_4();
-	private final Action action_3 = new SwingAction_5();
+	private final Action Export = new SwingAction_2();
+	private final Action Remove = new SwingAction_3();
+	private final Action Import = new SwingAction_4();
+	private final Action Leave = new SwingAction_5();
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
+	private final Action Create = new SwingAction_6();
 	
 	/**
 	 * Launch the application.
@@ -90,57 +95,36 @@ public class Gui {
 		springLayout.putConstraint(SpringLayout.SOUTH, panel, 554, SpringLayout.NORTH, frmRaid.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, panel, 936, SpringLayout.WEST, frmRaid.getContentPane());
 		frmRaid.getContentPane().add(panel);
-		SpringLayout sl_panel = new SpringLayout();
-		panel.setLayout(sl_panel);
+		panel.setLayout(null);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(394, 10, 532, 534);
+		panel.add(scrollPane_1);
 		
 		textArea = new JTextArea();
+		textArea.setWrapStyleWord(true);
+		scrollPane_1.setViewportView(textArea);
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
-		sl_panel.putConstraint(SpringLayout.NORTH, textArea, 10, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, textArea, -542, SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, textArea, 544, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, textArea, -10, SpringLayout.EAST, panel);
-		panel.add(textArea);
-		
-		list = new JList();
-		list.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				displayContent();
-			}
-		});
-		sl_panel.putConstraint(SpringLayout.WEST, EditButton, 0, SpringLayout.WEST, list);
-		sl_panel.putConstraint(SpringLayout.NORTH, list, 10, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, list, 10, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, list, -194, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, list, -10, SpringLayout.WEST, textArea);
-		panel.add(list);
-		list.setModel(model);
 		
 		sizeField = new JTextField();
+		sizeField.setBounds(10, 370, 116, 22);
 		sizeField.setEditable(false);
-		sl_panel.putConstraint(SpringLayout.NORTH, EditButton, 20, SpringLayout.SOUTH, sizeField);
-		sl_panel.putConstraint(SpringLayout.SOUTH, EditButton, 70, SpringLayout.SOUTH, sizeField);
-		sl_panel.putConstraint(SpringLayout.EAST, EditButton, 0, SpringLayout.EAST, sizeField);
-		sl_panel.putConstraint(SpringLayout.NORTH, sizeField, 10, SpringLayout.SOUTH, list);
-		sl_panel.putConstraint(SpringLayout.WEST, sizeField, 10, SpringLayout.WEST, panel);
 		panel.add(sizeField);
 		sizeField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		sl_panel.putConstraint(SpringLayout.NORTH, textField_1, 10, SpringLayout.SOUTH, list);
-		sl_panel.putConstraint(SpringLayout.EAST, textField_1, -10, SpringLayout.WEST, textArea);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		informationField = new JTextField();
+		informationField.setBounds(268, 370, 116, 22);
+		informationField.setEditable(false);
+		panel.add(informationField);
+		informationField.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		sl_panel.putConstraint(SpringLayout.NORTH, textField_2, 10, SpringLayout.SOUTH, list);
-		sl_panel.putConstraint(SpringLayout.WEST, textField_2, 13, SpringLayout.EAST, sizeField);
-		sl_panel.putConstraint(SpringLayout.EAST, textField_2, -13, SpringLayout.WEST, textField_1);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		textField = new JTextField();
+		textField.setBounds(139, 370, 116, 22);
+		textField.setEditable(false);
+		panel.add(textField);
+		textField.setColumns(10);
+		EditButton.setBounds(10, 412, 116, 50);
 		EditButton.setAction(EditFile);
 		EditButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,36 +133,47 @@ public class Gui {
 		panel.add(EditButton);
 		
 		HostButton = new JButton("New button");
-		HostButton.setAction(action);
-		sl_panel.putConstraint(SpringLayout.NORTH, HostButton, 20, SpringLayout.SOUTH, textField_2);
-		sl_panel.putConstraint(SpringLayout.WEST, HostButton, 0, SpringLayout.WEST, textField_2);
-		sl_panel.putConstraint(SpringLayout.SOUTH, HostButton, 0, SpringLayout.SOUTH, EditButton);
-		sl_panel.putConstraint(SpringLayout.EAST, HostButton, 0, SpringLayout.EAST, textField_2);
+		HostButton.setBounds(139, 412, 116, 50);
+		HostButton.setAction(Export);
 		panel.add(HostButton);
 		
 		RemoveButton = new JButton("New button");
-		RemoveButton.setAction(action_1);
-		sl_panel.putConstraint(SpringLayout.NORTH, RemoveButton, 20, SpringLayout.SOUTH, textField_1);
-		sl_panel.putConstraint(SpringLayout.WEST, RemoveButton, 0, SpringLayout.WEST, textField_1);
-		sl_panel.putConstraint(SpringLayout.SOUTH, RemoveButton, 0, SpringLayout.SOUTH, EditButton);
-		sl_panel.putConstraint(SpringLayout.EAST, RemoveButton, -10, SpringLayout.WEST, textArea);
+		RemoveButton.setBounds(268, 412, 116, 50);
+		RemoveButton.setAction(Remove);
 		panel.add(RemoveButton);
 		
 		NewButton = new JButton("New button");
-		NewButton.setAction(action_2);
-		sl_panel.putConstraint(SpringLayout.NORTH, NewButton, 10, SpringLayout.SOUTH, EditButton);
-		sl_panel.putConstraint(SpringLayout.WEST, NewButton, 0, SpringLayout.WEST, list);
-		sl_panel.putConstraint(SpringLayout.SOUTH, NewButton, 60, SpringLayout.SOUTH, EditButton);
-		sl_panel.putConstraint(SpringLayout.EAST, NewButton, 0, SpringLayout.EAST, sizeField);
+		NewButton.setBounds(139, 472, 116, 50);
+		NewButton.setAction(Import);
 		panel.add(NewButton);
 		
 		LeaveButton = new JButton("New button");
-		LeaveButton.setAction(action_3);
-		sl_panel.putConstraint(SpringLayout.NORTH, LeaveButton, 10, SpringLayout.SOUTH, RemoveButton);
-		sl_panel.putConstraint(SpringLayout.WEST, LeaveButton, 0, SpringLayout.WEST, textField_1);
-		sl_panel.putConstraint(SpringLayout.SOUTH, LeaveButton, 0, SpringLayout.SOUTH, NewButton);
-		sl_panel.putConstraint(SpringLayout.EAST, LeaveButton, -10, SpringLayout.WEST, textArea);
+		LeaveButton.setBounds(268, 472, 116, 50);
+		LeaveButton.setAction(Leave);
 		panel.add(LeaveButton);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 372, 350);
+		panel.add(scrollPane);
+		
+		list = new JList();
+		scrollPane.setViewportView(list);
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				displayContent();
+			}
+		});
+		list.setModel(model);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setAction(Create);
+		btnNewButton.setBounds(10, 474, 116, 47);
+		panel.add(btnNewButton);
 	}
 	
 	private void displayContent() {
@@ -195,9 +190,24 @@ public class Gui {
 			textArea.setText(text);
 			int i = f.getSize();
 			sizeField.setText(i + " byte" + (i>1?"s":""));
+		} else {
+			textArea.setText("");
+			sizeField.setText("");
 		}
 	}
 	
+	private void createElement() {
+		String name;
+		if ( (name = JOptionPane.showInputDialog("Name File :")) != null) {
+			FileHandler f = new FileHandler();
+			f.create(name);
+			
+			model.addElement(name);
+			information("File created");
+		} else {
+			information("");
+		}
+	}
 	
 	private void addElement() {
 		String name;
@@ -207,7 +217,11 @@ public class Gui {
 				if (f.write() == 0) {
 					model.addElement(name);
 				}
+			} else {
+				information("File already exists");
 			}
+		} else {
+			information("");
 		}
 	}
 	
@@ -216,7 +230,11 @@ public class Gui {
 		if (index != -1) {
 			VirtualDisk.inodes.delete(index);
 			model.remove(index);
+			information("File removed");
+		} else {
+			information("");
 		}
+		displayContent();
 	}
 	
 	private void hostElement() {
@@ -225,16 +243,23 @@ public class Gui {
 			FileHandler f = new FileHandler();
 			f.read(VirtualDisk.inodes.get(index));
 			f.toHost();
+			information("File hosted");
+		} else {
+			information("");
 		}
 	}
 	
 	
 	private void leave() {
-		if (JOptionPane.showConfirmDialog(null, "leave?") == 0)
+		if (JOptionPane.showConfirmDialog(null, "leave?","leave?",JOptionPane.YES_NO_OPTION) == 0)
 			System.exit(0);
+		else 
+			information("");
 	}
 	
-	
+	private void information(String s) {
+		informationField.setText(s);
+	}
 	
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -242,6 +267,7 @@ public class Gui {
 			putValue(SHORT_DESCRIPTION, "Edit the selected file");
 		}
 		public void actionPerformed(ActionEvent e) {
+			information("Editing file");
 			list.setEnabled(false);
 			textArea.setEditable(true);
 			EditButton.setAction(EditDone);
@@ -259,27 +285,36 @@ public class Gui {
 			putValue(SHORT_DESCRIPTION, "Finalise the edition");
 		}
 		public void actionPerformed(ActionEvent e) {
+			information("Confirm");
+			int index;
 			switch(JOptionPane.showConfirmDialog(null, "save?")) {
 				case 0:
-					int index = list.getSelectedIndex();
+					information("Saving file");
+					index = list.getSelectedIndex();
 					if (index != -1) {
 						String text = textArea.getText();
 						String filename = VirtualDisk.inodes.get(index).getFilename();
 						VirtualDisk.inodes.delete(filename);
 						new FileHandler(filename, text.getBytes()).write();
 						System.out.println("\nTable d'inodes : \n" + VirtualDisk.inodes + "\n");
+						information("File saved");
+					} else {
+						information("");
 					}
-						
 					break;
 				
 				case 1:
-					
+					index = list.getSelectedIndex();
+					if (index != -1)
+						information("File unsaved");
+					else 
+						information("");
 					break;
 					
 				case 2:
+					information("Editing file");
 					return;
 			}
-			
 			displayContent();
 			textArea.setEditable(false);
 			list.setEnabled(true);
@@ -297,7 +332,9 @@ public class Gui {
 			putValue(SHORT_DESCRIPTION, "Store from RAID to PC");
 		}
 		public void actionPerformed(ActionEvent e) {
+			information("Hosting file");
 			hostElement();
+			
 		}
 	}
 	
@@ -307,28 +344,42 @@ public class Gui {
 			putValue(SHORT_DESCRIPTION, "Delete the file");
 		}
 		public void actionPerformed(ActionEvent e) {
+			information("Removing file");
 			deleteElement();
+			
 		}
 	}
+	
+	
 	private class SwingAction_4 extends AbstractAction {
 		public SwingAction_4() {
-			putValue(NAME, "NEW");
-			putValue(SHORT_DESCRIPTION, "Add a new file");
+			putValue(NAME, "IMPORT");
+			putValue(SHORT_DESCRIPTION, "Import a new file");
 		}
 		public void actionPerformed(ActionEvent e) {
+			information("Importing file");
 			addElement();
 		}
 	}
+	
 	private class SwingAction_5 extends AbstractAction {
 		public SwingAction_5() {
 			putValue(NAME, "LEAVE");
 			putValue(SHORT_DESCRIPTION, "Leave RAID");
 		}
 		public void actionPerformed(ActionEvent e) {
+			information("Leaving");
 			leave();
 		}
 	}
-	
-	
-	
+	private class SwingAction_6 extends AbstractAction {
+		public SwingAction_6() {
+			putValue(NAME, "CREATE");
+			putValue(SHORT_DESCRIPTION, "Create a new file");
+		}
+		public void actionPerformed(ActionEvent e) {
+			information("Creating new file");
+			createElement();
+		}
+	}
 }
