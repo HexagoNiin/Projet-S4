@@ -2,6 +2,11 @@ package objets;
 
 import java.io.*;
 
+
+/**
+ * @author MARTIN Cedric, GAUTHIER Axel && EB-LEVADOUX Ugo
+ *	
+ */
 public class VirtualDisk {
 	public static int numberOfFiles;
 	public static SuperBlock superBlock;
@@ -11,6 +16,10 @@ public class VirtualDisk {
 	public static File [] storage = new File[nDisk]; //tab[NUMBER_OF_DISKS];
 	public static int nextParityPos = nDisk-1;
     
+    /**
+     * VirtualDisk creation at nom_rep directory
+     * @param nom_rep name of directory
+     */
     public VirtualDisk(String nom_rep) {
 		File repertoire = new File(nom_rep);
 		if(!(repertoire.exists() && repertoire.isDirectory())) {
@@ -23,5 +32,8 @@ public class VirtualDisk {
     	numberOfFiles = 0;
     }
     
+    /**
+     * VirtualDisk creation
+     */
     public VirtualDisk() {}
 }
