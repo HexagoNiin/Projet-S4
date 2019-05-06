@@ -83,15 +83,16 @@ public class Gui {
 		frmRaid = new JFrame();
 		frmRaid.setTitle("RAID 5");
 		frmRaid.setResizable(false);
-		frmRaid.setBounds(100, 100, 942, 575);
+		frmRaid.setBounds(100, 100, 942, 577);
 		frmRaid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		frmRaid.getContentPane().setLayout(springLayout);
 		
 		JPanel panel = new JPanel();
+		springLayout.putConstraint(SpringLayout.SOUTH, panel, 0, SpringLayout.SOUTH, frmRaid.getContentPane());
+		panel.setBackground(new Color(34, 34, 40));
 		springLayout.putConstraint(SpringLayout.NORTH, panel, 0, SpringLayout.NORTH, frmRaid.getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.WEST, frmRaid.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, panel, 554, SpringLayout.NORTH, frmRaid.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, panel, 936, SpringLayout.WEST, frmRaid.getContentPane());
 		frmRaid.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -101,23 +102,34 @@ public class Gui {
 		panel.add(scrollPane_1);
 		
 		textArea = new JTextArea();
+		textArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textArea.setForeground(new Color(255, 255, 255));
+		textArea.setBackground(new Color(53, 53, 64));
 		textArea.setWrapStyleWord(true);
 		scrollPane_1.setViewportView(textArea);
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
 		
 		sizeField = new JTextField();
+		sizeField.setForeground(Color.WHITE);
+		sizeField.setBackground(new Color(19, 19, 26));
 		sizeField.setBounds(10, 370, 116, 22);
 		sizeField.setEditable(false);
 		panel.add(sizeField);
 		sizeField.setColumns(10);
 		
 		informationField = new JTextField();
-		informationField.setBounds(138, 370, 246, 22);
+		informationField.setForeground(Color.WHITE);
+		informationField.setBackground(new Color(19, 19, 26));
+		informationField.setBounds(138, 370, 244, 22);
 		informationField.setEditable(false);
 		panel.add(informationField);
 		informationField.setColumns(10);
+		EditButton.setForeground(Color.WHITE);
+		EditButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
 		EditButton.setBounds(10, 412, 116, 50);
+		EditButton.setBackground(buttonColor);
 		EditButton.setAction(EditFile);
 		EditButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,21 +138,33 @@ public class Gui {
 		panel.add(EditButton);
 		
 		HostButton = new JButton("New button");
+		HostButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		HostButton.setForeground(Color.WHITE);
+		HostButton.setBackground(buttonColor);
 		HostButton.setBounds(139, 412, 116, 50);
 		HostButton.setAction(Export);
 		panel.add(HostButton);
 		
 		RemoveButton = new JButton("New button");
+		RemoveButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		RemoveButton.setForeground(Color.WHITE);
+		RemoveButton.setBackground(buttonColor);
 		RemoveButton.setBounds(268, 412, 116, 50);
 		RemoveButton.setAction(Remove);
 		panel.add(RemoveButton);
 		
 		ImportButton = new JButton("New button");
+		ImportButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ImportButton.setForeground(Color.WHITE);
+		ImportButton.setBackground(buttonColor);
 		ImportButton.setBounds(139, 472, 116, 50);
 		ImportButton.setAction(Import);
 		panel.add(ImportButton);
 		
 		LeaveButton = new JButton("New button");
+		LeaveButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		LeaveButton.setForeground(Color.WHITE);
+		LeaveButton.setBackground(buttonColor);
 		LeaveButton.setBounds(268, 472, 116, 50);
 		LeaveButton.setAction(Leave);
 		panel.add(LeaveButton);
@@ -150,6 +174,9 @@ public class Gui {
 		panel.add(scrollPane);
 		
 		list = new JList();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		list.setForeground(new Color(255, 255, 255));
+		list.setBackground(new Color(53, 53, 64));
 		scrollPane.setViewportView(list);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -160,6 +187,9 @@ public class Gui {
 		list.setModel(model);
 		
 		CreateButton = new JButton("New button");
+		CreateButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		CreateButton.setForeground(Color.WHITE);
+		CreateButton.setBackground(buttonColor);
 		CreateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
