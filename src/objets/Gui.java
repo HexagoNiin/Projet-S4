@@ -18,6 +18,7 @@ import javax.swing.JSlider;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 
@@ -53,7 +54,7 @@ public class Gui {
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane_1;
 	private final Action Create = new SwingAction_6();
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -88,7 +89,7 @@ public class Gui {
 		frmRaid.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		frmRaid.getContentPane().setLayout(springLayout);
-		
+
 		JPanel panel = new JPanel();
 		springLayout.putConstraint(SpringLayout.SOUTH, panel, 0, SpringLayout.SOUTH, frmRaid.getContentPane());
 		panel.setBackground(new Color(34, 34, 40));
@@ -97,11 +98,11 @@ public class Gui {
 		springLayout.putConstraint(SpringLayout.EAST, panel, 936, SpringLayout.WEST, frmRaid.getContentPane());
 		frmRaid.getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(394, 10, 532, 524);
 		panel.add(scrollPane_1);
-		
+
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textArea.setForeground(new Color(255, 255, 255));
@@ -110,7 +111,7 @@ public class Gui {
 		scrollPane_1.setViewportView(textArea);
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
-		
+
 		sizeField = new JTextField();
 		sizeField.setForeground(Color.WHITE);
 		sizeField.setBackground(new Color(19, 19, 26));
@@ -118,7 +119,7 @@ public class Gui {
 		sizeField.setEditable(false);
 		panel.add(sizeField);
 		sizeField.setColumns(10);
-		
+
 		informationField = new JTextField();
 		informationField.setForeground(Color.WHITE);
 		informationField.setBackground(new Color(19, 19, 26));
@@ -128,7 +129,7 @@ public class Gui {
 		informationField.setColumns(10);
 		EditButton.setForeground(Color.WHITE);
 		EditButton.setFont(new Font("Tahoma", Font.BOLD, 13));
-		
+
 		EditButton.setBounds(10, 412, 116, 50);
 		EditButton.setBackground(buttonColor);
 		EditButton.setAction(EditFile);
@@ -137,7 +138,7 @@ public class Gui {
 			}
 		});
 		panel.add(EditButton);
-		
+
 		HostButton = new JButton("New button");
 		HostButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		HostButton.setForeground(Color.WHITE);
@@ -145,7 +146,7 @@ public class Gui {
 		HostButton.setBounds(139, 412, 116, 50);
 		HostButton.setAction(Export);
 		panel.add(HostButton);
-		
+
 		RemoveButton = new JButton("New button");
 		RemoveButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		RemoveButton.setForeground(Color.WHITE);
@@ -153,7 +154,7 @@ public class Gui {
 		RemoveButton.setBounds(268, 412, 116, 50);
 		RemoveButton.setAction(Remove);
 		panel.add(RemoveButton);
-		
+
 		ImportButton = new JButton("New button");
 		ImportButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ImportButton.setForeground(Color.WHITE);
@@ -161,7 +162,7 @@ public class Gui {
 		ImportButton.setBounds(139, 472, 116, 50);
 		ImportButton.setAction(Import);
 		panel.add(ImportButton);
-		
+
 		LeaveButton = new JButton("New button");
 		LeaveButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		LeaveButton.setForeground(Color.WHITE);
@@ -169,11 +170,11 @@ public class Gui {
 		LeaveButton.setBounds(268, 472, 116, 50);
 		LeaveButton.setAction(Leave);
 		panel.add(LeaveButton);
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 10, 372, 350);
 		panel.add(scrollPane);
-		
+
 		list = new JList();
 		list.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		list.setForeground(new Color(255, 255, 255));
@@ -185,8 +186,7 @@ public class Gui {
 				displayContent();
 			}
 		});
-		list.setModel(model);
-		
+
 		CreateButton = new JButton("New button");
 		CreateButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		CreateButton.setForeground(Color.WHITE);
@@ -198,19 +198,23 @@ public class Gui {
 		CreateButton.setAction(Create);
 		CreateButton.setBounds(10, 474, 116, 47);
 		panel.add(CreateButton);
+
+
+		setList();
+		list.setModel(model);
 	}
-	
+
 	private void displayContent() {
 		int index = list.getSelectedIndex();
 		if (index != -1) {
 			String selected = list.getSelectedValue().toString();
-			
+
 			FileHandler f = new FileHandler();
 			f.read(VirtualDisk.inodes.get(selected));
-			
+
 			String text = f.content();
 			System.out.println(f);
-			
+
 			textArea.setText(text);
 			int i = f.getSize();
 			sizeField.setText(i + " byte" + (i>1?"s":""));
@@ -218,38 +222,50 @@ public class Gui {
 			textArea.setText("");
 			sizeField.setText("");
 		}
+
 	}
-	
+
+	private void setList() {
+		Inode inode;
+		for(int i = 0; i < InodeTable.tabSize; i++) {
+			inode = VirtualDisk.inodes.get(i);
+			if (!inode.empty())
+				model.addElement(inode.getFilename());
+		}
+
+
+	}
+
+
 	private void createElement() {
 		String name;
 		if ( (name = JOptionPane.showInputDialog("Name File :")) != null) {
 			FileHandler f = new FileHandler();
 			f.create(name);
-			
+
 			model.addElement(name);
 			information("File created");
 		} else {
 			information("");
 		}
 	}
-	
+
 	private void addElement() {
-		String name;
-		if ( (name = JOptionPane.showInputDialog("Name File :")) != null) {
-			if(VirtualDisk.inodes.get(name) == null) {
-				FileHandler f = new FileHandler(name);
-				System.out.println("JE SUIS LA");
-				if (f.write() == 0) {
-					model.addElement(name);
-				}
-			} else {
-				information("File already exists");
+		JFileChooser fc = new JFileChooser();
+		fc.showSaveDialog(null);
+		String name = fc.getSelectedFile().getAbsolutePath();
+
+
+		if(VirtualDisk.inodes.get(name) == null) {
+			FileHandler f = new FileHandler(name);
+			if (f.write() == 0) {
+				model.addElement(name);
 			}
 		} else {
-			information("");
+			information("File already exists");
 		}
 	}
-	
+
 	private void deleteElement() {
 		int index = list.getSelectedIndex();
 		if (index != -1) {
@@ -261,7 +277,7 @@ public class Gui {
 		}
 		displayContent();
 	}
-	
+
 	private void hostElement() {
 		int index = list.getSelectedIndex();
 		if (index != -1) {
@@ -273,19 +289,19 @@ public class Gui {
 			information("");
 		}
 	}
-	
-	
+
+
 	private void leave() {
 		if (JOptionPane.showConfirmDialog(null, "leave?","leave?",JOptionPane.YES_NO_OPTION) == 0)
 			System.exit(0);
-		else 
+		else
 			information("");
 	}
-	
+
 	private void information(String s) {
 		informationField.setText(s);
 	}
-	
+
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "EDIT");
@@ -301,10 +317,10 @@ public class Gui {
 			ImportButton.setEnabled(false);
 			LeaveButton.setEnabled(false);
 			CreateButton.setEnabled(false);
-			
+
 		}
-	}	
-	
+	}
+
 	private class SwingAction_1 extends AbstractAction {
 		public SwingAction_1() {
 			putValue(NAME, "DONE");
@@ -328,15 +344,15 @@ public class Gui {
 						information("");
 					}
 					break;
-				
+
 				case 1:
 					index = list.getSelectedIndex();
 					if (index != -1)
 						information("File unsaved");
-					else 
+					else
 						information("");
 					break;
-					
+
 				case 2:
 					information("Editing file");
 					return;
@@ -352,7 +368,7 @@ public class Gui {
 			CreateButton.setEnabled(true);
 		}
 	}
-	
+
 	private class SwingAction_2 extends AbstractAction {
 		public SwingAction_2() {
 			putValue(NAME, "EXPORT");
@@ -361,10 +377,10 @@ public class Gui {
 		public void actionPerformed(ActionEvent e) {
 			information("Hosting file");
 			hostElement();
-			
+
 		}
 	}
-	
+
 	private class SwingAction_3 extends AbstractAction {
 		public SwingAction_3() {
 			putValue(NAME, "REMOVE");
@@ -373,11 +389,11 @@ public class Gui {
 		public void actionPerformed(ActionEvent e) {
 			information("Removing file");
 			deleteElement();
-			
+
 		}
 	}
-	
-	
+
+
 	private class SwingAction_4 extends AbstractAction {
 		public SwingAction_4() {
 			putValue(NAME, "IMPORT");
@@ -388,7 +404,7 @@ public class Gui {
 			addElement();
 		}
 	}
-	
+
 	private class SwingAction_5 extends AbstractAction {
 		public SwingAction_5() {
 			putValue(NAME, "LEAVE");
