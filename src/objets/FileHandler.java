@@ -33,6 +33,7 @@ public class FileHandler {
 	public void create(String filename) {
 		this.filename = filename;
 		data = new Chunk("");
+		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
 	}
 	
 	public FileHandler(String filename, byte buffer []) {
