@@ -57,10 +57,7 @@ int write_file(const char *filename, file_t file) {
 	log2("[WRITE_FILE] size : %d", size);
     inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
-	if(r5Disk.raidmode == UN)
-		write_inodes_table(SUPER_BLOCK_SIZE * BLOCK_SIZE);
-	else
-		write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
+	write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
 	write_super_block();
     return EXIT_SUCCESS;
 }

@@ -13,9 +13,9 @@
 #define MAX_FILE_SIZE (50*1024) // uchar
 #define INODE_TABLE_SIZE 10 // taille fixe = nb max fichiers
 #define MAX_MSG 1024 // uchar
-#define SUPER_BLOCK_SIZE 4 // nb blocs avec parité
+#define SUPER_BLOCK_SIZE 12 // nb blocs avec parité
 #define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE+1 // en octets
-#define INODE_SIZE 16 // en blocks avec parité
+#define INODE_SIZE 44 // en blocks avec parité
 #define NB_RAIDS 7
 
 typedef unsigned int uint; // même taille que int

@@ -61,7 +61,7 @@ int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 		}
 		//if(startbyte == 124) {print_stripe(stripe); printf("\n");}
 	}
-	return 0;
+	return nblocks;
 }
 
 int read_chunk_raid0(uchar * buffer, int nChars, int startbyte) {
@@ -300,12 +300,9 @@ int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 			for(j=0;j<taille_grappe;j++) {
 				if(j == index) {
 					stripe.stripe[u * taille_grappe + j] = compute_parity(blocks_par_grappe, taille_grappe-1);
-		//			printf("parite\n");
-		//			print_block(stripe.stripe[u * taille_grappe + j]);
 				} else {
 					stripe.stripe[u * taille_grappe + j] = blocks_par_grappe[i_blocks];
 					i_blocks++;
-		//			print_block(stripe.stripe[u * taille_grappe + j]);
 				}
 			}
 		}
