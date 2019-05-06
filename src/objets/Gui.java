@@ -18,6 +18,7 @@ import javax.swing.JSlider;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 
@@ -234,19 +235,19 @@ public class Gui {
 	}
 	
 	private void addElement() {
-		String name;
-		if ( (name = JOptionPane.showInputDialog("Name File :")) != null) {
-			if(VirtualDisk.inodes.get(name) == null) {
-				FileHandler f = new FileHandler(name);
-				if (f.write() == 0) {
-					model.addElement(name);
-				}
-			} else {
-				information("File already exists");
+		JFileChooser fc = new JFileChooser();
+		fc.showSaveDialog(null);
+		String name = fc.getSelectedFile().getAbsolutePath();
+		
+		
+		if(VirtualDisk.inodes.get(name) == null) {
+			FileHandler f = new FileHandler(name);
+			if (f.write() == 0) {
+				model.addElement(name);
 			}
 		} else {
-			information("");
-		}
+			information("File already exists");
+		} 
 	}
 	
 	private void deleteElement() {
