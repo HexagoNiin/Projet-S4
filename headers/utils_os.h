@@ -1,3 +1,10 @@
+/// \file utils_os.h
+/// \brief Utilitaires permettant de gérer un terminal
+/// \author Ugo EB-LEVADOUX
+/// \author Axel GAUTHIER
+/// \author Cédric MARTIN
+/// \date 2019
+
 #ifndef _UTILS_OS
 #define _UTILS_OS
 

@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>RAID 5: Référence du fichier utils_os.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">RAID 5
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Définitions de type</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier utils_os.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Utilitaires permettant de gérer un terminal.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="utils__file_8h_source.html">utils_file.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="couleur_8h_source.html">couleur.h</a>&quot;</code><br />
+<code>#include &lt;wait.h&gt;</code><br />
+</div>
+<p><a href="utils__os_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a9b2ed3a266295f9210a80490556765f0"><td class="memItemLeft" align="right" valign="top"><a id="a9b2ed3a266295f9210a80490556765f0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NB_COMMANDS</b>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:a9b2ed3a266295f9210a80490556765f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd0c17ef805fcaef3783731ccd50b5a7"><td class="memItemLeft" align="right" valign="top"><a id="afd0c17ef805fcaef3783731ccd50b5a7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>COMMANDS_SIZE</b>&#160;&#160;&#160;16</td></tr>
+<tr class="separator:afd0c17ef805fcaef3783731ccd50b5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab01c8784aa76d38820c908a558c4ec6a"><td class="memItemLeft" align="right" valign="top"><a id="ab01c8784aa76d38820c908a558c4ec6a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NB_OPTIONS</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ab01c8784aa76d38820c908a558c4ec6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Définitions de type</h2></td></tr>
+<tr class="memitem:a74ffc708afe063cb1703bd8384a25315"><td class="memItemLeft" align="right" valign="top"><a id="a74ffc708afe063cb1703bd8384a25315"></a>
+typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><b>FunctionStr</b>) (char *)</td></tr>
+<tr class="separator:a74ffc708afe063cb1703bd8384a25315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a8d67ff0924eed55a300fa68f9ab7bfe5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a8d67ff0924eed55a300fa68f9ab7bfe5">action</a> (char **command)</td></tr>
+<tr class="separator:a8d67ff0924eed55a300fa68f9ab7bfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f431b81fc40deb62fc1e499d7ce853"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a08f431b81fc40deb62fc1e499d7ce853">cat</a> (char *filename)</td></tr>
+<tr class="separator:a08f431b81fc40deb62fc1e499d7ce853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab928dffd565cc70e2d63753422d72f40"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#ab928dffd565cc70e2d63753422d72f40">ls</a> (char *option)</td></tr>
+<tr class="separator:ab928dffd565cc70e2d63753422d72f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb8ae516ab71f66cefb19a1ecc9d9f0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#aedb8ae516ab71f66cefb19a1ecc9d9f0">rm</a> (char *filename)</td></tr>
+<tr class="separator:aedb8ae516ab71f66cefb19a1ecc9d9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60b0396c567047089fb34c28fdd0d682"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a60b0396c567047089fb34c28fdd0d682">create</a> (char *filename)</td></tr>
+<tr class="separator:a60b0396c567047089fb34c28fdd0d682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad07b151c0672ff61ba986622c510b1e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#ad07b151c0672ff61ba986622c510b1e5">edit</a> (char *filename)</td></tr>
+<tr class="separator:ad07b151c0672ff61ba986622c510b1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95ef13999500de7efdaed83fa45ae98d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a95ef13999500de7efdaed83fa45ae98d">load</a> (char *arguments)</td></tr>
+<tr class="separator:a95ef13999500de7efdaed83fa45ae98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c4db3acecacda60d7d534c17dd2eb1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a47c4db3acecacda60d7d534c17dd2eb1">store</a> (char *filename)</td></tr>
+<tr class="separator:a47c4db3acecacda60d7d534c17dd2eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058a8f6bf73d24fb5d7d4f06fb87a76f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a058a8f6bf73d24fb5d7d4f06fb87a76f">interpreteur</a> ()</td></tr>
+<tr class="separator:a058a8f6bf73d24fb5d7d4f06fb87a76f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d8734add661179c1832569b2181c4c4"><td class="memItemLeft" align="right" valign="top">char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__os_8h.html#a7d8734add661179c1832569b2181c4c4">parser</a> (char *command)</td></tr>
+<tr class="separator:a7d8734add661179c1832569b2181c4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Utilitaires permettant de gérer un terminal. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Ugo EB-LEVADOUX </dd>
+<dd>
+Axel GAUTHIER </dd>
+<dd>
+Cédric MARTIN </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2019 </dd></dl>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a8d67ff0924eed55a300fa68f9ab7bfe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d67ff0924eed55a300fa68f9ab7bfe5">&#9670;&nbsp;</a></span>action()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int action </td>
+          <td>(</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>command</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>exécute l'action d'une command + option passé en paramètre  command + option </p><dl class="section return"><dt>Renvoie</dt><dd>-1 si la commande est invalide, -2 si l'on veut quitter le shell, le code de retour de la commande exécutée sinon </dd></dl>
+
+</div>
+</div>
+<a id="a08f431b81fc40deb62fc1e499d7ce853"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08f431b81fc40deb62fc1e499d7ce853">&#9670;&nbsp;</a></span>cat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cat </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Affiche un fichier présent sur le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>: nom du fichier à afficher </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 en cas de succès, 1 en cas d'échec </dd></dl>
+
+</div>
+</div>
+<a id="a60b0396c567047089fb34c28fdd0d682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60b0396c567047089fb34c28fdd0d682">&#9670;&nbsp;</a></span>create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int create </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Crée un fichier sur le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>: nom du fichier à créer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 en cas de succès, 1 en cas d'échec </dd></dl>
+
+</div>
+</div>
+<a id="ad07b151c0672ff61ba986622c510b1e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad07b151c0672ff61ba986622c510b1e5">&#9670;&nbsp;</a></span>edit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int edit </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Edite un fichier présent sur le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>: nom du fichier à éditer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 en cas de succès, 1 en cas d'échec </dd></dl>
+
+</div>
+</div>
+<a id="a058a8f6bf73d24fb5d7d4f06fb87a76f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a058a8f6bf73d24fb5d7d4f06fb87a76f">&#9670;&nbsp;</a></span>interpreteur()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void interpreteur </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Interface qui va lire et exécuter des commandes en attendant de recevoir la chaîne "quit" </p>
+
+</div>
+</div>
+<a id="a95ef13999500de7efdaed83fa45ae98d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95ef13999500de7efdaed83fa45ae98d">&#9670;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int load </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>arguments</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Charge un fichier sur le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arguments</td><td>: nom du fichier à charger </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 en cas de succès, 1 en cas d'échec </dd></dl>
+
+</div>
+</div>
+<a id="ab928dffd565cc70e2d63753422d72f40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab928dffd565cc70e2d63753422d72f40">&#9670;&nbsp;</a></span>ls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ls </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>option</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Liste les fichiers présents sur le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>: option d'affichage </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 </dd></dl>
+
+</div>
+</div>
+<a id="a7d8734add661179c1832569b2181c4c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d8734add661179c1832569b2181c4c4">&#9670;&nbsp;</a></span>parser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char** parser </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>command</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Analyse la chaine de caractères et la transfome en command + option </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">command</td><td>: la chaine de caractères à analyser </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>NULL s'il y a eu une erreur ou le tableau command + option sinon </dd></dl>
+
+</div>
+</div>
+<a id="aedb8ae516ab71f66cefb19a1ecc9d9f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedb8ae516ab71f66cefb19a1ecc9d9f0">&#9670;&nbsp;</a></span>rm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rm </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Supprime un fichier présent sur le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>: nom du fichier à supprimer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 en cas de succès, 1 en cas d'échec </dd></dl>
+
+</div>
+</div>
+<a id="a47c4db3acecacda60d7d534c17dd2eb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47c4db3acecacda60d7d534c17dd2eb1">&#9670;&nbsp;</a></span>store()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int store </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Génère un fichier depuis le RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arguments</td><td>: nom du fichier à générer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 en cas de succès, 1 en cas d'échec </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

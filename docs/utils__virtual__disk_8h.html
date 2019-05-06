@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>RAID 5: Référence du fichier utils_virtual_disk.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -30,21 +30,18 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.14 -->
+<!-- Généré par Doxygen 1.8.13 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
-/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 $(function() {
   initMenu('',true,false,'search.php','Recherche');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -62,12 +59,13 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html">headers</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Fonctions</a>  </div>
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Référence du fichier utils_virtual_disk.h</div>  </div>
 </div><!--header-->
@@ -75,19 +73,34 @@ $(function() {
 
 <p>Utilitaires permettant de manipuler la structure <a class="el" href="structvirtual__disk__s.html">virtual_disk_s</a>.  
 <a href="#details">Plus de détails...</a></p>
-<div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="raid__defines_8h_source.html">raid_defines.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="utils__inode_8h_source.html">utils_inode.h</a>&quot;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;dirent.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
 </div>
 <p><a href="utils__virtual__disk_8h_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:ae288e5dd77c7a589ebabb5747da3e1a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__virtual__disk_8h.html#ae288e5dd77c7a589ebabb5747da3e1a6">init_disk_raid5</a> (const char *nom_rep, <a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a> *r5Disk)</td></tr>
-<tr class="separator:ae288e5dd77c7a589ebabb5747da3e1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a855830eff4388ef4dfcbd2eb999e879a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__virtual__disk_8h.html#a855830eff4388ef4dfcbd2eb999e879a">init_disk_raid5</a> (const char *repertoryName, int raid)</td></tr>
+<tr class="separator:a855830eff4388ef4dfcbd2eb999e879a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3dbf5f27d825bad1648d62cfec4e33e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__virtual__disk_8h.html#ab3dbf5f27d825bad1648d62cfec4e33e">repair_disk</a> (int num)</td></tr>
+<tr class="separator:ab3dbf5f27d825bad1648d62cfec4e33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aead66c871fa41fb5563a60a5d057f40a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__virtual__disk_8h.html#aead66c871fa41fb5563a60a5d057f40a">close_system</a> ()</td></tr>
+<tr class="separator:aead66c871fa41fb5563a60a5d057f40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16bd81441181457f92fab2c7ef5e0a20"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__virtual__disk_8h.html#a16bd81441181457f92fab2c7ef5e0a20">check_super_block</a> ()</td></tr>
+<tr class="separator:a16bd81441181457f92fab2c7ef5e0a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memItemLeft" align="right" valign="top"><a id="a95b5425e7df13b77b38e1b85a4c804e3"></a>
+<a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>r5Disk</b></td></tr>
+<tr class="separator:a95b5425e7df13b77b38e1b85a4c804e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Utilitaires permettant de manipuler la structure <a class="el" href="structvirtual__disk__s.html">virtual_disk_s</a>. </p>
@@ -98,8 +111,44 @@ Axel GAUTHIER </dd>
 Cédric MARTIN </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2019 </dd></dl>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
-<a id="ae288e5dd77c7a589ebabb5747da3e1a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae288e5dd77c7a589ebabb5747da3e1a6">&#9670;&nbsp;</a></span>init_disk_raid5()</h2>
+<a id="a16bd81441181457f92fab2c7ef5e0a20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16bd81441181457f92fab2c7ef5e0a20">&#9670;&nbsp;</a></span>check_super_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool check_super_block </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vérifie que les données du super block sont correctes </p><dl class="section return"><dt>Renvoie</dt><dd>1 si l'opération s'est mal passée, 0 sinon </dd></dl>
+
+</div>
+</div>
+<a id="aead66c871fa41fb5563a60a5d057f40a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aead66c871fa41fb5563a60a5d057f40a">&#9670;&nbsp;</a></span>close_system()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void close_system </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Ferme le système RAID </p>
+
+</div>
+</div>
+<a id="a855830eff4388ef4dfcbd2eb999e879a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a855830eff4388ef4dfcbd2eb999e879a">&#9670;&nbsp;</a></span>init_disk_raid5()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -108,13 +157,13 @@ Cédric MARTIN </dd></dl>
           <td class="memname">int init_disk_raid5 </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>nom_rep</em>, </td>
+          <td class="paramname"><em>repertoryName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structvirtual__disk__s.html">virtual_disk_t</a> *&#160;</td>
-          <td class="paramname"><em>r5Disk</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>raid</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -123,13 +172,39 @@ Cédric MARTIN </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialise la variable globale virtual_disk_t r5Disk à partir de nom_rep </p><dl class="params"><dt>Paramètres</dt><dd>
+<p>Initialise la variable globale r5Disk </p><dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nom_rep</td><td>: Nom du répertoire contenant les disques virtuels formatés </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">repertoryName</td><td>: le repertoire ou se situe les disks </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">raid</td><td>: type de RAID </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Renvoie</dt><dd>Un entier indiquant si l'opération s'est bien passée </dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 si tout s'est bien passé, un entier positif sinon </dd></dl>
+
+</div>
+</div>
+<a id="ab3dbf5f27d825bad1648d62cfec4e33e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3dbf5f27d825bad1648d62cfec4e33e">&#9670;&nbsp;</a></span>repair_disk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int repair_disk </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Regénère un disque à partir des autres disques </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>: le numéro du disque à générer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 </dd></dl>
 
 </div>
 </div>
@@ -138,7 +213,7 @@ Cédric MARTIN </dd></dl>
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
+</a> 1.8.13
 </small></address>
 </body>
 </html>

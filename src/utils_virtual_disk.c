@@ -97,9 +97,10 @@ int repair_disk(int num) {
 	fseek(r5Disk.storage[num_ref], 0, SEEK_SET);
 	uchar *buffer_lecture = malloc(size * sizeof(uchar));
 	uchar *buffer_ecriture = malloc(size * sizeof(uchar));
-	fread(buffer_ecriture, sizeof(uchar), size, r5Disk.storage[num_ref]);
-	for(int i = num_ref + 1; i < r5Disk.ndisk; i++) {
-		if(i != num) {
+    fread(buffer_ecriture, sizeof(uchar), size, r5Disk.storage[num_ref]);
+	for(int i = 0; i < r5Disk.ndisk; i++) {
+		if(i != num && i != num_ref) {
+            printf("ALLO ? %d %d\n", i, num);
 			fseek(r5Disk.storage[i], 0, SEEK_SET);
 			fread(buffer_lecture, sizeof(uchar), size, r5Disk.storage[i]);
 			buffer_ecriture = xor_uchar(buffer_lecture, buffer_ecriture, size);

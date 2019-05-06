@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>RAID 5: Référence du fichier raid_defines.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -30,21 +30,18 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.14 -->
+<!-- Généré par Doxygen 1.8.13 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
-/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 $(function() {
   initMenu('',true,false,'search.php','Recherche');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -62,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html">headers</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -79,6 +76,7 @@ $(function() {
 <p>Définitions des structures de données.  
 <a href="#details">Plus de détails...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="debug__log_8h_source.html">debug_log.h</a>&quot;</code><br />
 </div>
 <p><a href="raid__defines_8h_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
@@ -118,17 +116,17 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_MSG</b>&#160;&#160;&#160;1024</td></tr>
 <tr class="separator:aa24597a54a085c6c2c33b64138f09eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42178fcae46f09d3c91ca3da27188231"><td class="memItemLeft" align="right" valign="top"><a id="a42178fcae46f09d3c91ca3da27188231"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SUPER_BLOCK_SIZE</b>&#160;&#160;&#160;4</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SUPER_BLOCK_SIZE</b>&#160;&#160;&#160;8</td></tr>
 <tr class="separator:a42178fcae46f09d3c91ca3da27188231"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a1399be80da10bab823671e773453bb"><td class="memItemLeft" align="right" valign="top"><a id="a1a1399be80da10bab823671e773453bb"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>INODES_START</b>&#160;&#160;&#160;SUPER_BLOCK_SIZE*BLOCK_SIZE+1</td></tr>
 <tr class="separator:a1a1399be80da10bab823671e773453bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34a3a3e2e3a4bd30b993bce5b19f3d73"><td class="memItemLeft" align="right" valign="top"><a id="a34a3a3e2e3a4bd30b993bce5b19f3d73"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>INODE_SIZE</b>&#160;&#160;&#160;11</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>INODE_SIZE</b>&#160;&#160;&#160;24</td></tr>
 <tr class="separator:a34a3a3e2e3a4bd30b993bce5b19f3d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8834fc360bc86a39404295fd46bcbd75"><td class="memItemLeft" align="right" valign="top"><a id="a8834fc360bc86a39404295fd46bcbd75"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>NB_DISK</b>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:a8834fc360bc86a39404295fd46bcbd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b39044fc7eea70b5647e4c9a7ac3876"><td class="memItemLeft" align="right" valign="top"><a id="a3b39044fc7eea70b5647e4c9a7ac3876"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NB_RAIDS</b>&#160;&#160;&#160;7</td></tr>
+<tr class="separator:a3b39044fc7eea70b5647e4c9a7ac3876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Définitions de type</h2></td></tr>
@@ -163,14 +161,14 @@ typedef struct <a class="el" href="structfile__s.html">file_s</a>&#160;</td><td 
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Énumérations</h2></td></tr>
 <tr class="memitem:a7a2279e0841d50aa8e976d3bb0eb3a6e"><td class="memItemLeft" align="right" valign="top"><a id="a7a2279e0841d50aa8e976d3bb0eb3a6e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>raid</b> { <br />
-&#160;&#160;<b>ZERO</b>, 
-<b>UN</b>, 
-<b>CINQ</b>, 
-<b>ZERO_UN</b>, 
+&#160;&#160;<b>ZERO</b> =1, 
+<b>UN</b> =2, 
+<b>CINQ</b> =3, 
+<b>ZERO_UN</b> =4, 
 <br />
-&#160;&#160;<b>UN_ZERO</b>, 
-<b>CINQUANTE</b>, 
-<b>CENT</b>
+&#160;&#160;<b>UN_ZERO</b> =5, 
+<b>CINQUANTE</b> =6, 
+<b>CENT</b> =7
 <br />
  }</td></tr>
 <tr class="separator:a7a2279e0841d50aa8e976d3bb0eb3a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,7 +181,7 @@ typedef struct <a class="el" href="structfile__s.html">file_s</a>&#160;</td><td 
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
+</a> 1.8.13
 </small></address>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>RAID 5:  Fichier source de utils_virtual_disk.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -30,21 +30,18 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.14 -->
+<!-- Généré par Doxygen 1.8.13 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
-/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 $(function() {
   initMenu('',true,false,'search.php','Recherche');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -62,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html">headers</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -70,15 +67,19 @@ $(function() {
 <div class="title">utils_virtual_disk.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="utils__virtual__disk_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _UTILS_VIRTUAL_DISK</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _UTILS_VIRTUAL_DISK</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="raid__defines_8h.html">raid_defines.h</a>&quot;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;dirent.h&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__virtual__disk_8h.html#ae288e5dd77c7a589ebabb5747da3e1a6">init_disk_raid5</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* nom_rep, <a class="code" href="structvirtual__disk__s.html">virtual_disk_t</a>* r5Disk);</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="utils__virtual__disk_8h_html_ae288e5dd77c7a589ebabb5747da3e1a6"><div class="ttname"><a href="utils__virtual__disk_8h.html#ae288e5dd77c7a589ebabb5747da3e1a6">init_disk_raid5</a></div><div class="ttdeci">int init_disk_raid5(const char *nom_rep, virtual_disk_t *r5Disk)</div><div class="ttdef"><b>Definition:</b> utils_virtual_disk.c:3</div></div>
-<div class="ttc" id="raid__defines_8h_html"><div class="ttname"><a href="raid__defines_8h.html">raid_defines.h</a></div><div class="ttdoc">Définitions des structures de données. </div></div>
-<div class="ttc" id="structvirtual__disk__s_html"><div class="ttname"><a href="structvirtual__disk__s.html">virtual_disk_s</a></div><div class="ttdef"><b>Definition:</b> raid_defines.h:48</div></div>
+<a href="utils__virtual__disk_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _UTILS_VIRTUAL_DISK</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _UTILS_VIRTUAL_DISK</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="raid__defines_8h.html">raid_defines.h</a>&quot;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utils__inode_8h.html">utils_inode.h</a>&quot;</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;dirent.h&gt;</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<a class="code" href="structvirtual__disk__s.html">virtual_disk_t</a> r5Disk;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__virtual__disk_8h.html#a855830eff4388ef4dfcbd2eb999e879a">init_disk_raid5</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* repertoryName, <span class="keywordtype">int</span> raid);</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__virtual__disk_8h.html#ab3dbf5f27d825bad1648d62cfec4e33e">repair_disk</a>(<span class="keywordtype">int</span> num);</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="utils__virtual__disk_8h.html#aead66c871fa41fb5563a60a5d057f40a">close_system</a>();</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="utils__virtual__disk_8h.html#a16bd81441181457f92fab2c7ef5e0a20">check_super_block</a>();</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="raid__defines_8h_html"><div class="ttname"><a href="raid__defines_8h.html">raid_defines.h</a></div><div class="ttdoc">Définitions des structures de données. </div></div>
+<div class="ttc" id="utils__virtual__disk_8h_html_aead66c871fa41fb5563a60a5d057f40a"><div class="ttname"><a href="utils__virtual__disk_8h.html#aead66c871fa41fb5563a60a5d057f40a">close_system</a></div><div class="ttdeci">void close_system()</div><div class="ttdef"><b>Definition:</b> utils_virtual_disk.c:83</div></div>
+<div class="ttc" id="utils__virtual__disk_8h_html_a16bd81441181457f92fab2c7ef5e0a20"><div class="ttname"><a href="utils__virtual__disk_8h.html#a16bd81441181457f92fab2c7ef5e0a20">check_super_block</a></div><div class="ttdeci">bool check_super_block()</div><div class="ttdef"><b>Definition:</b> utils_virtual_disk.c:113</div></div>
+<div class="ttc" id="structvirtual__disk__s_html"><div class="ttname"><a href="structvirtual__disk__s.html">virtual_disk_s</a></div><div class="ttdef"><b>Definition:</b> raid_defines.h:49</div></div>
+<div class="ttc" id="utils__virtual__disk_8h_html_a855830eff4388ef4dfcbd2eb999e879a"><div class="ttname"><a href="utils__virtual__disk_8h.html#a855830eff4388ef4dfcbd2eb999e879a">init_disk_raid5</a></div><div class="ttdeci">int init_disk_raid5(const char *repertoryName, int raid)</div><div class="ttdef"><b>Definition:</b> utils_virtual_disk.c:3</div></div>
+<div class="ttc" id="utils__inode_8h_html"><div class="ttname"><a href="utils__inode_8h.html">utils_inode.h</a></div><div class="ttdoc">Utilitaires permettant de manipuler la structure inode_s. </div></div>
+<div class="ttc" id="utils__virtual__disk_8h_html_ab3dbf5f27d825bad1648d62cfec4e33e"><div class="ttname"><a href="utils__virtual__disk_8h.html#ab3dbf5f27d825bad1648d62cfec4e33e">repair_disk</a></div><div class="ttdeci">int repair_disk(int num)</div><div class="ttdef"><b>Definition:</b> utils_virtual_disk.c:90</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
+</a> 1.8.13
 </small></address>
 </body>
 </html>

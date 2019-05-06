@@ -1,3 +1,10 @@
+/// \file debug_log.h
+/// \brief Utilitaires permettant de créer des macros de debug
+/// \author Ugo EB-LEVADOUX
+/// \author Axel GAUTHIER
+/// \author Cédric MARTIN
+/// \date 2019
+
 #include "couleur.h"
 
 #define debug(...)\

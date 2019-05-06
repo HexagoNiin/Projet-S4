@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>RAID 5: Référence du fichier utils_inode.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -30,21 +30,18 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.14 -->
+<!-- Généré par Doxygen 1.8.13 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
-/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 $(function() {
   initMenu('',true,false,'search.php','Recherche');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -62,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html">headers</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -76,21 +73,35 @@ $(function() {
 <p>Utilitaires permettant de manipuler la structure <a class="el" href="structinode__s.html">inode_s</a>.  
 <a href="#details">Plus de détails...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="utils__stripe_8h_source.html">utils_stripe.h</a>&quot;</code><br />
-<code>#include &quot;string.h&quot;</code><br />
 </div>
 <p><a href="utils__inode_8h_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:a52d6eb7376813493821abcb42f88f50c"><td class="memItemLeft" align="right" valign="top"><a id="a52d6eb7376813493821abcb42f88f50c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>write_inodes_table</b> (inode_table_t inode, FILE **files)</td></tr>
-<tr class="separator:a52d6eb7376813493821abcb42f88f50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33599aedce57439e568b1350cc63b654"><td class="memItemLeft" align="right" valign="top"><a id="a33599aedce57439e568b1350cc63b654"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>get_unused_inode</b> (inode_table_t inodes)</td></tr>
-<tr class="separator:a33599aedce57439e568b1350cc63b654"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae81938796524dcea18a304a6b64a17d1"><td class="memItemLeft" align="right" valign="top"><a id="ae81938796524dcea18a304a6b64a17d1"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>indtostr</b> (<a class="el" href="structinode__s.html">inode_t</a> inode)</td></tr>
-<tr class="separator:ae81938796524dcea18a304a6b64a17d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53339d5f0965c354f4c9de88b72b9a54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#a53339d5f0965c354f4c9de88b72b9a54">delete_inode</a> (int pos)</td></tr>
+<tr class="separator:a53339d5f0965c354f4c9de88b72b9a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c8cd052fcd1a9a8039a9e9b80ead84a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#a1c8cd052fcd1a9a8039a9e9b80ead84a">write_inodes_table</a> (int startbyte)</td></tr>
+<tr class="separator:a1c8cd052fcd1a9a8039a9e9b80ead84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f49cde0ea6b3b43d9c6524ff02194d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#a47f49cde0ea6b3b43d9c6524ff02194d">get_unused_inode</a> ()</td></tr>
+<tr class="separator:a47f49cde0ea6b3b43d9c6524ff02194d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8931ad0455bff1be5570969015857c3b"><td class="memItemLeft" align="right" valign="top"><a id="a8931ad0455bff1be5570969015857c3b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>read_inodes_table</b> ()</td></tr>
+<tr class="separator:a8931ad0455bff1be5570969015857c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acadc9a444c53297842e5c5338d86a147"><td class="memItemLeft" align="right" valign="top">uchar *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#acadc9a444c53297842e5c5338d86a147">indtostr</a> (<a class="el" href="structinode__s.html">inode_t</a> inode)</td></tr>
+<tr class="separator:acadc9a444c53297842e5c5338d86a147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf72be19a48b3f220efe0c98d3c6e557"><td class="memItemLeft" align="right" valign="top"><a id="abf72be19a48b3f220efe0c98d3c6e557"></a>
+uchar *&#160;</td><td class="memItemRight" valign="bottom"><b>sbtostr</b> ()</td></tr>
+<tr class="separator:abf72be19a48b3f220efe0c98d3c6e557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a381eb068afd7c137745a4d6c3bf861b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#a381eb068afd7c137745a4d6c3bf861b3">write_super_block</a> ()</td></tr>
+<tr class="separator:a381eb068afd7c137745a4d6c3bf861b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1b65930446e00e0f88fe81b2e1e10cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structinode__s.html">inode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#ae1b65930446e00e0f88fe81b2e1e10cc">init_inode</a> (const char *filename, uint size, uint position)</td></tr>
+<tr class="separator:ae1b65930446e00e0f88fe81b2e1e10cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa22d43bed781a46ece6eb08dfdfa3f66"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#aa22d43bed781a46ece6eb08dfdfa3f66">read_super_block</a> ()</td></tr>
+<tr class="separator:aa22d43bed781a46ece6eb08dfdfa3f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7add32b3e3742f72d9a874ef51b733af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#a7add32b3e3742f72d9a874ef51b733af">update_inodes_table</a> (<a class="el" href="structinode__s.html">inode_t</a> inode)</td></tr>
+<tr class="separator:a7add32b3e3742f72d9a874ef51b733af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20b1c1a9bb6ccd4f802bd5a136c25a24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils__inode_8h.html#a20b1c1a9bb6ccd4f802bd5a136c25a24">update_first_free_byte</a> (int new_byte)</td></tr>
+<tr class="separator:a20b1c1a9bb6ccd4f802bd5a136c25a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Utilitaires permettant de manipuler la structure <a class="el" href="structinode__s.html">inode_s</a>. </p>
@@ -100,12 +111,239 @@ Axel GAUTHIER </dd>
 <dd>
 Cédric MARTIN </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2019 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a53339d5f0965c354f4c9de88b72b9a54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53339d5f0965c354f4c9de88b72b9a54">&#9670;&nbsp;</a></span>delete_inode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void delete_inode </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Supprime un noeud sur la table des index. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>: position du noeud à supprimer.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a47f49cde0ea6b3b43d9c6524ff02194d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47f49cde0ea6b3b43d9c6524ff02194d">&#9670;&nbsp;</a></span>get_unused_inode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get_unused_inode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retourne l'indice du premier inode disponible dans la table. </p><dl class="section return"><dt>Renvoie</dt><dd>L'indice d'un inode ou -1 si la table est pleine </dd></dl>
+
+</div>
+</div>
+<a id="acadc9a444c53297842e5c5338d86a147"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acadc9a444c53297842e5c5338d86a147">&#9670;&nbsp;</a></span>indtostr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uchar* indtostr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structinode__s.html">inode_t</a>&#160;</td>
+          <td class="paramname"><em>inode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transforme une inode en chaine de caractères non signés. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">inode</td><td>: L'inode a transformer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>La chaine de caractères ou NULL s'il y a eu une erreur </dd></dl>
+
+</div>
+</div>
+<a id="ae1b65930446e00e0f88fe81b2e1e10cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1b65930446e00e0f88fe81b2e1e10cc">&#9670;&nbsp;</a></span>init_inode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structinode__s.html">inode_t</a> init_inode </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint&#160;</td>
+          <td class="paramname"><em>position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialise une inode selon des informations de fichier </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>: le nom du fichier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>: la taille du fichier en octets </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">position</td><td>: la positon du fichier sur le RAID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>l'inode créée </dd></dl>
+
+</div>
+</div>
+<a id="aa22d43bed781a46ece6eb08dfdfa3f66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa22d43bed781a46ece6eb08dfdfa3f66">&#9670;&nbsp;</a></span>read_super_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int read_super_block </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Génère le super block à partir du RAID </p><dl class="section return"><dt>Renvoie</dt><dd>0 s'il y a eu une erreur, 1 sinon </dd></dl>
+
+</div>
+</div>
+<a id="a20b1c1a9bb6ccd4f802bd5a136c25a24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20b1c1a9bb6ccd4f802bd5a136c25a24">&#9670;&nbsp;</a></span>update_first_free_byte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void update_first_free_byte </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>new_byte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Met à jour le premier octet libre sur le super bloc </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_byte</td><td>: nombre d'octets à ajouter </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7add32b3e3742f72d9a874ef51b733af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7add32b3e3742f72d9a874ef51b733af">&#9670;&nbsp;</a></span>update_inodes_table()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int update_inodes_table </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structinode__s.html">inode_t</a>&#160;</td>
+          <td class="paramname"><em>inode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Met à jour la table d'inode </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">inode</td><td>; l'inode qui a été ajoutée à la table d'inodes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 s'il y a eu une erreur, 1 sinon </dd></dl>
+
+</div>
+</div>
+<a id="a1c8cd052fcd1a9a8039a9e9b80ead84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c8cd052fcd1a9a8039a9e9b80ead84a">&#9670;&nbsp;</a></span>write_inodes_table()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int write_inodes_table </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startbyte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Ecrit la table d'inode sur le système RAID. </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">startbyte</td><td>: position en octet </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>-1 s'il y a eu une erreur, le nombre de bandes écrites sinon </dd></dl>
+
+</div>
+</div>
+<a id="a381eb068afd7c137745a4d6c3bf861b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a381eb068afd7c137745a4d6c3bf861b3">&#9670;&nbsp;</a></span>write_super_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int write_super_block </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Ecrit le super block sur le système RAID </p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">startbyte</td><td>: premiere bande libre sur le RAID </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 s'il y a une erreur, 1 sinon </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
+</a> 1.8.13
 </small></address>
 </body>
 </html>

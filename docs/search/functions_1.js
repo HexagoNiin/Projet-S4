@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['init_5fdisk_5fraid5',['init_disk_raid5',['../utils__virtual__disk_8h.html#ae288e5dd77c7a589ebabb5747da3e1a6',1,'utils_virtual_disk.c']]]
+  ['block_5frepair',['block_repair',['../utils__block_8h.html#a3e61d832e243a81d3951d6639dbbdb37',1,'utils_block.c']]]
 ];

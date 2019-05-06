@@ -203,10 +203,11 @@ block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
 		size = r5Disk.ndisk - r5Disk.nb_grappe;
 	else if(r5Disk.raidmode == ZERO_UN)
 		size = r5Disk.size_grappe;
+	else if(r5Disk.raidmode == UN)
+		size = 1;
 	else
 		size = r5Disk.ndisk;
     block_t *blocks = malloc(sizeof(block_t) * (size));
-	log4("[GENERATE_STRIPE] size : %d", size);
     for(i=0;i<size;i++) {
         for(j=0;j<BLOCK_SIZE;j++) {
             if(*posCurrent == nChars)
@@ -261,6 +262,7 @@ int write_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
 		block_t *blocks = generateStripe(buffer, nChars, &pos);
 		int i_blocks = 0;
 		int index = compute_parity_index(i + (startbyte / r5Disk.ndisk), r5Disk.ndisk);
+		log4("[WRITE_CHUNK] index %d", index);
 		for(j=0;j<r5Disk.ndisk;j++) {
 			if(j == index)
 				stripe.stripe[j] = compute_parity(blocks, r5Disk.ndisk-1);
@@ -290,17 +292,19 @@ int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 	log4("[WRITE_CHUNK] RAID UN");
 	int nblocks = compute_nblock(nChars);
 	log4("[WRITE_CHUNK] Écriture en %d sur %d bandes de :\n%s", startbyte, nblocks, buffer);
+	int pos = 0;
 	for(int i = 0; i < nblocks; i++) {
 		stripe_t stripe;
 		stripe.nblocks = r5Disk.ndisk;
 		stripe.stripe = malloc(sizeof(block_t) * r5Disk.ndisk);
+		block_t *block = generateStripe(buffer, nChars, &pos);
+		print_block(block[0]);
 		for(int j = 0; j < r5Disk.ndisk; j++) {
-			stripe.stripe[j] = create_block();
-			for(int k = 0; k < BLOCK_SIZE && i * BLOCK_SIZE + k < nChars; k++)
-				stripe.stripe[j].data[k] = buffer[i * BLOCK_SIZE + k];
+			for(int k = 0; k < BLOCK_SIZE; k++)
+				stripe.stripe[j].data[k] = (*block).data[k];
 		}
-		if(startbyte == 124) {print_stripe(stripe); printf("\n");}
-		if(write_stripe(stripe, startbyte + i*BLOCK_SIZE)) return -1;
+		if(write_stripe(stripe, startbyte + i*BLOCK_SIZE))
+			return -1;
 	}
 	return nblocks;
 }

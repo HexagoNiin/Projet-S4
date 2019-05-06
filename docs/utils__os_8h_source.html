@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>RAID 5:  Fichier source de utils_os.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">RAID 5
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">utils_os.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="utils__os_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef _UTILS_OS</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define _UTILS_OS</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utils__file_8h.html">utils_file.h</a>&quot;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="couleur_8h.html">couleur.h</a>&quot;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;wait.h&gt;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define NB_COMMANDS 7</span></div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define COMMANDS_SIZE 16</span></div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define NB_OPTIONS 1</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">typedef</span> int(*FunctionStr)(<span class="keywordtype">char</span>*);</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#a8d67ff0924eed55a300fa68f9ab7bfe5">action</a>(<span class="keywordtype">char</span> **command);</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#a08f431b81fc40deb62fc1e499d7ce853">cat</a>(<span class="keywordtype">char</span> *filename);</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#ab928dffd565cc70e2d63753422d72f40">ls</a>(<span class="keywordtype">char</span> *option);</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#aedb8ae516ab71f66cefb19a1ecc9d9f0">rm</a>(<span class="keywordtype">char</span> *filename);</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#a60b0396c567047089fb34c28fdd0d682">create</a>(<span class="keywordtype">char</span> *filename);</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#ad07b151c0672ff61ba986622c510b1e5">edit</a>(<span class="keywordtype">char</span> *filename);</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#a95ef13999500de7efdaed83fa45ae98d">load</a>(<span class="keywordtype">char</span> *arguments);</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__os_8h.html#a47c4db3acecacda60d7d534c17dd2eb1">store</a>(<span class="keywordtype">char</span> *filename);</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keywordtype">void</span> <a class="code" href="utils__os_8h.html#a058a8f6bf73d24fb5d7d4f06fb87a76f">interpreteur</a>();</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">char</span> **<a class="code" href="utils__os_8h.html#a7d8734add661179c1832569b2181c4c4">parser</a>(<span class="keywordtype">char</span> *command);</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="utils__os_8h_html_a08f431b81fc40deb62fc1e499d7ce853"><div class="ttname"><a href="utils__os_8h.html#a08f431b81fc40deb62fc1e499d7ce853">cat</a></div><div class="ttdeci">int cat(char *filename)</div><div class="ttdef"><b>Definition:</b> utils_os.c:72</div></div>
+<div class="ttc" id="utils__os_8h_html_a8d67ff0924eed55a300fa68f9ab7bfe5"><div class="ttname"><a href="utils__os_8h.html#a8d67ff0924eed55a300fa68f9ab7bfe5">action</a></div><div class="ttdeci">int action(char **command)</div><div class="ttdef"><b>Definition:</b> utils_os.c:36</div></div>
+<div class="ttc" id="utils__os_8h_html_aedb8ae516ab71f66cefb19a1ecc9d9f0"><div class="ttname"><a href="utils__os_8h.html#aedb8ae516ab71f66cefb19a1ecc9d9f0">rm</a></div><div class="ttdeci">int rm(char *filename)</div><div class="ttdef"><b>Definition:</b> utils_os.c:88</div></div>
+<div class="ttc" id="utils__os_8h_html_a95ef13999500de7efdaed83fa45ae98d"><div class="ttname"><a href="utils__os_8h.html#a95ef13999500de7efdaed83fa45ae98d">load</a></div><div class="ttdeci">int load(char *arguments)</div><div class="ttdef"><b>Definition:</b> utils_os.c:149</div></div>
+<div class="ttc" id="utils__os_8h_html_a7d8734add661179c1832569b2181c4c4"><div class="ttname"><a href="utils__os_8h.html#a7d8734add661179c1832569b2181c4c4">parser</a></div><div class="ttdeci">char ** parser(char *command)</div><div class="ttdef"><b>Definition:</b> utils_os.c:169</div></div>
+<div class="ttc" id="utils__file_8h_html"><div class="ttname"><a href="utils__file_8h.html">utils_file.h</a></div><div class="ttdoc">Utilitaires permettant de manipuler la structure file_s. </div></div>
+<div class="ttc" id="utils__os_8h_html_a60b0396c567047089fb34c28fdd0d682"><div class="ttname"><a href="utils__os_8h.html#a60b0396c567047089fb34c28fdd0d682">create</a></div><div class="ttdeci">int create(char *filename)</div><div class="ttdef"><b>Definition:</b> utils_os.c:108</div></div>
+<div class="ttc" id="utils__os_8h_html_ad07b151c0672ff61ba986622c510b1e5"><div class="ttname"><a href="utils__os_8h.html#ad07b151c0672ff61ba986622c510b1e5">edit</a></div><div class="ttdeci">int edit(char *filename)</div><div class="ttdef"><b>Definition:</b> utils_os.c:117</div></div>
+<div class="ttc" id="utils__os_8h_html_a47c4db3acecacda60d7d534c17dd2eb1"><div class="ttname"><a href="utils__os_8h.html#a47c4db3acecacda60d7d534c17dd2eb1">store</a></div><div class="ttdeci">int store(char *filename)</div><div class="ttdef"><b>Definition:</b> utils_os.c:159</div></div>
+<div class="ttc" id="couleur_8h_html"><div class="ttname"><a href="couleur_8h.html">couleur.h</a></div><div class="ttdoc">Utilitaires permettant l&amp;#39;affichage coloré dans le terminal. </div></div>
+<div class="ttc" id="utils__os_8h_html_a058a8f6bf73d24fb5d7d4f06fb87a76f"><div class="ttname"><a href="utils__os_8h.html#a058a8f6bf73d24fb5d7d4f06fb87a76f">interpreteur</a></div><div class="ttdeci">void interpreteur()</div><div class="ttdef"><b>Definition:</b> utils_os.c:6</div></div>
+<div class="ttc" id="utils__os_8h_html_ab928dffd565cc70e2d63753422d72f40"><div class="ttname"><a href="utils__os_8h.html#ab928dffd565cc70e2d63753422d72f40">ls</a></div><div class="ttdeci">int ls(char *option)</div><div class="ttdef"><b>Definition:</b> utils_os.c:54</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

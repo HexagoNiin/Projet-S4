@@ -23,28 +23,30 @@ int main(int argc, char *argv[]) {
 		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, ".."))
 			nbFiles++;
 	}
-	nbFiles++;
 	rewinddir(rep);
 
 	FILE **storage = malloc(sizeof(FILE *) * nbFiles);
-	int i = 0;
+	int i = nbFiles-1;
 	while((disk = readdir(rep))) {
 		if(strcmp(disk->d_name, ".") && strcmp(disk->d_name, "..")) {
 			char chemin[512];
-			if(indice == i) {
-				sprintf(chemin, "%s/d%d", argv[1], indice);
+			int len = strlen(disk->d_name);
+			printf("name%d ind%d i%d\n",disk->d_name[len-1]-48, indice, i);
+			if(disk->d_name[len-1]-48 == indice) {
+				sprintf(chemin, "%s/%s", argv[1], disk->d_name);
 				if(!(storage[indice] = fopen(chemin, "w"))) {
 					fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
 					return 4;
 				}
-				i++;
+			} else {
+				sprintf(chemin, "%s/%s", argv[1], disk->d_name);
+				printf("i : %d\n", i);
+				if(!(storage[i] = fopen(chemin, "r"))) {
+					fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
+					return 4;
+				}
 			}
-			sprintf(chemin, "%s/%s", argv[1], disk->d_name);
-			if(!(storage[i] = fopen(chemin, "r"))) {
-				fprintf(stderr, "Erreur lors de l'ouverture du fichier %s.\n", disk->d_name);
-				return 4;
-			}
-			i++;
+			i--;
 		}
 	}
 	closedir(rep);

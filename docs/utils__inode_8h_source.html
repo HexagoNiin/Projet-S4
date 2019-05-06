@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.14"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>RAID 5:  Fichier source de utils_inode.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -30,21 +30,18 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.14 -->
+<!-- Généré par Doxygen 1.8.13 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
-/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 $(function() {
   initMenu('',true,false,'search.php','Recherche');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -62,7 +59,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_7f57b1e41c5acd0e859ae5f3a2b075a9.html">headers</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_7ba74b75e382b9fa45e3adcb25c3939f.html">headers</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -70,14 +67,23 @@ $(function() {
 <div class="title">utils_inode.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="utils__inode_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _UTILS_INODE</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _UTILS_INODE</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utils__stripe_8h.html">utils_stripe.h</a>&quot;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;string.h&quot;</span></div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">int</span> write_inodes_table(inode_table_t inode, FILE **files);</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">int</span> get_unused_inode(inode_table_t inodes);</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">char</span> *indtostr(<a class="code" href="structinode__s.html">inode_t</a> inode);</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="utils__stripe_8h_html"><div class="ttname"><a href="utils__stripe_8h.html">utils_stripe.h</a></div><div class="ttdoc">Utilitaires permettant de manipuler la structure stripe_s. </div></div>
-<div class="ttc" id="structinode__s_html"><div class="ttname"><a href="structinode__s.html">inode_s</a></div><div class="ttdef"><b>Definition:</b> raid_defines.h:30</div></div>
+<a href="utils__inode_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _UTILS_INODE</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _UTILS_INODE</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utils__stripe_8h.html">utils_stripe.h</a>&quot;</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> <a class="code" href="utils__inode_8h.html#a53339d5f0965c354f4c9de88b72b9a54">delete_inode</a>(<span class="keywordtype">int</span> pos);</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__inode_8h.html#a1c8cd052fcd1a9a8039a9e9b80ead84a">write_inodes_table</a>(<span class="keywordtype">int</span> startbyte);</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__inode_8h.html#a47f49cde0ea6b3b43d9c6524ff02194d">get_unused_inode</a>();</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">int</span> read_inodes_table();</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;uchar *<a class="code" href="utils__inode_8h.html#acadc9a444c53297842e5c5338d86a147">indtostr</a>(<a class="code" href="structinode__s.html">inode_t</a> inode);</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;uchar *sbtostr();</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__inode_8h.html#a381eb068afd7c137745a4d6c3bf861b3">write_super_block</a>();</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<a class="code" href="structinode__s.html">inode_t</a> <a class="code" href="utils__inode_8h.html#ae1b65930446e00e0f88fe81b2e1e10cc">init_inode</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, uint size, uint position);</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__inode_8h.html#aa22d43bed781a46ece6eb08dfdfa3f66">read_super_block</a>();</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">int</span> <a class="code" href="utils__inode_8h.html#a7add32b3e3742f72d9a874ef51b733af">update_inodes_table</a>(<a class="code" href="structinode__s.html">inode_t</a> inode);</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> <a class="code" href="utils__inode_8h.html#a20b1c1a9bb6ccd4f802bd5a136c25a24">update_first_free_byte</a>(<span class="keywordtype">int</span> new_byte);</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="utils__inode_8h_html_a20b1c1a9bb6ccd4f802bd5a136c25a24"><div class="ttname"><a href="utils__inode_8h.html#a20b1c1a9bb6ccd4f802bd5a136c25a24">update_first_free_byte</a></div><div class="ttdeci">void update_first_free_byte(int new_byte)</div><div class="ttdef"><b>Definition:</b> utils_inode.c:203</div></div>
+<div class="ttc" id="utils__inode_8h_html_a47f49cde0ea6b3b43d9c6524ff02194d"><div class="ttname"><a href="utils__inode_8h.html#a47f49cde0ea6b3b43d9c6524ff02194d">get_unused_inode</a></div><div class="ttdeci">int get_unused_inode()</div><div class="ttdef"><b>Definition:</b> utils_inode.c:96</div></div>
+<div class="ttc" id="utils__inode_8h_html_aa22d43bed781a46ece6eb08dfdfa3f66"><div class="ttname"><a href="utils__inode_8h.html#aa22d43bed781a46ece6eb08dfdfa3f66">read_super_block</a></div><div class="ttdeci">int read_super_block()</div><div class="ttdef"><b>Definition:</b> utils_inode.c:150</div></div>
+<div class="ttc" id="utils__inode_8h_html_ae1b65930446e00e0f88fe81b2e1e10cc"><div class="ttname"><a href="utils__inode_8h.html#ae1b65930446e00e0f88fe81b2e1e10cc">init_inode</a></div><div class="ttdeci">inode_t init_inode(const char *filename, uint size, uint position)</div><div class="ttdef"><b>Definition:</b> utils_inode.c:170</div></div>
+<div class="ttc" id="utils__inode_8h_html_a7add32b3e3742f72d9a874ef51b733af"><div class="ttname"><a href="utils__inode_8h.html#a7add32b3e3742f72d9a874ef51b733af">update_inodes_table</a></div><div class="ttdeci">int update_inodes_table(inode_t inode)</div><div class="ttdef"><b>Definition:</b> utils_inode.c:185</div></div>
+<div class="ttc" id="utils__inode_8h_html_acadc9a444c53297842e5c5338d86a147"><div class="ttname"><a href="utils__inode_8h.html#acadc9a444c53297842e5c5338d86a147">indtostr</a></div><div class="ttdeci">uchar * indtostr(inode_t inode)</div><div class="ttdef"><b>Definition:</b> utils_inode.c:27</div></div>
+<div class="ttc" id="utils__stripe_8h_html"><div class="ttname"><a href="utils__stripe_8h.html">utils_stripe.h</a></div><div class="ttdoc">Utilitaires permettant de manipuler la structure stripe_s. </div></div>
+<div class="ttc" id="structinode__s_html"><div class="ttname"><a href="structinode__s.html">inode_s</a></div><div class="ttdef"><b>Definition:</b> raid_defines.h:31</div></div>
+<div class="ttc" id="utils__inode_8h_html_a53339d5f0965c354f4c9de88b72b9a54"><div class="ttname"><a href="utils__inode_8h.html#a53339d5f0965c354f4c9de88b72b9a54">delete_inode</a></div><div class="ttdeci">void delete_inode(int pos)</div><div class="ttdef"><b>Definition:</b> utils_inode.c:3</div></div>
+<div class="ttc" id="utils__inode_8h_html_a381eb068afd7c137745a4d6c3bf861b3"><div class="ttname"><a href="utils__inode_8h.html#a381eb068afd7c137745a4d6c3bf861b3">write_super_block</a></div><div class="ttdeci">int write_super_block()</div><div class="ttdef"><b>Definition:</b> utils_inode.c:122</div></div>
+<div class="ttc" id="utils__inode_8h_html_a1c8cd052fcd1a9a8039a9e9b80ead84a"><div class="ttname"><a href="utils__inode_8h.html#a1c8cd052fcd1a9a8039a9e9b80ead84a">write_inodes_table</a></div><div class="ttdeci">int write_inodes_table(int startbyte)</div><div class="ttdef"><b>Definition:</b> utils_inode.c:42</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Généré par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
+</a> 1.8.13
 </small></address>
 </body>
 </html>
