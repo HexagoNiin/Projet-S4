@@ -1,6 +1,6 @@
 #include "../headers/utils_block.h"
 
-block_t create_block() { //Utilisé dans utils_stripe.c
+block_t create_block() {
 	/// \brief Crée un block vide
     /// \return Un block initialisé à 0
 	block_t block;
@@ -11,6 +11,9 @@ block_t create_block() { //Utilisé dans utils_stripe.c
 }
 
 block_t tab_to_block(uchar *tab) {	//Fonction de debug
+	/// \brief Crée un block à partir d'une chaîne de caractères
+	/// \param[in] tab : la chaîne de caractères
+	/// \return le block généré
 	block_t block = create_block();
 	for(int i = 0; i < BLOCK_SIZE; i++) {
 		block.data[i] = tab[i];
@@ -34,12 +37,14 @@ int write_block(block_t block, int pos, FILE * disk_id) {
     fseek(disk_id, pos, SEEK_SET);
     if(fwrite(&block, sizeof(block_t), 1, disk_id) != 1) {
         log5("[WRITE_BLOCK] Une Erreur est survenue lors de l'ecriture du block.");
-        return EXIT_FAILURE; //1
+        return EXIT_FAILURE;
     }
-    return EXIT_SUCCESS; //0
+    return EXIT_SUCCESS;
 }
 
 void print_block(block_t block) {
+	/// \brief Affiche un block
+	/// \param[in] block : block à afficher
     int i;
 	printf("[");
     for(i=0;i<BLOCK_SIZE;i++) {

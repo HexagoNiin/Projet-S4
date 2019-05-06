@@ -3,6 +3,8 @@
 int init_disk_raid5(const char *repertoryName, int raid) {
 	/// \brief Initialise la variable globale r5Disk
     /// \param[in] repertoryName : le repertoire ou se situe les disks
+    /// \param[in] raid : type de RAID
+    /// \return 0 si tout s'est bien passé, un entier positif sinon
 
 	/* ouverture repertoire "repertoryName" */
     DIR *rep;
@@ -45,7 +47,7 @@ int init_disk_raid5(const char *repertoryName, int raid) {
 
     /* detection de la table d'inode */
     int exit_read = read_super_block();
-    if(exit_read || !check_super_block()) {
+    if(exit_read || check_super_block()) {
         printf("Systeme inexistant : mise en place du systeme RAID\n");
 
         /* initialisation r5Disk */
@@ -79,12 +81,16 @@ uchar *xor_uchar(uchar *a, uchar *b, int size) {
 }
 
 void close_system() {
+    /// \brief Ferme le système RAID
 	int u;
 	for(u=0;u<r5Disk.ndisk;u++)
 		fclose(r5Disk.storage[u]);
 }
 
 int repair_disk(int num) {
+    /// \brief Regénère un disque à partir des autres disques
+    /// \param[in] num : le numéro du disque à générer
+    /// \return 0
 	int num_ref = (!num) ? (1) : (0);
 	fseek(r5Disk.storage[num_ref], 0, SEEK_END);
 	size_t size = ftell(r5Disk.storage[num_ref]);
@@ -104,11 +110,13 @@ int repair_disk(int num) {
 	return EXIT_SUCCESS;
 }
 
-bool check_super_block() {
+int check_super_block() {
+    /// \brief Vérifie que les données du super block sont correctes
+    /// \return 1 si l'opération s'est mal passée, 0 sinon
     log1("[CHECK_SUPER_BLOCK] raid_type : %d first_free_byte : %d blocks : %d", r5Disk.super_block.raid_type, r5Disk.super_block.first_free_byte, r5Disk.super_block.nb_blocks_used);
     if(r5Disk.super_block.raid_type < 1 || r5Disk.super_block.raid_type > 7)
-        return false;
+        return EXIT_FAILURE;
     if(r5Disk.super_block.first_free_byte < 0 || r5Disk.super_block.nb_blocks_used <0)
-        return false;
-    return true;
+        return EXIT_FAILURE;
+    return EXIT_SUCCESS;
 }

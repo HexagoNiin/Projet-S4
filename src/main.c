@@ -1,6 +1,10 @@
 #include "../headers/utils_os.h"
 
 int check_raid_exists(char *raid, char raid_type[NB_RAIDS][32]) {
+	/// \brief Vérifie que le RAID donnée en paramètre existe bien
+	/// \param[in] raid : nom du raid
+	/// \param[in] raid_type : tableau des raids existants
+	/// \return l'index du raid correspondant + 1 ou 0
 	int i;
 	for(i=0;i<NB_RAIDS;i++) {
 		if(!strcmp(raid, raid_type[i]))
@@ -9,19 +13,23 @@ int check_raid_exists(char *raid, char raid_type[NB_RAIDS][32]) {
 	return 0;
 }
 
-bool get_grappes(char *grappe, enum raid raid) {
+int get_grappes(char *grappe, enum raid raid) {
+	/// \brief Initialise les variables nb_grappe et size_grappe dans la structure r5Disk si grappe est sous la bonne forme
+	/// \param[in] grappe : l'option détaillant les grappes
+	/// \param[in] raid : le type de raid voulue
+	/// \return 1 en cas d'échec, 0 en cas de succès
 	if(raid == CINQUANTE && (strlen(grappe) != 3 || grappe[1] != ':' || grappe[0] - 48 < 2 || grappe[0] - 48 > 9 || grappe[2] - 48 < 3 || grappe[2] - 48 > 9)) {
 		fprintf(stderr, "Le nombre de grappe doit etre compris entre 2 et 9 compris et la taille des grappes doit etre comprise entre 3 et 9 compris.\nLe format a respecter est le suivant : ngrappe:sgrappe\n");
-		return false;
+		return EXIT_SUCCESS;
 	}
 
 	if(raid == ZERO_UN && (strlen(grappe) != 3 || grappe[1] != ':' || grappe[0] - 48 < 2 || grappe[0] - 48 > 9 || grappe[2] - 48 < 2 || grappe[2] - 48 > 9)) {
 		fprintf(stderr, "Le nombre de grappe doit etre compris entre 2 et 9 compris et la taille des grappes doit etre comprise entre 2 et 9 compris.\nLe format a respecter est le suivant : ngrappe:sgrappe\n");
-		return false;
+		return EXIT_SUCCESS;
 	}
 	r5Disk.nb_grappe = grappe[0] - 48;
 	r5Disk.size_grappe = grappe[2] - 48;
-	return true;
+	return EXIT_FAILURE;
 }
 
 int main(int argc, char *argv[]) {
@@ -58,7 +66,6 @@ int main(int argc, char *argv[]) {
 			return 4;
 	}
 
-	//faire en sorte que le systeme ait acces aux grappes pour le raid 50
 	if(init_disk_raid5(argv[1], raid))
 		return 1;
     interpreteur();

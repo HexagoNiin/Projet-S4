@@ -1,6 +1,8 @@
 #include "../headers/utils_stripe.h"
 
 int read_chunk(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Interface permettant de sélectionner le mode de lecture en fonction du type de RAID
+	/// \return le code de retour de la fonction read_chunk sélectionnée
 	if(r5Disk.super_block.raid_type == ZERO)
 		return read_chunk_raid0(buffer, nChars, startbyte);
 	if(r5Disk.super_block.raid_type == UN)
@@ -14,10 +16,10 @@ int read_chunk(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Lis une chaine de caractères du RAID
-	/// \param[out] buffer : Chaine de caractere lue
-	/// \param[in] nChars : Nombre de caracteres a lire
-	/// \param[in] startbyte : Position où lire la chaine en octets
+	/// \brief Lis une chaine de caractères du RAID en RAID 5
+	/// \param[out] buffer : Chaîne de caractères lue
+	/// \param[in] nChars : Nombre de caractères à lire
+	/// \param[in] startbyte : Position où lire la chaîne en octets
 	log4("[READ_CHUNK] RAID CINQ");
 	int posBuffer = 0;
 	int posDisk = 0;
@@ -45,10 +47,10 @@ int read_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Lis une chaine de caractères du RAID
-	/// \param[out] buffer : Chaine de caractere lue
-	/// \param[in] nChars : Nombre de caracteres a lire
-	/// \param[in] startbyte : Position où lire la chaine en octets
+	/// \brief Lis une chaine de caractères du RAID en RAID 1
+	/// \param[out] buffer : Chaîne de caractères lue
+	/// \param[in] nChars : Nombre de caractères à lire
+	/// \param[in] startbyte : Position où lire la chaîne en octets
 	log4("[Read_CHUNK] RAID UN");
 	int nblocks = compute_nblock(nChars);
 	log4("[Read_CHUNK] Lecture en %d sur %d bandes de :\n%s", startbyte, nblocks, buffer);
@@ -63,10 +65,10 @@ int read_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid0(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Lis une chaine de caractères du RAID
-	/// \param[out] buffer : Chaine de caractere lue
-	/// \param[in] nChars : Nombre de caracteres a lire
-	/// \param[in] startbyte : Position où lire la chaine en octets
+	/// \brief Lis une chaine de caractères du RAID en RAID 0
+	/// \param[out] buffer : Chaîne de caractères lue
+	/// \param[in] nChars : Nombre de caractères à lire
+	/// \param[in] startbyte : Position où lire la chaîne en octets
 	log4("[READ_CHUNK] RAID ZERO");
 	int posBuffer = 0;
 	int posDisk = 0;
@@ -90,10 +92,10 @@ int read_chunk_raid0(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Lis une chaine de caractères du RAID
-	/// \param[out] buffer : Chaine de caractere lue
-	/// \param[in] nChars : Nombre de caracteres a lire
-	/// \param[in] startbyte : Position où lire la chaine en octets
+	/// \brief Lis une chaine de caractères du RAID en RAID 50
+	/// \param[out] buffer : Chaîne de caractères lue
+	/// \param[in] nChars : Nombre de caractères à lire
+	/// \param[in] startbyte : Position où lire la chaîne en octets
 	log4("[READ_CHUNK] RAID CINQUANTE");
 	int posBuffer = 0;
 	int posDisk = 0;
@@ -124,10 +126,10 @@ int read_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 }
 
 int read_chunk_raid01(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Lis une chaine de caractères du RAID
-	/// \param[out] buffer : Chaine de caractere lue
-	/// \param[in] nChars : Nombre de caracteres a lire
-	/// \param[in] startbyte : Position où lire la chaine en octets
+	/// \brief Lis une chaine de caractères du RAID en RAID 01
+	/// \param[out] buffer : Chaîne de caractères lue
+	/// \param[in] nChars : Nombre de caractères à lire
+	/// \param[in] startbyte : Position où lire la chaîne en octets
 	log4("[READ_CHUNK] RAID ZERO UN");
 	int posBuffer = 0;
 	int posDisk = 0;
@@ -187,7 +189,7 @@ int write_stripe(stripe_t stripe, int pos) {
 }
 
 block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
-    /// \brief Transforme une partie d'une chaine de caractères en nb_disks - 1 blocks.
+    /// \brief Transforme une partie d'une chaine de caractères en blocks.
     /// \brief Incrémente posCurrent de façon automatique.
     /// \param[in] buffer : Chaine de caractères
     /// \param[in] nChars : Nombre de caractères de la chaine
@@ -207,11 +209,10 @@ block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
 	log4("[GENERATE_STRIPE] size : %d", size);
     for(i=0;i<size;i++) {
         for(j=0;j<BLOCK_SIZE;j++) {
-            if(*posCurrent == nChars) {
+            if(*posCurrent == nChars)
                 blocks[i].data[j] = '\0';
-            } else {
+			else
                 blocks[i].data[j] = buffer[(*posCurrent)++];
-            }
         }
     }
     return blocks;
@@ -228,6 +229,8 @@ int compute_final_nblock(int nChars) {
 }
 
 int write_chunk(uchar * buffer, int nChars, int startbyte) {
+	/// \brief Interface permettant de sélectionner le mode d'écriture en fonction du type de RAID
+	/// \return le code de retour de la fonction write_chunk sélectionnée
 	if(r5Disk.super_block.raid_type == ZERO)
 		return write_chunk_raid0(buffer, nChars, startbyte);
 	if(r5Disk.super_block.raid_type == UN)
@@ -241,7 +244,7 @@ int write_chunk(uchar * buffer, int nChars, int startbyte) {
 }
 
 int write_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \brief Ecrit une chaine de caractères sur le système RAID en RAID 5
 	/// \param[in] buffer : Chaine de caractères à écrire
 	/// \param[in] nChars : Nombre de caractères de la chaine
 	/// \param[in] startbyte : Position où écrire la chaine en octets
@@ -279,7 +282,7 @@ int write_chunk_raid5(uchar * buffer, int nChars, int startbyte) {
 }
 
 int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \brief Ecrit une chaine de caractères sur le système RAID en RAID 1
 	/// \param[in] buffer : Chaine de caractères à écrire
 	/// \param[in] nChars : Nombre de caractères de la chaine
 	/// \param[in] startbyte : Position où écrire la chaine en octets
@@ -303,7 +306,7 @@ int write_chunk_raid1(uchar * buffer, int nChars, int startbyte) {
 }
 
 int write_chunk_raid01(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \brief Ecrit une chaine de caractères sur le système RAID en RAID 01
 	/// \param[in] buffer : Chaine de caractères à écrire
 	/// \param[in] nChars : Nombre de caractères de la chaine
 	/// \param[in] startbyte : Position où écrire la chaine en octets
@@ -331,7 +334,7 @@ int write_chunk_raid01(uchar * buffer, int nChars, int startbyte) {
 }
 
 int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
-	/// \brief Ecrit une chaine de caractères sur le système RAID.
+	/// \brief Ecrit une chaine de caractères sur le système RAID en RAID 50
 	/// \param[in] buffer : Chaine de caractères à écrire
 	/// \param[in] nChars : Nombre de caractères de la chaine
 	/// \param[in] startbyte : Position où écrire la chaine en octets
@@ -372,6 +375,11 @@ int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 }
 
 int write_chunk_raid0(uchar *buffer, int nChars, int startbyte) {
+	/// \brief Ecrit une chaine de caractères sur le système RAID en RAID 0
+	/// \param[in] buffer : Chaine de caractères à écrire
+	/// \param[in] nChars : Nombre de caractères de la chaine
+	/// \param[in] startbyte : Position où écrire la chaine en octets
+	/// \return Le nombre de bandes écrites ou -1 s'il y a eu une erreur.
 	log4("[WRITE_CHUNK] RAID ZERO");
 	int nBlock = compute_nblock(nChars);
 	int nStripes = compute_nstripe(nBlock);
@@ -400,6 +408,8 @@ int compute_parity_index(int numBande, int ndisk){
 }
 
 int compute_nstripe(int nb_blocks) {
+	/// \brief Calcule le nombre de bandes nécessaires pour stocker nb_blocks blocks en fonction du type de RAID
+	/// \param[in] nb_blocks : nombre de blocks
 	if(r5Disk.raidmode == CINQ)
     	return nb_blocks / (r5Disk.ndisk - 1) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
 	else if(r5Disk.raidmode == CINQUANTE)
@@ -411,6 +421,10 @@ int compute_nstripe(int nb_blocks) {
 }
 
 block_t xor(block_t a, block_t b) {
+	/// \brief Crée un block étant le xor bit à bit de deux autres blocks
+	/// \param[in] a : block à transformer
+	/// \param[in] b : block à transformer
+	/// \return le block transformé
     block_t c;
     for(int i = 0; i < BLOCK_SIZE; i++) {
         c.data[i] = a.data[i] ^ b.data[i];
@@ -419,6 +433,10 @@ block_t xor(block_t a, block_t b) {
 }
 
 block_t compute_parity(block_t *blocks, int nb_block) {
+	/// \brief Crée un block résultant d'un xor bit à bit sur une suite de blocks
+	/// \param[in] blocks : le tableau de blocks
+	/// \param(in) nb_blocks : le nombre de blocks
+	/// \return le block généré
     block_t parite = create_block();
     for(int i = 0; i < nb_block; i++) {
         parite = xor(parite, blocks[i]);
@@ -428,6 +446,8 @@ block_t compute_parity(block_t *blocks, int nb_block) {
 
 
 void print_stripe(stripe_t s) {
+	/// \brief Affiche une stripe
+	/// \param[in] s : la stripe à afficher
 	printf("[");
 	for(int i = 0; i < r5Disk.ndisk; i++) {
 		printf("[");

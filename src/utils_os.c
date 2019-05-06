@@ -4,6 +4,7 @@ char command_list[NB_COMMANDS][COMMANDS_SIZE] = {"ls", "cat", "rm", "create", "e
 FunctionStr command_exec[NB_COMMANDS] = {&ls, &cat, &rm, &create, &edit, &load, &store};
 
 void interpreteur() {
+	/// \brief Interface qui va lire et exécuter des commandes en attendant de recevoir la chaîne "quit"
 	log1("[INTERPRETEUR] Lancement interpréteur\n");
     char *command = malloc(sizeof(char) * (COMMANDS_SIZE + FILENAME_MAX_SIZE + 2));
     char **command_option = NULL;
@@ -33,9 +34,9 @@ void interpreteur() {
 }
 
 int action(char **command) {
-    /// \brief execute l'action d'une command + option passé en paramètre
+    /// \brief exécute l'action d'une command + option passé en paramètre
     /// \command command + option
-    /// \return -1 si la commande est invalide, -2 si l'on veut quitter le shell, le code de retour de la commande executee sinon
+    /// \return -1 si la commande est invalide, -2 si l'on veut quitter le shell, le code de retour de la commande exécutée sinon
     int i;
     for(i=0;i<NB_COMMANDS;i++) {
         if(!strcmp(command[0], command_list[i])) {
@@ -51,6 +52,9 @@ int action(char **command) {
 }
 
 int ls(char *option) {
+	/// \brief Liste les fichiers présents sur le RAID
+	/// \param[in] option : option d'affichage
+	/// \return 0
 	int i;
 	for(i=0;i<INODE_TABLE_SIZE;i++) {
 		if(r5Disk.inodes[i].first_byte) {
@@ -66,6 +70,9 @@ int ls(char *option) {
 }
 
 int cat(char *filename) {
+	/// \brief Affiche un fichier présent sur le RAID
+	/// \param[in] filename : nom du fichier à afficher
+	/// \return 0 en cas de succès, 1 en cas d'échec
     file_t file;
 	int code = read_file(filename, &file);
 	if(!code) {
@@ -79,6 +86,9 @@ int cat(char *filename) {
 }
 
 int rm(char *filename) {
+	/// \brief Supprime un fichier présent sur le RAID
+	/// \param[in] filename : nom du fichier à supprimer
+	/// \return 0 en cas de succès, 1 en cas d'échec
     int i = 0;
 	log1("[RM] Parcours de la table d'inodes : (%d emplacements)", INODE_TABLE_SIZE);
 	while(i < INODE_TABLE_SIZE && strcmp(r5Disk.inodes[i].filename, "") && strcmp(r5Disk.inodes[i].filename, filename)) {
@@ -96,16 +106,20 @@ int rm(char *filename) {
 }
 
 int create(char *filename) {
+	/// \brief Crée un fichier sur le RAID
+	/// \param[in] filename : nom du fichier à créer
+	/// \return 0 en cas de succès, 1 en cas d'échec
     file_t file;
 	file.size = 0;
-	write_file(filename, file);
-    return EXIT_SUCCESS;
+	return write_file(filename, file);
 }
 
 int edit(char *filename) {
-	if(cat(filename)) {
+	/// \brief Edite un fichier présent sur le RAID
+	/// \param[in] filename : nom du fichier à éditer
+	/// \return 0 en cas de succès, 1 en cas d'échec
+	if(cat(filename))
 		return EXIT_FAILURE;
-	}
 	printf("\n ===========================================================\n");
 	printf("         Remplacer ce qu'il y a dans votre fichier :\n");
 	printf("  (Ecrivez votre texte puis appuyez sur Entree puis 'quit')\n");
@@ -129,19 +143,24 @@ int edit(char *filename) {
 	int u;
 	for(u=0;u<size;u++)
 		file.data[u] = (uchar)str[u];
-	write_file(filename, file);
-    return EXIT_SUCCESS;
+	return write_file(filename, file);
 }
 
 int load(char *arguments) {
+	/// \brief Charge un fichier sur le RAID
+	/// \param[in] arguments : nom du fichier à charger
+	/// \return 0 en cas de succès, 1 en cas d'échec
 	int exit = load_file_from_host(arguments);
 	if(exit)
 		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'existe pas.\n");
 	return exit;
 }
 
-int store(char *filename) {
-    int exit = store_file_to_host(filename);
+int store(char *arguments) {
+	/// \brief Génère un fichier depuis le RAID
+	/// \param[in] arguments : nom du fichier à générer
+	/// \return 0 en cas de succès, 1 en cas d'échec
+    int exit = store_file_to_host(arguments);
 	if(exit)
 		fprintf(stderr, "\x1B[91m[ERR]\x1B[0m Le fichier n'existe pas.\n");
 	return exit;

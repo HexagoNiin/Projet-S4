@@ -4,6 +4,7 @@ int write_file(const char *filename, file_t file) {
     /// \brief Ecrit un fichier sur le système
     /// \param[in] filename : filename du fichier à écrire
     /// \param[in] file : fichier à écrire
+	/// \return 0 en cas de succès, 1 en cas d'échec 
 	log2("[WRITE_FILE] Écriture sur le système de %s", filename);
     int i, u;
 
@@ -88,6 +89,9 @@ int read_file(const char* filename, file_t *file){
 }
 
 int load_file_from_host(const char *filename) {
+	/// \brief Charge un fichier sur le système RAID
+	/// \param[in] filename : le nom du fichier
+	/// \return 1 si l'opération s'est mal passée, 0 sinon
 	log2("[LOAD_FILE_FROM_HOST] Chargement vers le disque virtuel de %s", filename);
 	FILE* f = fopen(filename, "r");
 	if(f == NULL)
@@ -103,10 +107,13 @@ int load_file_from_host(const char *filename) {
 }
 
 int store_file_to_host(const char *filename) {
+	/// \brief Ecrit un fichier depuis le système RAID
+	/// \param[in] filename : le nom du fichier
+	/// \return 1 si l'opération s'est mal passée, 0 sinon
 	log2("[STORE_FILE_TO_HOST] Importation depuis le disque virtuel de %s", filename);
 	file_t file;
 	if(read_file(filename, &file))
-		return 1;
+		return EXIT_FAILURE;
 	FILE* f = fopen(filename, "w");
 	if(f == NULL) return 2;
 	log2("[STORE_FILE_TO_HOST] Données lues (%d caractères) : %s", file.size, file.data)
