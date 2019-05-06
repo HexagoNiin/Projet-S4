@@ -2,11 +2,19 @@ package objets;
 
 import java.io.*;
 
+
+/**
+ * @author MARTIN Cedric, GAUTHIER Axel && EB-LEVADOUX Ugo
+ *	
+ */
 public class Block {
 	
 	public final static int nBytes = 4;
 	private byte [] data;
 
+	/**
+	 * Block creation
+	 */
 	public Block() {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
@@ -14,6 +22,10 @@ public class Block {
 		}
 	}
 	
+	/**
+	 * Block creation
+	 * @param b byte to store
+	 */
 	public Block(byte b) {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
@@ -21,6 +33,10 @@ public class Block {
 		}
 	}
 	
+	/**
+	 * Block creation
+	 * @param b byte array to store
+	 */
 	public Block(byte b []) {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
@@ -28,6 +44,10 @@ public class Block {
 		}
 	}
 	
+	/**
+	 * Block creation
+	 * @param nb int to store
+	 */
 	public Block(int nb) {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
@@ -35,6 +55,10 @@ public class Block {
 		}
 	}
 	
+	/**
+	 * Block creation
+	 * @param nb int array to store
+	 */
 	public Block(int nb[]) {
 		data = new byte[nBytes];
 		for(int i = 0; i < nBytes; i++) {
@@ -42,23 +66,30 @@ public class Block {
 		}
 	}
 	
+	/**
+	 * store data at i position
+	 * @param data byte to store
+	 * @param i storing position
+	 */
 	public void setByte(byte data, int i) {
 		this.data[i] = data;
 	}
-	
-	
+		
+	/**
+	 * retrieve data at i position
+	 * @param i retrieve position
+	 * @return byte retrieved
+	 */
 	public Byte getByte(int i) {
 		return this.data[i];
 	}
 	
-	
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param pos Position o� �crire le block
-	 * @param disk_id Disk sur lequel �crire le block	
-	 * @return Un entier indiquant si l'opération s'est bien passée (0 : OK, 1 : Erreur cast, 2 ; Erreur �criture) 
+	 * write block's data to disk at pos position
+	 * @param pos writing position
+	 * @param disk_id writing disk
+	 * @return 0 if OK else 1 if writing issue 
 	 */
-	
 	public int write(int pos, File disk_id) {
 		try {
 			RandomAccessFile file = new RandomAccessFile(disk_id, "rw");
@@ -74,10 +105,10 @@ public class Block {
 	}
 	
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param pos Position du block à lire
-	 * @param id_disk Index du disk avec le block à lire
-	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur d'ouverture, 2 : Erreur de lecture)
+	 * read disk's data at pos position and store it in block
+	 * @param pos reading position
+	 * @param disk_id reading disk
+	 * @return 0 if OK else 1 if reading issue
 	 */
 	public int read(int pos, File disk_id) {
 		try {
@@ -93,16 +124,13 @@ public class Block {
 		}
 		return 0;
 	}
-	
+
 	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param pos Position du block eronn�
-	 * @param disks Tableau des disks utilis�s par le RAID
-	 * @param id_disk Index du disk avec le block eronn�
-	 * @param nbr_disks
-	 * @return Un entier indiquant si l'op�ration s'est bien pass�e (0 : OK, 1 : Erreur lecture, 2 : Erreur �criture)
+	 * repair disk at pos position
+	 * @param pos repairing position
+ 	 * @param id_disk repairing disk
+	 * @return 0 if OK else 1 if to much damage or 2 if repairing issue
 	 */
-	
 	public int repair(int pos, int id_disk) {
 		Block block = new Block();
 		for(int i = 0;i < VirtualDisk.nDisk; i++) {
@@ -122,7 +150,10 @@ public class Block {
 		return 2;
 	}
 	
-	
+	/**
+	 * create compute parity block
+	 * @param blocks blocks array 
+	 */
 	public void	computeParity(Block blocks []) {
 		data = blocks[0].data.clone();
 		for(int i = 1; i < blocks.length; i++) {
@@ -132,11 +163,9 @@ public class Block {
 		}
 	}
 	
-	/**
-	 * @author Ugo EB-LEVADOUX, Axel GAUTHIER & Cedric MARTIN
-	 * @param this bloc à afficher
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
-	
 	public String toString() {
 		String buffer = "[";
 		for(int i = 0; i < nBytes; i++) {
@@ -146,6 +175,10 @@ public class Block {
 		return buffer + "]";
 	}
 	
+	/**
+	 * retrieve buffer of block's data
+	 * @return block's content
+	 */
 	public String content() {
 		String buffer = "";
 		for(int i = 0; i < nBytes && data[i] != 0; i++) {
