@@ -56,6 +56,7 @@ int write_inodes_table(int startbyte) {
 		totalStripe += nStripe;
 		free(buffer);
     }
+	log3("[WRITE_INODES_TABLE] totalStripe : %d", totalStripe)
     return totalStripe;
 }
 

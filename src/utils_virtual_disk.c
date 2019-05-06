@@ -53,11 +53,17 @@ int init_disk_raid5(const char *repertoryName, int raid) {
         r5Disk.number_of_files = 0;
         r5Disk.super_block.nb_blocks_used = INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE;
         r5Disk.super_block.first_free_byte = ((INODE_SIZE * INODE_TABLE_SIZE + SUPER_BLOCK_SIZE) / nbFiles) * BLOCK_SIZE;
+		if(raid == UN)
+			r5Disk.super_block.first_free_byte = BLOCK_SIZE * (SUPER_BLOCK_SIZE + INODE_TABLE_SIZE * compute_nblock(sizeof(inode_t)));
+		log1("FIRST FREE BYTE : %d", r5Disk.super_block.first_free_byte)
         int u;
         for(u=0;u<INODE_TABLE_SIZE;u++)
             r5Disk.inodes[u].first_byte = 0;
         write_super_block();
-        write_inodes_table((SUPER_BLOCK_SIZE / nbFiles) * BLOCK_SIZE);
+		if(r5Disk.raidmode == UN)
+			write_inodes_table(SUPER_BLOCK_SIZE * BLOCK_SIZE);
+		else
+			write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
     } else {
         printf("Detection du systeme RAID\n");
         int u;

@@ -46,18 +46,21 @@ int write_file(const char *filename, file_t file) {
     /* creation inode */
     inode_t inode = init_inode(filename, file.size, r5Disk.super_block.first_free_byte);
 
-    /* ecriture fichier */
-    int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
-    if(size == -1) {
-        fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
+	/* ecriture fichier */
+	int size = write_chunk(file.data, file.size, r5Disk.super_block.first_free_byte);
+	if(size == -1) {
+		fprintf(stderr, "Erreur lors de l'ecriture du fichier.\n");
 		return EXIT_FAILURE;
-    }
+	}
 
 	/* mise a jour de la table */
 	log2("[WRITE_FILE] size : %d", size);
     inode.nblock = size * r5Disk.ndisk;
     update_inodes_table(inode);
-	write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
+	if(r5Disk.raidmode == UN)
+		write_inodes_table(SUPER_BLOCK_SIZE * BLOCK_SIZE);
+	else
+		write_inodes_table((SUPER_BLOCK_SIZE / r5Disk.ndisk) * BLOCK_SIZE);
 	write_super_block();
     return EXIT_SUCCESS;
 }
