@@ -186,7 +186,6 @@ public class Gui {
 				displayContent();
 			}
 		});
-		list.setModel(model);
 		
 		CreateButton = new JButton("New button");
 		CreateButton.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -199,6 +198,10 @@ public class Gui {
 		CreateButton.setAction(Create);
 		CreateButton.setBounds(10, 474, 116, 47);
 		panel.add(CreateButton);
+		
+		
+		setList();
+		list.setModel(model);
 	}
 	
 	private void displayContent() {
@@ -219,7 +222,20 @@ public class Gui {
 			textArea.setText("");
 			sizeField.setText("");
 		}
+		
 	}
+	
+	private void setList() {
+		Inode inode;
+		for(int i = 0; i < InodeTable.tabSize; i++) {
+			inode = VirtualDisk.inodes.get(i);
+			if (!inode.empty())
+				model.addElement(inode.getFilename());
+		}
+		
+		
+	}
+	
 	
 	private void createElement() {
 		String name;
