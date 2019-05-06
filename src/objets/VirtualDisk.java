@@ -20,23 +20,6 @@ public class VirtualDisk {
 		nextParityPos = nDisk-1;
     	storage = repertoire.listFiles();
     	nDisk = storage.length;
-    	/*Path chemin = Paths.get(nom_rep);
-    	try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)) {
-    		int tailleStorage = 0;
-    		for (Path file: stream) {
-    	        tailleStorage++;
-    	    }
-    		storage = new File [tailleStorage];
-    		tailleStorage = 0;
-    	    for (Path file: stream) {
-    	        storage[tailleStorage] = file;
-    	        tailleStorage++;
-    	    }
-    	} catch (IOException | DirectoryIteratorException x) {
-    	    // IOException can never be thrown by the iteration.
-    	    // In this snippet, it can only be thrown by newDirectoryStream.
-    	    System.err.println(x);
-    	}*/ //JE SAIS PAS LIRE DES DOSSIERS EN JAVA C'EST L'ENFER
     	numberOfFiles = 0;
     }
     
