@@ -28,8 +28,9 @@ public class Chunk {
 	 */
 	public Chunk(byte [] buffer, int nChars) {
 		this(nChars);
+		//System.out.println(nStripes);
 		for(int i = 0; i < nStripes; i++) {
-			System.out.println("Next Parity : " + VirtualDisk.nextParityPos);
+			//System.out.println("Next Parity : " + VirtualDisk.nextParityPos);
 			stripes[i] = new Stripe(Utils.subArray(buffer, i * (Stripe.nBlocks - 1) * Block.nBytes, (Stripe.nBlocks - 1) * Block.nBytes));
 		}
 	}
@@ -103,6 +104,13 @@ public class Chunk {
 		String buffer = "";
 		for(int i = 0; i < nStripes; i++) {
 			buffer += stripes[i].content();
+		}
+		return buffer;
+	}
+	public String rawContent() {
+		String buffer = "";
+		for(int i = 0; i < nStripes; i++) {
+			buffer += stripes[i].rawContent();
 		}
 		return buffer;
 	}

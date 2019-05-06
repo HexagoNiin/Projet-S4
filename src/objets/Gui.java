@@ -238,6 +238,7 @@ public class Gui {
 		if ( (name = JOptionPane.showInputDialog("Name File :")) != null) {
 			if(VirtualDisk.inodes.get(name) == null) {
 				FileHandler f = new FileHandler(name);
+				System.out.println("JE SUIS LA");
 				if (f.write() == 0) {
 					model.addElement(name);
 				}

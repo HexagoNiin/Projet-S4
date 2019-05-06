@@ -30,6 +30,8 @@ public class VirtualDisk {
     	storage = repertoire.listFiles();
     	nDisk = storage.length;
     	numberOfFiles = 0;
+    	SuperBlock.read();
+    	inodes.read();
     }
     
     /**

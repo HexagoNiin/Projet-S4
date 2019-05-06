@@ -2,20 +2,11 @@ package objets;
 
 import java.io.*;
 
-
-/**
- * @author MARTIN Cedric, GAUTHIER Axel && EB-LEVADOUX Ugo
- *	
- */
 public class FileHandler {
 	private String filename;
 	private int size;
 	private Chunk data;
 	
-	/**
-	 * FileHandler creation
-	 * @param filename name of file
-	 */
 	public FileHandler(String filename) {
 		System.out.println(filename);
 		this.filename = filename;
@@ -33,41 +24,24 @@ public class FileHandler {
 		}
 	}
 	
-	/**
-	 * FileHandler creation
-	 */
 	public FileHandler() {
 		filename = null;
 		size = 0;
 		data = null;
 	}
 	
-	/**
-	 * create new file with filename name 
-	 * @param filename name of file
-	 */
 	public void create(String filename) {
 		this.filename = filename;
 		data = new Chunk("");
 		VirtualDisk.inodes.add(filename, size, SuperBlock.getFirstFreeBytes());
 	}
 	
-	/**
-	 * FileHandler creation with filename name and buffer content
-	 * @param filename name of file
-	 * @param buffer content 
-	 */
 	public FileHandler(String filename, byte buffer []) {
 		this.filename = filename;
 		size = buffer.length;
 		data = new Chunk(buffer, size);
 	}
 	
-	/**
-	 * read virtualdisk at filename name to fileHandler
-	 * @param filename name of file
-	 * @return firstbyte of file 
-	 */
 	public int read(String filename) {
 		Inode i = VirtualDisk.inodes.get(filename);
 		this.filename = filename;
@@ -76,26 +50,14 @@ public class FileHandler {
 		return data.read(i.getFirstByte());
 	}
 	
-	/**
-	 * read virtualdisk to fileHandler
-	 * @return firstbyte of file
-	 */
 	public int read() {
 		return this.read(filename);
 	}
 	
-	/**
-	 * read virtualdisk at i position to fileHandler
-	 * @param i reading position of file
-	 * @return firstbyte of file*/
 	public int read(Inode i) {
 		return this.read(i.getFilename());
 	}
 	
-	/**
-	 * write fileHandler to virtualdisk
-	 * @return firstbyte of file
-	 */
 	public int write() {
 		if(VirtualDisk.inodes.get(filename) != null) return 2;
 		System.out.println(VirtualDisk.inodes.get(filename));
@@ -106,10 +68,6 @@ public class FileHandler {
 		return 0;
 	}
 	
-	/**
-	 * host fileHandler
-	 * @return 0 if OK else 1 if hosting issue
-	 */
 	public int toHost() {
 		System.out.println(content());
 		try {
@@ -125,33 +83,18 @@ public class FileHandler {
 		return 0;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	public String toString() {
 		return "Nom du fichier : " + filename + "\nTaille : " + size + " octets, " + Utils.compute_nstripe(Utils.compute_nblock(size)) + " bandes\nPosition : " + VirtualDisk.inodes.get(filename).getFirstByte() + "\nContenu :\n" + data;
 	}
 	
-	/**
-	 * retrieve buffer of fileHandler's data
-	 * @return fileHandler's content
-	 */
 	public String content() {
 		return data.content();
 	}
 	
-	/**
-	 * retrieve data of fileHandler
-	 * @return data retrieved
-	 */
 	public Chunk getData() {
 		return data;
 	}
 	
-	/**
-	 * retrieve size of fileHandler
-	 * @return size retrieved
-	 */
 	public int getSize() {
 		return size;
 	}

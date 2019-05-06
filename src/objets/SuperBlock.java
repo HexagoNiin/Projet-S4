@@ -7,7 +7,7 @@ package objets;
  */
 public class SuperBlock {
 	public static int size = 4;
-	private static int firstFreeBytes;
+	private static int firstFreeBytes = Utils.compute_nstripe(Utils.compute_nblock(size + InodeTable.tabSize * 40)) * Stripe.nBlocks * Block.nBytes;
 	
 	/**
 	 * add new firstByte
@@ -23,5 +23,16 @@ public class SuperBlock {
 	 */
 	public static int getFirstFreeBytes() {
 		return firstFreeBytes;
+	}
+	
+	public static void write() {
+		System.out.println(Utils.toBytes(firstFreeBytes));
+		new Chunk(Utils.toBytes(firstFreeBytes), size).write(0);
+	}
+	
+	public static void read() {
+		Chunk c = new Chunk(size);
+		c.read(0);
+		System.out.println(Utils.toInt(c.rawContent().getBytes()));
 	}
 }

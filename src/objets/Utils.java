@@ -64,6 +64,12 @@ public class Utils {
 			return s;
 		}
 	}
+	
+	public static String trim(String s) {
+		int i = 0;
+		while(s.charAt(i) != 0) i++;
+		return s.substring(0, i);
+	}
 
 	public static byte[] toBytes(int value) {
 		return  ByteBuffer.allocate(4).putInt(value).array();

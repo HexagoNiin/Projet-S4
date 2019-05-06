@@ -13,7 +13,7 @@ public class Inode {
 	public Inode() {
 		filename = "";
 		size = 0;
-		firstByte = -1;
+		firstByte = 0;
 	}
 
 	/**
@@ -64,13 +64,18 @@ public class Inode {
 	 * @return true if empty else false
 	 */
 	public boolean empty() {
-		return firstByte == -1;
+		return firstByte == 0;
 	}
 
 	public String writable() {
 		byte [] sizeBytes = Utils.toBytes(size);
 		byte [] firstByteBytes = Utils.toBytes(firstByte);
-		System.out.println(sizeBytes + " " + firstByteBytes);
-		return Utils.setSize(filename, 32) + sizeBytes.toString() + firstByteBytes.toString();
+		return Utils.setSize(filename, 32) + (char)sizeBytes[0] + (char)sizeBytes[1] + (char)sizeBytes[2] + (char)sizeBytes[3] + (char)firstByteBytes[0] + (char)firstByteBytes[1] + (char)firstByteBytes[2] + (char)firstByteBytes[3];
+	}
+	
+	public void decode(String raw) {
+		filename = Utils.trim(raw.substring(0, 32));
+		size = Utils.toInt(raw.substring(32, 36).getBytes());
+		firstByte = Utils.toInt(raw.substring(36, 40).getBytes());
 	}
 }

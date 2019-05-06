@@ -91,13 +91,16 @@ public class Stripe {
 	 * @return 0 if OK else 1 if writing issue
 	 */
 	public int write(int pos) {
+		//System.out.println("POS : " + pos);
+		//System.out.println(Utils.compute_parity_index(pos/Block.nBytes));
 		parityPos = Utils.compute_parity_index(pos / Block.nBytes);
 		for(int i = 0; i < this.getNBlocks(); i++) {
 			if(this.blocks[i].write(pos , VirtualDisk.storage[i]) != 0) {
-				System.err.println("Erreur lors de l'Ã©criture de la bande.");
+				System.err.println("Erreur lors de l'écriture de la bande.");
 				return 1;
 			}
 		}
+		//System.out.println(this);
 		return 0;
 	}
 
@@ -142,6 +145,16 @@ public class Stripe {
 		for(int i = 0; i < nBlocks; i++) {
 			if(i != parityPos) {
 				buffer += blocks[i].content();
+			}
+		}
+		return buffer;
+	}
+	
+	public String rawContent() {
+		String buffer = "";
+		for(int i = 0; i < nBlocks; i++) {
+			if(i != parityPos) {
+				buffer += blocks[i].rawContent();
 			}
 		}
 		return buffer;
