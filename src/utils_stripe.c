@@ -109,10 +109,10 @@ int read_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 			return -1;
 		}
 
-		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk, 3);
+		int parity_index = compute_parity_index(startbyte / r5Disk.ndisk + posDisk, r5Disk.size_grappe);
 		for(int i = 0; i < stripe.nblocks && posBuffer < nChars; i++) {
 			block_t block = stripe.stripe[i];
-			if(i % 3 != parity_index) {
+			if(i % r5Disk.size_grappe != parity_index) {
 				for(int j = 0; j < BLOCK_SIZE && posBuffer < nChars; j++) {
 					buffer[posBuffer] = block.data[j];
 					posBuffer++;
@@ -171,7 +171,7 @@ block_t *generateStripe(uchar *buffer, int nChars, int *posCurrent) {
 	if(r5Disk.raidmode == CINQ)
 	 	size = r5Disk.ndisk - 1;
 	else if(r5Disk.raidmode == CINQUANTE)
-		size = r5Disk.ndisk - 2; // -grappe
+		size = r5Disk.ndisk - r5Disk.nb_grappe; // -grappe
 	else
 		size = r5Disk.ndisk;
     block_t *blocks = malloc(sizeof(block_t) * (size));
@@ -286,7 +286,7 @@ int write_chunk_raid50(uchar * buffer, int nChars, int startbyte) {
 	int i, j, u, pos = 0;
 	int nChunks = compute_nblock(nChars);
 	int nStripes = compute_nstripe(nChunks);
-	int taille_grappe = 3, nombre_grappe = 2;
+	int taille_grappe = r5Disk.size_grappe, nombre_grappe = r5Disk.nb_grappe;
 	int i_blocks;
 	log4("[WRITE_CHUNK] nChunks : %d nStripe : %d", nChunks, nStripes);
 	for(i=0;i<nStripes;i++) {
@@ -349,7 +349,7 @@ int compute_nstripe(int nb_blocks) {
 	if(r5Disk.raidmode == CINQ)
     	return nb_blocks / (r5Disk.ndisk - 1) + (nb_blocks % (r5Disk.ndisk - 1) != 0);
 	else if(r5Disk.raidmode == CINQUANTE)
-		return nb_blocks / (r5Disk.ndisk - 2) + (nb_blocks % (r5Disk.ndisk - 2) != 0); // -4 => -grappe
+		return nb_blocks / (r5Disk.ndisk - r5Disk.nb_grappe) + (nb_blocks % (r5Disk.ndisk - r5Disk.nb_grappe) != 0); // -4 => -grappe
 	else
 		return nb_blocks / r5Disk.ndisk + (nb_blocks % r5Disk.ndisk != 0);
 }

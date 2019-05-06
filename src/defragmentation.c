@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Usage : <%s> repertory\n", argv[0]);
         return 1;
     }
-    if(init_disk_raid5(argv[1]))
+    if(init_disk_raid5(argv[1], CINQ))
         return 2;
 
     if(r5Disk.super_block.nb_blocks_used == SUPER_BLOCK_SIZE) {

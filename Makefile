@@ -82,7 +82,7 @@ clean:
 
 mrproper: clean
 	rm $(SYSTEM)/d* || true
-	touch $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3 $(SYSTEM)/d4 $(SYSTEM)/d5
+	touch $(SYSTEM)/d0 $(SYSTEM)/d1 $(SYSTEM)/d2 $(SYSTEM)/d3
 	rm *.out || true
 
 

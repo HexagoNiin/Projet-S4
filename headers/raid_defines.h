@@ -13,9 +13,9 @@
 #define MAX_FILE_SIZE (50*1024) // uchar
 #define INODE_TABLE_SIZE 10 // taille fixe = nb max fichiers
 #define MAX_MSG 1024 // uchar
-#define SUPER_BLOCK_SIZE 6 // nb blocs avec parité
+#define SUPER_BLOCK_SIZE 4 // nb blocs avec parité
 #define INODES_START SUPER_BLOCK_SIZE*BLOCK_SIZE+1 // en octets
-#define INODE_SIZE 18 // en blocks avec parité
+#define INODE_SIZE 16 // en blocks avec parité
 #define NB_RAIDS 7
 
 typedef unsigned int uint; // même taille que int
@@ -53,6 +53,8 @@ typedef struct virtual_disk_s {
     int ndisk;
     enum raid raidmode; // type de RAID
     FILE **storage; //tab[NUMBER_OF_DISKS];
+    int nb_grappe;
+    int size_grappe;
 } virtual_disk_t;
 
 //=======================================================
