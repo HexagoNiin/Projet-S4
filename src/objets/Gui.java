@@ -70,7 +70,7 @@ public class Gui {
 		});
 	}
 
-	/** ferokgporeopd
+	/**
 	 * Create the application.
 	 */
 	public Gui() {
