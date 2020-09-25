@@ -28,5 +28,5 @@
 
 ### Auteurs
 * **MARTIN Cédric** - *Initial work* - [Hexagoniin](https://github.com/HexagoNiin)
-* **GAUTHIER Axel** - *Initial work* - [axlmk](https://github.com/axlmk))
+* **GAUTHIER Axel** - *Initial work* - [axlmk](https://github.com/axlmk)
 * **EB-LEVADOUX Ugo** - *Initial work* - [gogonouze](https://github.com/gogonouze)
