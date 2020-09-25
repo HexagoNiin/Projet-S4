@@ -17,7 +17,7 @@
   - **[Java](https://www.java.com/fr/)** - à jours
   
 ### installation 
-**WIP**
+**=-= WIP =-=**
 
 ### Fabriqué avec
 
