@@ -5,7 +5,7 @@
 ## [FR]
 
 ### Système de virtualisation de stockage [RAID](https://fr.wikipedia.org/wiki/RAID_(informatique))
-Réaliser en 2 version :
+#### Réaliser en 2 version :
 * **[C](https://fr.wikipedia.org/wiki/C_(langage))** (RAID 0, 1, 5, 0+1, 1+0, 50, 100) 
 * **[Java](https://fr.wikipedia.org/wiki/Java_(langage))** avec interface graphique (RAID 5)
 
