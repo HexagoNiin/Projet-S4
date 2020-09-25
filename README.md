@@ -21,7 +21,7 @@
 
 ### Fabriqué avec
 
-* [atom](https://atom.io/)
+* [atom](https://atom.io/) - éditeur de texte
 * [Amour](https://fr.wikipedia.org/wiki/Amour)
 * [Eclipse](https://www.eclipse.org) - IDE java
 
