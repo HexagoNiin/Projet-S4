@@ -9,14 +9,14 @@
 * **[C](https://fr.wikipedia.org/wiki/C_(langage))** (RAID 0, 1, 5, 0+1, 1+0, 50, 100) 
 * **[Java](https://fr.wikipedia.org/wiki/Java_(langage))** avec interface graphique (RAID 5)
 
-### prè-requis
+### Prè-requis
 * Pour la version **C** :
   - Un sytème ou sous-système [linux](https://fr.wikipedia.org/wiki/Linux) - à jours
   
 * Pour la version **Java**
   - **[Java](https://www.java.com/fr/)** - à jours
   
-### installation 
+### Installation 
 **=-= WIP =-=**
 
 ### Fabriqué avec
