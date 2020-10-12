@@ -16,8 +16,15 @@
 * Pour la version **Java**
   - **[Java](https://www.java.com/fr/)** - à jours
   
-### Installation 
-**=-= WIP =-=**
+### Utilisation
+  * Pour la version **C** :
+  - **=-= WIP =-=**
+  
+  Pour la version **Java** :
+  - Lancer RAID 5.jar
+  ```sh
+  java -jar "RAID 5.jar"
+  ```
 
 ### Fabriqué avec
 
