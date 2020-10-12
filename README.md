@@ -17,10 +17,10 @@
   - **[Java](https://www.java.com/fr/)** - à jours
   
 ### Utilisation
-  * Pour la version **C** :
+* Pour la version **C** :
   - **=-= WIP =-=**
   
-  Pour la version **Java** :
+* Pour la version **Java** :
   - Lancer RAID 5.jar
   ```sh
   java -jar "RAID 5.jar"
